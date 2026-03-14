@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tienda Marecoin — RSMV</title>
+  <link rel="stylesheet" href="../css/styles.css">
+  <style>
+    .paquete-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 28px;
+      text-align: center;
+      cursor: pointer;
+      transition: var(--trans);
+      position: relative;
+    }
+
+    .paquete-card:hover {
+      border-color: rgba(255,215,0,0.5);
+      transform: translateY(-4px);
+      box-shadow: 0 12px 40px rgba(0,0,0,0.3);
+    }
+
+    .paquete-card.popular {
+      border-color: rgba(0,212,255,0.5);
+    }
+
+    .popular-badge {
+      position: absolute;
+      top: -12px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: var(--cyan);
+      color: #000;
+      font-size: 11px;
+      font-weight: 700;
+      padding: 4px 14px;
+      border-radius: 20px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .paquete-mc {
+      font-size: 48px;
+      font-weight: 900;
+      color: var(--gold);
+      margin: 12px 0 4px;
+    }
+
+    .paquete-nombre {
+      font-size: 14px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      color: var(--text-muted);
+    }
+
+    .paquete-precio {
+      font-size: 22px;
+      font-weight: 700;
+      color: var(--text);
+      margin: 12px 0;
+    }
+
+    .paquete-precio span {
+      font-size: 13px;
+      color: var(--text-muted);
+      font-weight: 400;
+    }
+  </style>
+</head>
+<body>
+
+<nav class="navbar">
+  <div class="navbar-inner">
+    <a href="/" class="navbar-brand">
+      <div class="navbar-logo">RSMV</div>
+    </a>
+    <div class="navbar-nav">
+      <a href="dashboard.html">Dashboard</a>
+      <a href="torneos.html">Torneos</a>
+      <div class="mc-badge">◈ <span class="mc-saldo-valor">...</span> MC</div>
+      <button class="btn btn-outline btn-sm" onclick="api.logout()">Salir</button>
+    </div>
+  </div>
+</nav>
+
+<main style="padding:40px 20px;max-width:1000px;margin:0 auto;">
+
+  <!-- Header -->
+  <div style="text-align:center;margin-bottom:48px;">
+    <div style="font-size:48px;margin-bottom:12px;">◈</div>
+    <h1 class="page-title">Tienda Marecoin</h1>
+    <p class="page-subtitle">Sin Marecoin no hay información. Sin información, no hay ventaja.</p>
+
+    <div style="display:inline-flex;align-items:center;gap:12px;background:var(--bg-card);border:1px solid var(--border2);border-radius:var(--radius-lg);padding:16px 28px;margin-top:8px;">
+      <div>
+        <div style="font-size:11px;color:var(--text-muted);text-transform:uppercase;letter-spacing:1px;">Tu saldo actual</div>
+        <div style="font-size:32px;font-weight:700;color:var(--gold);">◈ <span id="saldoActual">...</span> MC</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Tarifas -->
+  <div class="card mb-32">
+    <div class="card-title mb-16">¿Qué puedes comprar con Marecoin?</div>
+    <div id="tarifas" class="grid-2" style="gap:12px;"></div>
+  </div>
+
+  <!-- Paquetes -->
+  <h2 style="font-size:20px;font-weight:700;margin-bottom:8px;">Paquetes de Marecoin</h2>
+  <p style="color:var(--text-muted);font-size:14px;margin-bottom:24px;">
+    Compra MC para acceder a estadísticas y ventajas estratégicas.
+    <br><em style="font-size:12px;color:var(--text-dim);">MVP: Simulación de pago. Integración PSE/Wompi próximamente.</em>
+  </p>
+
+  <div class="grid-4" style="gap:20px;margin-bottom:40px;">
+    <div class="paquete-card" onclick="comprar('starter')">
+      <div class="paquete-nombre">Starter</div>
+      <div class="paquete-mc">100</div>
+      <div style="font-size:12px;color:var(--gold);margin-bottom:12px;">MC</div>
+      <div class="paquete-precio">$5,000 <span>COP</span></div>
+      <button class="btn btn-outline btn-sm btn-block">Comprar</button>
+    </div>
+
+    <div class="paquete-card popular" onclick="comprar('jugador')">
+      <div class="popular-badge">MÁS POPULAR</div>
+      <div class="paquete-nombre">Jugador</div>
+      <div class="paquete-mc">300</div>
+      <div style="font-size:12px;color:var(--gold);margin-bottom:12px;">MC</div>
+      <div class="paquete-precio">$12,000 <span>COP</span></div>
+      <button class="btn btn-primary btn-sm btn-block">Comprar</button>
+    </div>
+
+    <div class="paquete-card" onclick="comprar('campeon')">
+      <div class="paquete-nombre">Campeón</div>
+      <div class="paquete-mc">1,000</div>
+      <div style="font-size:12px;color:var(--gold);margin-bottom:12px;">MC</div>
+      <div class="paquete-precio">$35,000 <span>COP</span></div>
+      <div style="font-size:11px;color:var(--green);margin-bottom:8px;">Ahorra 14%</div>
+      <button class="btn btn-outline btn-sm btn-block">Comprar</button>
+    </div>
+
+    <div class="paquete-card" style="border-color:rgba(155,89,182,0.4)" onclick="comprar('leyenda')">
+      <div class="paquete-nombre" style="color:var(--purple);">Leyenda</div>
+      <div class="paquete-mc" style="color:#c49ef5;">5,000</div>
+      <div style="font-size:12px;color:var(--gold);margin-bottom:12px;">MC</div>
+      <div class="paquete-precio">$150,000 <span>COP</span></div>
+      <div style="font-size:11px;color:var(--green);margin-bottom:8px;">Ahorra 25%</div>
+      <button class="btn btn-sm btn-block" style="background:var(--purple);color:#fff;">Comprar</button>
+    </div>
+  </div>
+
+  <!-- Historial de transacciones -->
+  <div class="card">
+    <div class="card-header">
+      <div class="card-title">Historial de Transacciones</div>
+    </div>
+    <div id="historialMC">
+      <div class="spinner" style="margin:24px auto;display:block;width:28px;height:28px;border-width:2px;"></div>
+    </div>
+  </div>
+
+</main>
+
+<script src="../js/api.js"></script>
+<script src="../js/app.js"></script>
+<script>
+  requireLogin();
+
+  async function cargar() {
+    // Saldo
+    try {
+      const { saldo } = await api.getSaldo();
+      document.getElementById('saldoActual').textContent = saldo;
+      document.querySelector('.mc-saldo-valor').textContent = saldo;
+      localStorage.setItem('rsmv_mc', saldo);
+    } catch {}
+
+    // Tarifas
+    try {
+      const tarifas = await api.getTarifas();
+      document.getElementById('tarifas').innerHTML = tarifas.map(t => `
+        <div style="display:flex;align-items:center;justify-content:space-between;padding:10px 14px;background:var(--bg-card2);border-radius:var(--radius);">
+          <div style="font-size:13px;">${t.descripcion}</div>
+          <div style="font-weight:700;color:var(--gold);">◈ ${t.costo} MC</div>
+        </div>`).join('');
+    } catch {}
+
+    // Historial
+    try {
+      const historial = await api.getHistorialMC();
+      const tipoColor = {
+        compra: 'var(--cyan)', ganancia_partido: 'var(--green)',
+        ganancia_torneo: 'var(--gold)', gasto_informacion: 'var(--red)',
+        premio: 'var(--gold)'
+      };
+      const tipoLabel = {
+        compra: 'Compra', ganancia_partido: 'Premio partido',
+        ganancia_torneo: 'Premio torneo', gasto_informacion: 'Información',
+        premio: 'Premio'
+      };
+
+      document.getElementById('historialMC').innerHTML = historial.length ? `
+        <div class="table-wrapper">
+          <table>
+            <thead><tr><th>Tipo</th><th>Descripción</th><th>Cantidad</th><th>Saldo</th><th>Fecha</th></tr></thead>
+            <tbody>
+              ${historial.map(t => `
+                <tr>
+                  <td><span style="font-size:12px;color:${tipoColor[t.tipo] || 'var(--text-muted)'};">${tipoLabel[t.tipo] || t.tipo}</span></td>
+                  <td style="font-size:13px;color:var(--text-muted);">${t.descripcion || '—'}</td>
+                  <td style="font-weight:700;color:${t.cantidad >= 0 ? 'var(--green)' : 'var(--red)'};">
+                    ${t.cantidad >= 0 ? '+' : ''}${t.cantidad} MC
+                  </td>
+                  <td style="color:var(--gold);">◈ ${t.saldo_nuevo}</td>
+                  <td style="font-size:12px;color:var(--text-muted);">${new Date(t.created_at).toLocaleDateString('es-CO')}</td>
+                </tr>`).join('')}
+            </tbody>
+          </table>
+        </div>` : '<div class="text-muted" style="padding:20px;">Sin transacciones aún</div>';
+    } catch {}
+  }
+
+  async function comprar(paqueteId) {
+    const nombres = { starter: 'Starter (100 MC)', jugador: 'Jugador (300 MC)', campeon: 'Campeón (1,000 MC)', leyenda: 'Leyenda (5,000 MC)' };
+
+    showModal({
+      title: '◈ Confirmar compra',
+      body: `
+        <p>Comprar paquete <strong>${nombres[paqueteId]}</strong></p>
+        <p class="text-muted mt-8">El Marecoin se acreditará inmediatamente.</p>
+        <div style="background:rgba(255,193,7,0.1);border:1px solid rgba(255,193,7,0.3);border-radius:var(--radius);padding:12px;margin-top:16px;font-size:12px;color:var(--text-muted);">
+          ⚠️ MVP: Integración de pago real (PSE/Wompi) próximamente.
+        </div>`,
+      confirmText: '◈ Confirmar compra',
+      onConfirm: async () => {
+        try {
+          const res = await api.comprarMC(paqueteId);
+          showToast(`¡+${res.mc_acreditados} MC acreditados!`, 'mc', 4000);
+          document.getElementById('saldoActual').textContent = res.saldo_nuevo;
+          document.querySelector('.mc-saldo-valor').textContent = res.saldo_nuevo;
+          localStorage.setItem('rsmv_mc', res.saldo_nuevo);
+          // Recargar historial
+          setTimeout(cargar, 500);
+        } catch (err) {
+          showToast(err.message || 'Error en la compra', 'error');
+        }
+      }
+    });
+  }
+
+  cargar();
+</script>
+</body>
+</html>

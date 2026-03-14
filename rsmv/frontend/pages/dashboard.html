@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard — RSMV</title>
+  <link rel="stylesheet" href="../css/styles.css">
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav class="navbar">
+  <div class="navbar-inner">
+    <a href="/" class="navbar-brand">
+      <div>
+        <div class="navbar-logo">RSMV</div>
+        <div class="navbar-tagline" id="navRol">Jugador</div>
+      </div>
+    </a>
+    <div class="navbar-nav">
+      <a href="dashboard.html" class="active">Dashboard</a>
+      <a href="torneos.html">Torneos</a>
+      <a href="ranking.html">Ranking</a>
+      <div class="mc-badge" onclick="window.location.href='tienda.html'" title="Comprar Marecoin">
+        ◈ <span class="mc-saldo-valor">...</span> MC
+      </div>
+      <button class="btn btn-outline btn-sm" onclick="api.logout()">Salir</button>
+    </div>
+  </div>
+</nav>
+
+<!-- LAYOUT DASHBOARD -->
+<div class="dashboard">
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+    <div class="sidebar-label">Principal</div>
+    <div class="sidebar-section">
+      <a href="dashboard.html" class="sidebar-link active">
+        <span class="icon">📊</span> Mi Dashboard
+      </a>
+      <a href="torneos.html" class="sidebar-link">
+        <span class="icon">🏆</span> Torneos
+      </a>
+      <a href="mi-equipo.html" class="sidebar-link">
+        <span class="icon">🤖</span> Mi Equipo
+      </a>
+      <a href="ranking.html" class="sidebar-link">
+        <span class="icon">📈</span> Ranking
+      </a>
+    </div>
+
+    <div class="sidebar-label">Economía</div>
+    <div class="sidebar-section">
+      <a href="tienda.html" class="sidebar-link">
+        <span class="icon">◈</span> Marecoin
+      </a>
+      <a href="historial.html" class="sidebar-link">
+        <span class="icon">📋</span> Historial EXP
+      </a>
+    </div>
+
+    <div class="sidebar-label">DT</div>
+    <div class="sidebar-section" id="dtSection" style="display:none">
+      <a href="dt-panel.html" class="sidebar-link">
+        <span class="icon">🎯</span> Panel DT
+      </a>
+      <a href="alineacion.html" class="sidebar-link">
+        <span class="icon">📋</span> Alineación
+      </a>
+    </div>
+
+    <!-- Info usuario -->
+    <div style="padding:16px 12px;margin-top:auto;border-top:1px solid var(--border);">
+      <div style="font-size:12px;color:var(--text-dim)" id="sidebarNombre">Cargando...</div>
+      <div style="font-size:11px;color:var(--text-dim);margin-top:2px" id="sidebarEmail"></div>
+    </div>
+  </aside>
+
+  <!-- CONTENIDO PRINCIPAL -->
+  <main class="main-content">
+
+    <!-- Cargando -->
+    <div id="loadingState" style="text-align:center;padding:80px 0;">
+      <div class="spinner" style="width:40px;height:40px;border-width:3px;margin:0 auto 16px;"></div>
+      <div class="text-muted">Cargando tu dashboard...</div>
+    </div>
+
+    <!-- Contenido -->
+    <div id="dashContent" style="display:none">
+
+      <!-- Header -->
+      <div class="flex-between mb-24">
+        <div>
+          <h1 class="page-title" id="userName">Hola, Jugador</h1>
+          <div class="page-subtitle flex gap-8 items-center" id="userNivel">
+            <!-- Badge nivel aquí -->
+          </div>
+        </div>
+        <div id="mcDisplay" style="text-align:right;">
+          <div style="font-size:28px;font-weight:700;color:var(--gold)">
+            ◈ <span id="mcSaldo">...</span>
+          </div>
+          <div style="font-size:12px;color:var(--text-muted)">Marecoin</div>
+        </div>
+      </div>
+
+      <!-- Stats cards -->
+      <div class="grid-4 mb-24" id="statsGrid">
+        <div class="card card-cyan">
+          <div class="card-title">EXP Total</div>
+          <div class="card-value text-cyan" id="statExp">0</div>
+        </div>
+        <div class="card card-gold">
+          <div class="card-title">Goles</div>
+          <div class="card-value text-gold" id="statGoles">0</div>
+        </div>
+        <div class="card card-green">
+          <div class="card-title">Victorias</div>
+          <div class="card-value text-green" id="statVictorias">0</div>
+        </div>
+        <div class="card">
+          <div class="card-title">Partidos</div>
+          <div class="card-value" id="statPartidos">0</div>
+        </div>
+      </div>
+
+      <!-- Barra de EXP -->
+      <div class="card mb-24">
+        <div class="flex-between mb-16">
+          <div class="card-title">Progreso de Nivel</div>
+          <div id="nivelBadge"></div>
+        </div>
+        <div id="expBar"></div>
+      </div>
+
+      <!-- Grid: Equipo + Stats -->
+      <div class="grid-2">
+
+        <!-- Mi Equipo -->
+        <div class="card" id="teamCard">
+          <div class="card-header">
+            <div class="card-title">Mi Equipo</div>
+            <a href="mi-equipo.html" class="btn btn-outline btn-sm">Ver →</a>
+          </div>
+          <div id="teamContent">
+            <div class="text-muted" style="font-size:14px;">Sin equipo asignado</div>
+            <a href="mi-equipo.html" class="btn btn-primary btn-sm mt-16">Unirse a un equipo</a>
+          </div>
+        </div>
+
+        <!-- Próximos torneos -->
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title">Torneos Activos</div>
+            <a href="torneos.html" class="btn btn-outline btn-sm">Ver todos →</a>
+          </div>
+          <div id="torneosContent">
+            <div class="spinner" style="margin:16px auto;display:block;"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Historial EXP reciente -->
+      <div class="card mt-24">
+        <div class="card-header">
+          <div class="card-title">EXP Reciente</div>
+          <a href="historial.html" class="btn btn-outline btn-sm">Ver historial →</a>
+        </div>
+        <div id="expHistorial">
+          <!-- Se carga con MC -->
+          <div class="mc-lock" style="border-radius:var(--radius);">
+            <div style="opacity:0.2;">
+              <div style="padding:12px 0;border-bottom:1px solid var(--border);">Gol de penal · +3 EXP</div>
+              <div style="padding:12px 0;border-bottom:1px solid var(--border);">Partido ganado · +5 EXP</div>
+              <div style="padding:12px 0;">Titular en cancha · +1 EXP</div>
+            </div>
+            <div class="mc-lock-overlay">
+              <div class="mc-lock-icon">🔒</div>
+              <div class="mc-lock-text">Ver tu historial de EXP</div>
+              <div class="mc-lock-cost">3 MC</div>
+              <button class="btn btn-gold btn-sm" onclick="desbloquearHistorial()">
+                ◈ Desbloquear
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /dashContent -->
+  </main>
+</div>
+
+<script src="../js/api.js"></script>
+<script src="../js/app.js"></script>
+<script>
+  requireLogin();
+
+  let jugadorData = null;
+  let userData = null;
+
+  async function cargarDashboard() {
+    try {
+      const me = await api.me();
+      userData = me;
+      jugadorData = me.jugador;
+
+      const perfil = me.perfil;
+      const jugador = me.jugador;
+      const dt = me.dt;
+
+      // Nombre y rol
+      document.getElementById('userName').textContent = `Hola, ${perfil.nombre_completo.split(' ')[0]} 👋`;
+      document.getElementById('sidebarNombre').textContent = perfil.nombre_completo;
+      document.getElementById('sidebarEmail').textContent = perfil.email;
+
+      // Saldo MC
+      document.getElementById('mcSaldo').textContent = perfil.marecoin_saldo;
+      document.querySelector('.mc-saldo-valor').textContent = perfil.marecoin_saldo;
+      document.getElementById('mcDisplay').style.display = 'block';
+
+      // Rol en navbar
+      const roles = [];
+      if (perfil.es_dt) roles.push('Director Técnico');
+      if (perfil.es_dueno) roles.push('Dueño');
+      if (roles.length === 0) roles.push('Jugador');
+      document.getElementById('navRol').textContent = roles.join(' · ');
+
+      // Mostrar panel DT si aplica
+      if (perfil.es_dt) {
+        document.getElementById('dtSection').style.display = 'block';
+      }
+
+      if (jugador) {
+        // Stats
+        document.getElementById('statExp').textContent = jugador.exp_total.toLocaleString();
+        document.getElementById('statGoles').textContent =
+          (jugador.goles_partido + jugador.goles_penales).toLocaleString();
+        document.getElementById('statVictorias').textContent = jugador.partidos_ganados.toLocaleString();
+        document.getElementById('statPartidos').textContent = jugador.partidos_jugados.toLocaleString();
+
+        // Barra EXP
+        renderExpBar(document.getElementById('expBar'), jugador.exp_total);
+
+        // Badge nivel
+        document.getElementById('nivelBadge').innerHTML = nivelBadge(jugador.nivel);
+        document.getElementById('userNivel').innerHTML =
+          nivelBadge(jugador.nivel) +
+          `<span class="text-muted" style="font-size:13px;margin-left:8px;">${jugador.exp_total} EXP total</span>`;
+
+        // Equipo
+        if (jugador.equipos) {
+          document.getElementById('teamContent').innerHTML = `
+            <div style="font-size:20px;font-weight:700;margin-bottom:8px;">${jugador.equipos.nombre}</div>
+            <div class="badge ${jugador.rol === 'titular' ? 'badge-regional' : 'badge-local'}">
+              ${jugador.rol === 'titular' ? '⚡ Titular' : '🔄 Suplente'}
+            </div>
+            <div style="margin-top:16px;">
+              <a href="mi-equipo.html" class="btn btn-outline btn-sm">Ver equipo completo →</a>
+            </div>`;
+        }
+      }
+
+      // Torneos activos
+      try {
+        const torneos = await api.getTorneos({ estado: 'en_curso' });
+        const tc = document.getElementById('torneosContent');
+        if (!torneos.length) {
+          tc.innerHTML = `
+            <div class="text-muted" style="font-size:14px;">No hay torneos en curso</div>
+            <a href="torneos.html" class="btn btn-primary btn-sm mt-16">Ver próximos torneos</a>`;
+        } else {
+          tc.innerHTML = torneos.slice(0,3).map(t => `
+            <div style="padding:12px 0;border-bottom:1px solid var(--border);">
+              <div style="font-weight:600">${t.nombre}</div>
+              <div style="font-size:12px;color:var(--text-muted);margin-top:2px;">
+                <span class="badge badge-${t.tipo}">${t.tipo}</span>
+                <span style="margin-left:8px;">${t.modo === 'evento' ? '🔴 En Vivo' : '⚡ Express'}</span>
+              </div>
+            </div>`).join('') +
+            `<a href="torneos.html" class="btn btn-primary btn-sm mt-16">Ver todos</a>`;
+        }
+      } catch {}
+
+      // Mostrar contenido
+      document.getElementById('loadingState').style.display = 'none';
+      document.getElementById('dashContent').style.display = 'block';
+
+    } catch (err) {
+      console.error(err);
+      showToast('Error cargando dashboard', 'error');
+      document.getElementById('loadingState').innerHTML =
+        '<div class="text-red">Error cargando datos. <a href="dashboard.html">Recargar</a></div>';
+    }
+  }
+
+  async function desbloquearHistorial() {
+    if (!jugadorData) return;
+
+    try {
+      const historial = await api.getHistorialExp(jugadorData.id);
+      const cont = document.getElementById('expHistorial');
+
+      if (!historial.length) {
+        cont.innerHTML = '<div class="text-muted">Aún no tienes historial de EXP</div>';
+        return;
+      }
+
+      const iconos = {
+        gol_partido: '⚽', gol_penal: '🎯', super_penal_anotador: '🚀',
+        partido_ganado: '🏆', clasificar_copa: '🎯', campeon: '👑',
+        tiempo_cancha: '⏱', default: '📈'
+      };
+
+      cont.innerHTML = `
+        <div class="table-wrapper">
+          <table>
+            <thead><tr><th>Acción</th><th>EXP</th><th>Nivel</th><th>Fecha</th></tr></thead>
+            <tbody>
+              ${historial.map(h => `
+                <tr>
+                  <td>${iconos[h.tipo_accion] || iconos.default} ${h.tipo_accion.replace(/_/g,' ')}</td>
+                  <td class="text-green">+${h.exp_ganado}</td>
+                  <td>${h.nivel_nuevo ? nivelBadge(h.nivel_nuevo) : '—'}</td>
+                  <td class="text-muted" style="font-size:12px;">${new Date(h.created_at).toLocaleDateString('es-CO')}</td>
+                </tr>`).join('')}
+            </tbody>
+          </table>
+        </div>`;
+
+      showToast('-3 MC · Historial desbloqueado', 'mc');
+
+      // Actualizar saldo en navbar
+      actualizarSaldoNavbar();
+
+    } catch (err) {
+      if (err.type === 'MARECOIN_INSUFICIENTE') {
+        showMCModal(err.data.costo, err.data.saldo);
+      } else {
+        showToast(err.message || 'Error cargando historial', 'error');
+      }
+    }
+  }
+
+  cargarDashboard();
+</script>
+</body>
+</html>

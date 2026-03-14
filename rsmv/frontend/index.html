@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>RSMV — Robot Soccer Mare Virtual | Marelab</title>
+  <meta name="description" content="El manager game de robots de fútbol. Acumula EXP, dirige tu equipo, compite en torneos reales con premios en Colombia.">
+  <link rel="stylesheet" href="css/styles.css">
+  <style>
+    /* Landing-specific */
+    .hero {
+      min-height: calc(100vh - 60px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 60px 20px;
+      background:
+        radial-gradient(ellipse 80% 50% at 50% -20%, rgba(0,212,255,0.12), transparent),
+        radial-gradient(ellipse 50% 40% at 80% 80%, rgba(0,255,136,0.06), transparent);
+    }
+
+    .hero-content { max-width: 700px; }
+
+    .hero-eyebrow {
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 3px;
+      color: var(--cyan);
+      text-transform: uppercase;
+      margin-bottom: 20px;
+    }
+
+    .hero-title {
+      font-size: clamp(40px, 8vw, 72px);
+      font-weight: 900;
+      line-height: 1;
+      color: #fff;
+      margin-bottom: 8px;
+    }
+
+    .hero-title span { color: var(--cyan); }
+
+    .hero-sub {
+      font-size: clamp(16px, 3vw, 22px);
+      color: var(--text-muted);
+      margin-bottom: 40px;
+      line-height: 1.5;
+    }
+
+    .hero-cta {
+      display: flex;
+      gap: 16px;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-bottom: 60px;
+    }
+
+    .hero-stats {
+      display: flex;
+      justify-content: center;
+      gap: 48px;
+      flex-wrap: wrap;
+      padding-top: 40px;
+      border-top: 1px solid var(--border);
+    }
+
+    .stat { text-align: center; }
+
+    .stat-value {
+      font-size: 32px;
+      font-weight: 700;
+      color: var(--text);
+    }
+
+    .stat-value span { color: var(--cyan); }
+
+    .stat-label {
+      font-size: 12px;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-top: 4px;
+    }
+
+    /* Features */
+    .features {
+      padding: 80px 20px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .section-title {
+      text-align: center;
+      font-size: 32px;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+
+    .section-sub {
+      text-align: center;
+      color: var(--text-muted);
+      margin-bottom: 48px;
+    }
+
+    .feature-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 24px;
+    }
+
+    .feature-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 28px;
+      transition: var(--trans);
+    }
+
+    .feature-card:hover {
+      border-color: var(--border2);
+      transform: translateY(-2px);
+    }
+
+    .feature-icon {
+      font-size: 32px;
+      margin-bottom: 16px;
+    }
+
+    .feature-title {
+      font-size: 18px;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+
+    .feature-desc {
+      font-size: 14px;
+      color: var(--text-muted);
+      line-height: 1.6;
+    }
+
+    /* Prizes */
+    .prizes {
+      padding: 80px 20px;
+      background: var(--bg-dark);
+    }
+
+    .prizes-inner { max-width: 800px; margin: 0 auto; }
+
+    .prize-table {
+      background: var(--bg-card);
+      border: 1px solid var(--border2);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+    }
+
+    .prize-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 16px 24px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .prize-row:last-child { border-bottom: none; }
+
+    .prize-pos {
+      font-size: 20px;
+      font-weight: 700;
+      width: 40px;
+    }
+
+    .prize-name { flex: 1; margin: 0 16px; }
+
+    .prize-amount {
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--gold);
+    }
+
+    /* CTA bottom */
+    .cta-section {
+      padding: 80px 20px;
+      text-align: center;
+      background:
+        radial-gradient(ellipse 60% 40% at 50% 50%, rgba(0,212,255,0.08), transparent);
+    }
+
+    /* Vaki banner */
+    .vaki-banner {
+      background: linear-gradient(135deg, rgba(0,212,255,0.1), rgba(0,255,136,0.1));
+      border: 1px solid rgba(0,212,255,0.3);
+      border-radius: var(--radius-lg);
+      padding: 24px 32px;
+      margin: 40px auto;
+      max-width: 600px;
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      flex-wrap: wrap;
+      justify-content: space-between;
+    }
+
+    .vaki-text { flex: 1; min-width: 200px; }
+    .vaki-title { font-size: 18px; font-weight: 700; color: var(--cyan); }
+    .vaki-sub { font-size: 13px; color: var(--text-muted); margin-top: 4px; }
+
+    footer {
+      padding: 32px 20px;
+      border-top: 1px solid var(--border);
+      text-align: center;
+      color: var(--text-muted);
+      font-size: 13px;
+    }
+
+    footer a { color: var(--text-muted); }
+    footer a:hover { color: var(--cyan); }
+  </style>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav class="navbar">
+  <div class="navbar-inner">
+    <a href="/" class="navbar-brand">
+      <div>
+        <div class="navbar-logo">RSMV</div>
+        <div class="navbar-tagline">Robot Soccer Mare Virtual</div>
+      </div>
+    </a>
+    <div class="navbar-nav" id="navLinks">
+      <a href="#features">¿Cómo jugar?</a>
+      <a href="#premios">Premios</a>
+      <a href="pages/ranking.html">Ranking</a>
+      <a href="pages/login.html" class="btn btn-outline btn-sm">Iniciar sesión</a>
+      <a href="pages/register.html" class="btn btn-primary btn-sm">Registrarse</a>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-content">
+    <div class="hero-eyebrow">🇨🇴 Colombia · Marelab · 2025</div>
+    <h1 class="hero-title">
+      Robot Soccer<br><span>Mare Virtual</span>
+    </h1>
+    <p class="hero-sub">
+      El manager game de robots de fútbol. Dirige tu equipo,<br>
+      acumula EXP y compite en torneos con premios reales.
+    </p>
+    <div class="hero-cta">
+      <a href="pages/register.html" class="btn btn-primary btn-lg">
+        ⚽ Comenzar a jugar
+      </a>
+      <a href="pages/ranking.html" class="btn btn-outline btn-lg">
+        🏆 Ver Ranking
+      </a>
+    </div>
+    <div class="hero-stats">
+      <div class="stat">
+        <div class="stat-value"><span>1,024</span></div>
+        <div class="stat-label">Jugadores</div>
+      </div>
+      <div class="stat">
+        <div class="stat-value"><span>256</span></div>
+        <div class="stat-label">Equipos</div>
+      </div>
+      <div class="stat">
+        <div class="stat-value"><span>$6.5M</span></div>
+        <div class="stat-label">En premios COP</div>
+      </div>
+      <div class="stat">
+        <div class="stat-value"><span>2×3</span></div>
+        <div class="stat-label">Metro campo</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FEATURES -->
+<section class="features" id="features">
+  <h2 class="section-title">¿Cómo funciona RSMV?</h2>
+  <p class="section-sub">Un ecosistema completo de fútbol robótico — desde la academia hasta el nacional</p>
+
+  <div class="feature-grid">
+    <div class="feature-card">
+      <div class="feature-icon">🤖</div>
+      <div class="feature-title">Forma tu Equipo</div>
+      <div class="feature-desc">4 jugadores por equipo: 2 titulares y 2 suplentes. Un dueño y un Director Técnico. La IA simula todos los partidos automáticamente.</div>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">⚽</div>
+      <div class="feature-title">Torneos en 3 Fases</div>
+      <div class="feature-desc">Municipal → Regional → Nacional. Cada torneo tiene Entrenamiento, Clasificación y Copa. Los mejores avanzan de nivel.</div>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">📈</div>
+      <div class="feature-title">Sistema EXP Único</div>
+      <div class="feature-desc">EXP inmediato por cada acción: penales, goles, tiempo en cancha, victorias. Nunca disminuye. Sube de Local a Estrella RSMV.</div>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">🎯</div>
+      <div class="feature-title">Director Técnico</div>
+      <div class="feature-desc">El DT elige titulares, decide quién corre el Super Penal y realiza cambios en tiempo real. Con datos reales de sus jugadores.</div>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">◈</div>
+      <div class="feature-title">Marecoin</div>
+      <div class="feature-desc">La moneda del juego. Gánala jugando o cómprala. Sin Marecoin no puedes ver estadísticas. Cada información tiene su precio.</div>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">🔴</div>
+      <div class="feature-title">Streaming en Vivo</div>
+      <div class="feature-desc">Modo Evento: los torneos corren en tiempo real, diseñados para transmitirse en YouTube y TikTok. Finales y semifinales EN VIVO.</div>
+    </div>
+  </div>
+</section>
+
+<!-- PREMIOS -->
+<section class="prizes" id="premios">
+  <div class="prizes-inner">
+    <h2 class="section-title">Premios Reales 💰</h2>
+    <p class="section-sub">Torneos con premios en pesos colombianos</p>
+
+    <div class="prize-table">
+      <div class="prize-row" style="background:rgba(255,215,0,0.05)">
+        <div class="prize-pos" style="color:var(--gold)">🥇</div>
+        <div class="prize-name">
+          <div style="font-weight:700">Campeón Nacional</div>
+          <div style="font-size:13px;color:var(--text-muted)">4 jugadores + Dueño + DT + MVP</div>
+        </div>
+        <div class="prize-amount">$4,000,000</div>
+      </div>
+      <div class="prize-row">
+        <div class="prize-pos" style="color:#aaa">🥈</div>
+        <div class="prize-name">
+          <div style="font-weight:700">Subcampeón Nacional</div>
+        </div>
+        <div class="prize-amount">$2,500,000</div>
+      </div>
+      <div class="prize-row">
+        <div class="prize-pos" style="color:var(--cyan)">🏆</div>
+        <div class="prize-name">
+          <div style="font-weight:700">Campeón Regional</div>
+          <div style="font-size:13px;color:var(--text-muted)">×2 regiones</div>
+        </div>
+        <div class="prize-amount">$400,000 c/u</div>
+      </div>
+      <div class="prize-row">
+        <div class="prize-pos" style="color:var(--text-muted)">⚽</div>
+        <div class="prize-name">
+          <div style="font-weight:700">Campeón Municipal</div>
+          <div style="font-size:13px;color:var(--text-muted)">×16 municipios</div>
+        </div>
+        <div class="prize-amount">$100,000 c/u</div>
+      </div>
+    </div>
+
+    <!-- Distribución del primer premio -->
+    <div class="card mt-24">
+      <div class="card-title">Distribución Premio Nacional 1°</div>
+      <div class="grid-2 mt-16">
+        <div>
+          <div class="text-muted" style="font-size:13px">Jugadores (×4)</div>
+          <div style="font-size:20px;font-weight:700;color:var(--gold)">$400,000 c/u</div>
+        </div>
+        <div>
+          <div class="text-muted" style="font-size:13px">Dueño/Licenciante</div>
+          <div style="font-size:20px;font-weight:700;color:var(--gold)">$1,200,000</div>
+        </div>
+        <div>
+          <div class="text-muted" style="font-size:13px">Director Técnico</div>
+          <div style="font-size:20px;font-weight:700;color:var(--gold)">$800,000</div>
+        </div>
+        <div>
+          <div class="text-muted" style="font-size:13px">MVP del torneo</div>
+          <div style="font-size:20px;font-weight:700;color:var(--cyan)">+$400,000</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- VAKI / CROWDFUNDING -->
+<section class="cta-section">
+  <div class="vaki-banner">
+    <div class="vaki-text">
+      <div class="vaki-title">🚀 Apoya el proyecto en Vaki</div>
+      <div class="vaki-sub">Meta: $50,000,000 COP · Ayúdanos a llevar RSMV a toda Colombia</div>
+    </div>
+    <a href="https://vaki.co/vaki/grSrTLJbUrfbPiwhBj2A" target="_blank" rel="noopener" class="btn btn-primary">
+      Apoyar en Vaki
+    </a>
+  </div>
+
+  <h2 class="section-title mt-32">¿Listo para competir?</h2>
+  <p class="section-sub">Únete ahora y recibe 50 Marecoin de bienvenida</p>
+  <a href="pages/register.html" class="btn btn-primary btn-lg">
+    ⚽ Crear mi cuenta gratis
+  </a>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <p style="margin-bottom:8px;">
+    <strong style="color:var(--cyan)">RSMV</strong> — Robot Soccer Mare Virtual |
+    <strong>Marelab</strong> · Jhon Carlos Corzo Vega
+  </p>
+  <p>
+    <a href="https://marelab.co" target="_blank">marelab.co</a> ·
+    <a href="https://instagram.com/marecolombia" target="_blank">@marecolombia</a> ·
+    WhatsApp: 315 2445278
+  </p>
+  <p style="margin-top:12px;font-size:11px;color:var(--text-dim)">
+    © 2025 Marelab. Todos los derechos reservados. · 🇨🇴 Hecho con ❤️ en Colombia
+  </p>
+</footer>
+
+<script src="js/api.js"></script>
+<script src="js/app.js"></script>
+<script>
+  // Si ya está logueado, redirigir al dashboard
+  if (api.isLoggedIn()) {
+    document.querySelector('.navbar-nav').innerHTML = `
+      <a href="pages/dashboard.html">Dashboard</a>
+      <a href="pages/torneos.html">Torneos</a>
+      <a href="pages/ranking.html">Ranking</a>
+      <div class="mc-badge" onclick="window.location.href='pages/tienda.html'">
+        ◈ <span class="mc-saldo-valor">${localStorage.getItem('rsmv_mc') || '...'}</span> MC
+      </div>`;
+    actualizarSaldoNavbar();
+  }
+</script>
+</body>
+</html>
