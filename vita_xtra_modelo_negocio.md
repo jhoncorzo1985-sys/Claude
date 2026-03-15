@@ -164,6 +164,233 @@ TU GANAS MARGEN + BONO DE RED
 
 ---
 
+## ESTRUCTURA ORGANIZACIONAL — 4 AREAS ESTRATEGICAS
+
+### Organigrama General
+
+```
+                    [LIDER / CEO]
+                   VITA FLEX EMPIRE
+                         |
+          ┌──────────────┼──────────────┐
+          |              |              |
+     [ALIADO]       [ALIADO]      [ALIADO]
+     FUXION     ROBOT SOCCER    COMUNIDAD
+                    MARE         RETO FLEX
+          |
+    ┌─────┴──────────────────┐
+    |          |             |             |
+[SOPORTE]  [OPERACIONES]  [MARKETING]   [VENTAS]
+```
+
+---
+
+### AREA 1 — SOPORTE
+
+**Mision:** Garantizar que cada cliente y distribuidor tenga una experiencia de 10/10.
+
+**Responsabilidades:**
+- Atencion al cliente por WhatsApp Business (tiempo de respuesta < 2 horas)
+- Gestion de quejas, cambios y devoluciones con Fuxion
+- Seguimiento post-venta: "¿Como te fue con Vita Xtra?"
+- Base de conocimiento (FAQs, tutoriales de uso del producto)
+- Soporte a distribuidores nuevos (onboarding)
+
+**Herramientas:**
+| Herramienta | Funcion |
+|-------------|---------|
+| WhatsApp Business API | Atencion multiagente |
+| Google Forms | Registro de incidencias |
+| Notion / Trello | Seguimiento de casos abiertos |
+| Telegram Bot | Respuestas automaticas FAQ |
+
+**KPI de Soporte:**
+- Satisfaccion del cliente: >90%
+- Tiempo de resolucion: <24 horas
+- Tasa de recompra: >60% al mes 3
+
+**Relacion con Fuxion:**
+> Fuxion es el aliado que gestiona el envio, la calidad y las garantias del producto.
+> El area de Soporte es el puente entre el cliente final y Fuxion.
+> Protocolo: Soporte recibe queja → escala a Fuxion → confirma resolucion al cliente.
+
+---
+
+### AREA 2 — OPERACIONES
+
+**Mision:** Que el negocio funcione como un reloj suizo, todos los dias, sin depender de una sola persona.
+
+**Responsabilidades:**
+- Gestion de pedidos (coordinacion con Fuxion para envios)
+- Control de inventario virtual (stock disponible en catalogo Fuxion)
+- Administracion financiera: ingresos, margenes, bonos de red
+- Gestion de distribuidores: contratos, comisiones, niveles
+- Reportes semanales de desempeno del negocio
+- Coordinacion logistica con Robot Soccer Mare para eventos
+
+**Flujo Operativo Diario:**
+```
+07:00  Revision de pedidos nuevos
+08:00  Confirmacion de envios con Fuxion
+10:00  Actualizacion de hoja de control (Google Sheets)
+12:00  Pago de comisiones a distribuidores activos
+18:00  Reporte del dia (ventas, incidencias, leads)
+```
+
+**Herramientas:**
+| Herramienta | Funcion |
+|-------------|---------|
+| Google Sheets | Control maestro de pedidos y comisiones |
+| Portal Fuxion | Gestion de pedidos y envios |
+| Google Drive | Documentos, contratos, reportes |
+| Calendly | Agenda de capacitaciones y reuniones |
+
+**KPI de Operaciones:**
+- Pedidos procesados el mismo dia: 100%
+- Error en envios: <2%
+- Comisiones pagadas a tiempo: 100%
+
+**Relacion con Fuxion (Aliado Estrategico):**
+```
+OPERACIONES <----> FUXION
+     |
+  Gestiona:
+  - Codigos de distribuidor
+  - Niveles y rangos en la red
+  - Bonos y comisiones del plan de compensacion
+  - Soporte logistico para eventos especiales
+```
+
+---
+
+### AREA 3 — MARKETING
+
+**Mision:** Hacer que Vita Xtra y el Reto Flex sean INEVITABLES en la mente del publico objetivo.
+
+**Responsabilidades:**
+- Estrategia de contenido semanal (Reto Flex en redes)
+- Gestion de comunidades digitales (grupos, canales, foros)
+- Campanas de publicidad paga (cuando el flujo lo permita)
+- Relaciones con Robot Soccer Mare (co-marketing en eventos)
+- Gestion de embajadores y referidos
+- Email/WhatsApp marketing a base de clientes
+
+**Calendario de Contenido (Semanal):**
+```
+LUNES     → Motivacion AMP + inicio de semana con Vita Xtra
+MARTES    → Tutorial / beneficio especifico del producto
+MIERCOLES → Video Reto Flex (progreso personal)
+JUEVES    → Testimonio de cliente o distribuidor
+VIERNES   → Oferta semanal / promocion Fuxion
+SABADO    → Evento / actividad Robot Soccer Mare
+DOMINGO   → Reflexion W. Clement Stone + llamada a la accion
+```
+
+**Ecosistema de Marketing:**
+```
+[RETO FLEX]                    [ROBOT SOCCER MARE]
+     |                                  |
+Contenido diario               Co-branding en eventos
+autentico y viral              Stands y demostraciones
+     |                                  |
+     └──────────→ [VITA XTRA] ←─────────┘
+                       |
+              [FUXION como respaldo]
+              Logo, credibilidad,
+              material de marca
+```
+
+**Funnel Completo de Marketing:**
+| Etapa | Accion | Canal |
+|-------|--------|-------|
+| Awareness | Reto Flex viral | TikTok / Reels |
+| Interes | Beneficios Vita Xtra | Stories / Posts |
+| Deseo | Testimonio real | WhatsApp / Telegram |
+| Accion | Oferta + link de compra | Landing Page / Fuxion |
+| Fidelidad | Comunidad Reto Flex | Grupo Telegram / WA |
+
+**KPI de Marketing:**
+- Alcance semanal: >5,000 personas
+- Leads nuevos por semana: >50
+- Tasa de conversion lead → cliente: >10%
+- Engagement promedio: >5%
+
+**Co-marketing con Fuxion:**
+- Usar materiales oficiales de Fuxion (banners, videos, fichas tecnicas)
+- Participar en eventos Fuxion como lider de equipo
+- Aprovechar lanzamientos de nuevos productos para activaciones
+
+---
+
+### AREA 4 — VENTAS
+
+**Mision:** Convertir cada interaccion en una venta o en un distribuidor nuevo.
+
+**Responsabilidades:**
+- Prospeccion activa (lista de contactos, redes, eventos)
+- Seguimiento de leads (pipeline de ventas)
+- Cierres de venta directa de Vita Xtra
+- Reclutamiento de nuevos distribuidores Fuxion
+- Capacitacion del equipo de ventas (duplicacion del sistema)
+- Gestion de la red en eventos de Robot Soccer Mare
+
+**Pipeline de Ventas:**
+```
+[PROSPECTO]
+    |
+    v
+[PRIMER CONTACTO]
+(mensaje personalizado, no spam)
+    |
+    v
+[PRESENTACION]
+(historia personal + Reto Flex + beneficios Vita Xtra)
+    |
+    v
+[SEGUIMIENTO]
+(1, 3 y 7 dias despues)
+    |
+    v
+[CIERRE]
+(oferta + facilidad de compra via Fuxion)
+    |
+    v
+[POST-VENTA]
+(traspaso a Soporte + invitacion a ser distribuidor)
+```
+
+**Tipos de Venta:**
+| Tipo | Descripcion | Canal |
+|------|-------------|-------|
+| Venta Directa | Cliente compra Vita Xtra para consumo | WhatsApp, eventos |
+| Venta de Oportunidad | Cliente se convierte en distribuidor | Presentacion 1:1 |
+| Venta de Volumen | Pedidos grandes para reventas locales | Acuerdo con Robot Soccer Mare |
+| Venta de Comunidad | Grupo compra como reto colectivo | Telegram / grupos |
+
+**Script de Venta (Mensaje Inicial):**
+```
+"Hola [nombre], te escribo porque estoy haciendo
+el Reto Flex — 100 flexiones diarias con Vita Xtra
+de Fuxion y los resultados me sorprendieron.
+¿Te gustaria saber como? Tengo algo que puede
+interesarte si buscas energia o un ingreso extra."
+```
+
+**KPI de Ventas:**
+- Contactos nuevos por dia: 10 minimo
+- Tasa de respuesta a primer mensaje: >30%
+- Cierres semanales: 5 clientes nuevos (mes 1), 20 (mes 3)
+- Distribuidores nuevos por mes: 3 (mes 1), 10 (mes 3)
+
+**Comisiones del Equipo de Ventas:**
+| Nivel | Condicion | Comision |
+|-------|-----------|---------|
+| Vendedor Jr | 5-15 ventas/mes | 10% sobre margen |
+| Vendedor Sr | 16-30 ventas/mes | 15% sobre margen |
+| Lider | >30 ventas + equipo | 20% + bono de red Fuxion |
+
+---
+
 ## ESTRUCTURA DE EQUIPO (Red de Distribuidores)
 
 ```
@@ -304,6 +531,87 @@ HOY actuo. HOY vendo. HOY construyo mi imperio."
 
 ---
 
+## ALIADOS ESTRATEGICOS
+
+### FUXION — Aliado Principal
+
+```
+┌─────────────────────────────────────────────────┐
+│                   FUXION                        │
+│  Rol: Proveedor, Fabricante y Socio de Red      │
+├─────────────────────────────────────────────────┤
+│  LO QUE APORTA AL NEGOCIO:                      │
+│  ✓ Producto de calidad certificada (Vita Xtra)  │
+│  ✓ Sistema de envios y logistica                │
+│  ✓ Plan de compensacion multinivel              │
+│  ✓ Material de marketing oficial                │
+│  ✓ Capacitacion y soporte corporativo           │
+│  ✓ Plataforma tecnologica de pedidos            │
+│  ✓ Credibilidad de marca establecida            │
+├─────────────────────────────────────────────────┤
+│  LO QUE VITA FLEX EMPIRE APORTA A FUXION:       │
+│  ✓ Nuevos clientes finales                      │
+│  ✓ Nuevos distribuidores reclutados             │
+│  ✓ Presencia en nichos nuevos (tech/robotica)   │
+│  ✓ Contenido viral orgánico del Reto Flex       │
+└─────────────────────────────────────────────────┘
+```
+
+**Protocolo de Comunicacion con Fuxion:**
+| Area | Comunicacion con Fuxion | Frecuencia |
+|------|------------------------|------------|
+| Operaciones | Confirmacion de pedidos y envios | Diaria |
+| Soporte | Resolucion de quejas y garantias | Segun demanda |
+| Ventas | Reporte de nuevos distribuidores | Semanal |
+| Marketing | Uso de materiales y campanas | Mensual |
+
+---
+
+### ROBOT SOCCER MARE — Aliado de Canal
+
+```
+┌─────────────────────────────────────────────────┐
+│             ROBOT SOCCER MARE                   │
+│  Rol: Canal de Distribucion y Co-marketing      │
+├─────────────────────────────────────────────────┤
+│  LO QUE APORTA:                                 │
+│  ✓ Acceso a eventos y torneos                   │
+│  ✓ Comunidad de jovenes y familias activas      │
+│  ✓ Credibilidad en segmento tech + deporte      │
+│  ✓ Espacio fisico para stands y demos           │
+│  ✓ Red de mentores como embajadores             │
+├─────────────────────────────────────────────────┤
+│  ACUERDO PROPUESTO:                             │
+│  • Vita Xtra patrocina equipos RSM              │
+│  • RSM permite stands en todos sus eventos      │
+│  • Comision del 8% por ventas en sus eventos   │
+│  • Co-branding en redes sociales mutuo          │
+└─────────────────────────────────────────────────┘
+```
+
+---
+
+### MAPA DE RELACIONES ENTRE AREAS Y ALIADOS
+
+```
+                        FUXION
+                     (Producto + Red)
+                          |
+           ┌──────────────┼──────────────┐
+           |              |              |
+       SOPORTE       OPERACIONES      VENTAS
+    (Garantias,     (Pedidos,       (Distribuidores
+    devoluciones)    envios)         nuevos)
+                          |
+                      MARKETING
+                          |
+                   ROBOT SOCCER MARE
+                   (Eventos, Stands,
+                    Co-branding)
+```
+
+---
+
 ## RESUMEN EJECUTIVO
 
 ```
@@ -311,6 +619,17 @@ PROBLEMA:     La gente quiere energia, salud y un ingreso extra
 SOLUCION:     Vita Xtra + comunidad Reto Flex + red de distribuidores
 DIFERENCIAL:  Reto Flex viral + canal Robot Soccer Mare innovador
 MODELO:       Dropshipping Fuxion + MLM etico + marketing de contenido
+
+ESTRUCTURA ORGANIZACIONAL:
+  - SOPORTE:     Atencion al cliente + gestion con Fuxion
+  - OPERACIONES: Pedidos, logistica, finanzas y distribuidores
+  - MARKETING:   Contenido Reto Flex + co-marketing RSM + Fuxion
+  - VENTAS:      Prospeccion, cierres y reclutamiento de red
+
+ALIADOS ESTRATEGICOS:
+  - FUXION:            Producto, logistica, red y compensacion
+  - ROBOT SOCCER MARE: Canal de distribucion en eventos tech
+
 META 90 DIAS: 300 clientes, 25 distribuidores, $4,000/mes
 META 1 ANO:   1,000 clientes, 100 distribuidores, $15,000/mes
 ```
