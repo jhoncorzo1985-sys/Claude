@@ -1,0 +1,1170 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RSMV — Demo Interactivo | Robot Soccer Mare Virtual</title>
+<style>
+/* ============================================================
+   RSMV Design System — inlined
+   ============================================================ */
+:root {
+  --cyan:       #00d4ff;
+  --cyan-dark:  #0099bb;
+  --gold:       #ffd700;
+  --green:      #00ff88;
+  --red:        #ff4444;
+  --purple:     #9b59b6;
+  --bg-black:   #0a0a0f;
+  --bg-dark:    #0f0f1a;
+  --bg-card:    #13131f;
+  --bg-card2:   #1a1a2e;
+  --border:     #1e1e35;
+  --border2:    #2a2a45;
+  --text:       #e0e0e0;
+  --text-muted: #6b6b8a;
+  --text-dim:   #444466;
+  --font-main:  'Segoe UI', 'Inter', sans-serif;
+  --font-mono:  'Courier New', 'Fira Code', monospace;
+  --radius:     8px;
+  --radius-lg:  16px;
+  --gap:        16px;
+  --trans:      0.2s ease;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{font-size:16px;scroll-behavior:smooth}
+body{font-family:var(--font-main);background:var(--bg-black);color:var(--text);min-height:100vh;line-height:1.6}
+a{color:var(--cyan);text-decoration:none}
+a:hover{text-decoration:underline}
+
+/* NAVBAR */
+.navbar{position:sticky;top:0;z-index:100;background:rgba(10,10,15,0.95);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);padding:0 20px}
+.navbar-inner{max-width:1100px;margin:0 auto;height:60px;display:flex;align-items:center;justify-content:space-between}
+.navbar-logo{font-size:20px;font-weight:900;color:var(--cyan);letter-spacing:3px}
+.navbar-tagline{font-size:11px;color:var(--text-muted);letter-spacing:1px}
+.navbar-nav{display:flex;align-items:center;gap:8px}
+.navbar-nav a{padding:6px 14px;border-radius:var(--radius);color:var(--text-muted);font-size:14px;transition:var(--trans)}
+.navbar-nav a:hover{color:var(--cyan);background:rgba(0,212,255,0.08);text-decoration:none}
+.demo-badge{padding:4px 12px;border-radius:20px;background:rgba(0,255,136,0.15);border:1px solid rgba(0,255,136,0.3);color:var(--green);font-size:11px;font-weight:700;letter-spacing:1px}
+
+/* HERO */
+.hero{min-height:calc(100vh - 60px);display:flex;align-items:center;justify-content:center;text-align:center;padding:60px 20px;background:radial-gradient(ellipse 80% 50% at 50% -20%,rgba(0,212,255,0.12),transparent),radial-gradient(ellipse 50% 40% at 80% 80%,rgba(0,255,136,0.06),transparent)}
+.hero-content{max-width:700px}
+.hero-eyebrow{font-size:12px;font-weight:700;letter-spacing:3px;color:var(--cyan);text-transform:uppercase;margin-bottom:20px}
+.hero-title{font-size:clamp(40px,8vw,72px);font-weight:900;line-height:1;color:#fff;margin-bottom:8px}
+.hero-title span{color:var(--cyan)}
+.hero-sub{font-size:clamp(16px,3vw,22px);color:var(--text-muted);margin-bottom:40px;line-height:1.5}
+.hero-cta{display:flex;gap:16px;justify-content:center;flex-wrap:wrap;margin-bottom:60px}
+.hero-stats{display:flex;justify-content:center;gap:48px;flex-wrap:wrap;padding-top:40px;border-top:1px solid var(--border)}
+.stat{text-align:center}
+.stat-value{font-size:32px;font-weight:700;color:var(--text)}
+.stat-value span{color:var(--cyan)}
+.stat-label{font-size:12px;color:var(--text-muted);text-transform:uppercase;letter-spacing:1px;margin-top:4px}
+
+/* BUTTONS */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:10px 20px;border-radius:var(--radius);font-size:14px;font-weight:600;cursor:pointer;border:none;transition:var(--trans);text-decoration:none;white-space:nowrap}
+.btn:disabled{opacity:0.4;cursor:not-allowed}
+.btn-primary{background:var(--cyan);color:#000}
+.btn-primary:hover:not(:disabled){background:var(--cyan-dark);text-decoration:none}
+.btn-gold{background:var(--gold);color:#000}
+.btn-gold:hover:not(:disabled){background:#e6c200}
+.btn-green{background:var(--green);color:#000}
+.btn-green:hover:not(:disabled){background:#00dd77}
+.btn-outline{background:transparent;border:1px solid var(--border2);color:var(--text)}
+.btn-outline:hover:not(:disabled){border-color:var(--cyan);color:var(--cyan)}
+.btn-danger{background:var(--red);color:#fff}
+.btn-lg{padding:14px 32px;font-size:16px}
+.btn-sm{padding:6px 14px;font-size:12px}
+.btn-block{width:100%}
+
+/* CARDS */
+.card{background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius-lg);padding:24px;transition:var(--trans)}
+.card:hover{border-color:var(--border2)}
+.card-title{font-size:14px;font-weight:600;color:var(--text-muted);text-transform:uppercase;letter-spacing:1px;margin-bottom:12px}
+.card-value{font-size:36px;font-weight:700;color:var(--text);line-height:1}
+.card-cyan{border-color:rgba(0,212,255,0.3)}
+.card-gold{border-color:rgba(255,215,0,0.3)}
+.card-green{border-color:rgba(0,255,136,0.3)}
+
+/* BADGES */
+.badge{display:inline-flex;align-items:center;padding:3px 10px;border-radius:20px;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px}
+.badge-local{background:rgba(107,107,138,0.2);color:var(--text-muted);border:1px solid rgba(107,107,138,0.3)}
+.badge-municipal{background:rgba(255,215,0,0.15);color:var(--gold);border:1px solid rgba(255,215,0,0.3)}
+.badge-regional{background:rgba(0,212,255,0.15);color:var(--cyan);border:1px solid rgba(0,212,255,0.3)}
+.badge-nacional{background:rgba(255,68,68,0.15);color:var(--red);border:1px solid rgba(255,68,68,0.3)}
+.badge-estrella{background:rgba(155,89,182,0.2);color:#c49ef5;border:1px solid rgba(155,89,182,0.4)}
+
+/* EXP BAR */
+.exp-bar-container{position:relative;margin:8px 0}
+.exp-bar-label{display:flex;justify-content:space-between;font-size:12px;color:var(--text-muted);margin-bottom:6px}
+.exp-bar{height:8px;background:var(--bg-card2);border-radius:4px;overflow:hidden}
+.exp-bar-fill{height:100%;border-radius:4px;background:linear-gradient(90deg,var(--cyan),var(--green));transition:width 0.8s cubic-bezier(0.4,0,0.2,1)}
+
+/* TABLE */
+.table-wrapper{overflow-x:auto;border-radius:var(--radius-lg);border:1px solid var(--border)}
+table{width:100%;border-collapse:collapse;font-size:14px}
+thead tr{background:var(--bg-card2);border-bottom:1px solid var(--border2)}
+thead th{padding:12px 16px;text-align:left;font-size:11px;font-weight:700;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.5px;white-space:nowrap}
+tbody tr{border-bottom:1px solid var(--border);transition:var(--trans)}
+tbody tr:last-child{border-bottom:none}
+tbody tr:hover{background:rgba(255,255,255,0.02)}
+tbody td{padding:12px 16px;color:var(--text)}
+
+/* SCORE BOARD */
+.score-board{background:var(--bg-card2);border:1px solid var(--border2);border-radius:var(--radius-lg);padding:24px;text-align:center}
+.score-teams{display:flex;align-items:center;justify-content:space-between;gap:20px}
+.score-team{flex:1;font-size:15px;font-weight:700;color:var(--text-muted)}
+.score-team.home{text-align:right}
+.score-team.away{text-align:left}
+.score-number{font-size:64px;font-weight:900;color:var(--text);padding:0 20px;font-variant-numeric:tabular-nums}
+.score-sep{font-size:32px;color:var(--text-dim)}
+.score-phase{font-size:12px;color:var(--cyan);text-transform:uppercase;letter-spacing:2px;margin-top:8px}
+
+/* TOAST */
+.toast-container{position:fixed;top:80px;right:20px;z-index:1000;display:flex;flex-direction:column;gap:8px;pointer-events:none}
+.toast{background:var(--bg-card);border:1px solid var(--border2);border-radius:var(--radius);padding:14px 20px;font-size:14px;color:var(--text);box-shadow:0 8px 32px rgba(0,0,0,0.5);pointer-events:all;animation:slideIn 0.3s ease;max-width:320px}
+.toast-success{border-left:3px solid var(--green)}
+.toast-error{border-left:3px solid var(--red)}
+.toast-info{border-left:3px solid var(--cyan)}
+.toast-mc{border-left:3px solid var(--gold)}
+@keyframes slideIn{from{transform:translateX(100%);opacity:0}to{transform:translateX(0);opacity:1}}
+
+/* EXP FLOAT */
+.exp-float{position:fixed;pointer-events:none;font-size:18px;font-weight:700;color:var(--green);z-index:500;animation:expFloat 2s ease-out forwards}
+@keyframes expFloat{0%{opacity:1;transform:translateY(0) scale(1)}50%{opacity:1;transform:translateY(-40px) scale(1.2)}100%{opacity:0;transform:translateY(-80px) scale(0.8)}}
+
+/* LAYOUT UTILS */
+.container{max-width:1100px;margin:0 auto;padding:0 20px}
+.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:var(--gap)}
+.grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--gap)}
+.grid-4{display:grid;grid-template-columns:repeat(4,1fr);gap:var(--gap)}
+.section{padding:80px 20px;max-width:1100px;margin:0 auto}
+.section-dark{padding:80px 20px;background:var(--bg-dark)}
+.section-title{text-align:center;font-size:32px;font-weight:700;margin-bottom:8px}
+.section-sub{text-align:center;color:var(--text-muted);margin-bottom:48px}
+.page-title{font-size:28px;font-weight:700;color:var(--text);margin-bottom:8px}
+.page-subtitle{font-size:14px;color:var(--text-muted);margin-bottom:32px}
+
+/* TEXT UTILS */
+.text-cyan{color:var(--cyan)}
+.text-gold{color:var(--gold)}
+.text-green{color:var(--green)}
+.text-red{color:var(--red)}
+.text-muted{color:var(--text-muted)}
+.text-center{text-align:center}
+.mt-4{margin-top:4px}
+.mt-8{margin-top:8px}
+.mt-16{margin-top:16px}
+.mt-24{margin-top:24px}
+.mt-32{margin-top:32px}
+.mb-8{margin-bottom:8px}
+.mb-16{margin-bottom:16px}
+.mb-24{margin-bottom:24px}
+.flex{display:flex}
+.flex-center{display:flex;align-items:center;justify-content:center}
+.flex-between{display:flex;align-items:center;justify-content:space-between}
+.gap-8{gap:8px}
+.gap-16{gap:16px}
+.hidden{display:none!important}
+.spinner{width:20px;height:20px;border:2px solid rgba(255,255,255,0.2);border-top-color:var(--cyan);border-radius:50%;animation:spin 0.8s linear infinite;display:inline-block}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+/* DEMO-SPECIFIC */
+.demo-section{padding:60px 20px}
+.demo-panel{background:var(--bg-card);border:1px solid var(--border2);border-radius:var(--radius-lg);padding:28px;margin-bottom:24px}
+.demo-panel-title{font-size:18px;font-weight:700;color:var(--text);margin-bottom:20px;display:flex;align-items:center;gap:10px}
+.player-row{display:flex;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid var(--border)}
+.player-row:last-child{border-bottom:none}
+.player-avatar{width:36px;height:36px;border-radius:50%;background:var(--bg-card2);border:2px solid var(--border2);display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0}
+.player-info{flex:1}
+.player-name{font-weight:600;font-size:15px}
+.player-meta{font-size:12px;color:var(--text-muted)}
+.player-exp{text-align:right;flex-shrink:0}
+.player-exp-val{font-size:18px;font-weight:700;color:var(--cyan)}
+.player-exp-lbl{font-size:11px;color:var(--text-muted)}
+
+/* LOG */
+.event-log{background:var(--bg-dark);border:1px solid var(--border);border-radius:var(--radius-lg);padding:16px;height:280px;overflow-y:auto;font-family:var(--font-mono);font-size:13px;line-height:1.8}
+.event-log::-webkit-scrollbar{width:6px}
+.event-log::-webkit-scrollbar-track{background:var(--bg-dark)}
+.event-log::-webkit-scrollbar-thumb{background:var(--border2);border-radius:3px}
+.log-entry{padding:2px 0;border-bottom:1px solid rgba(255,255,255,0.03)}
+.log-time{color:var(--text-dim)}
+.log-exp{color:var(--green);font-weight:700}
+.log-goal{color:var(--gold);font-weight:700}
+.log-sp{color:var(--cyan);font-weight:700}
+
+/* SCOREBOARD ANIM */
+.score-animate{animation:scorePop 0.4s cubic-bezier(0.17,0.67,0.3,1.33)}
+@keyframes scorePop{0%{transform:scale(1)}50%{transform:scale(1.4)}100%{transform:scale(1)}}
+
+/* BRACKET */
+.bracket{display:flex;gap:32px;align-items:center;overflow-x:auto;padding:16px 0}
+.bracket-round{display:flex;flex-direction:column;gap:24px}
+.bracket-round-title{text-align:center;font-size:11px;font-weight:700;color:var(--text-dim);text-transform:uppercase;letter-spacing:1px;margin-bottom:12px}
+.bracket-match{background:var(--bg-card);border:1px solid var(--border2);border-radius:var(--radius);min-width:160px;overflow:hidden}
+.bracket-team{padding:8px 12px;font-size:13px;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid var(--border)}
+.bracket-team:last-child{border-bottom:none}
+.bracket-team.winner{background:rgba(0,212,255,0.08);color:var(--cyan);font-weight:700}
+.bracket-score{font-weight:700;font-size:15px}
+
+/* PRIZE TABLE */
+.prize-table{background:var(--bg-card);border:1px solid var(--border2);border-radius:var(--radius-lg);overflow:hidden}
+.prize-row{display:flex;align-items:center;justify-content:space-between;padding:16px 24px;border-bottom:1px solid var(--border)}
+.prize-row:last-child{border-bottom:none}
+.prize-pos{font-size:20px;font-weight:700;width:40px}
+.prize-name{flex:1;margin:0 16px}
+.prize-amount{font-size:18px;font-weight:700;color:var(--gold)}
+
+/* PROGRESS RING */
+.ring-wrap{position:relative;width:80px;height:80px;flex-shrink:0}
+.ring-svg{transform:rotate(-90deg)}
+.ring-bg{fill:none;stroke:var(--border2);stroke-width:6}
+.ring-fill{fill:none;stroke:var(--cyan);stroke-width:6;stroke-linecap:round;transition:stroke-dashoffset 1s ease}
+.ring-text{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center}
+.ring-val{font-size:16px;font-weight:700;color:var(--text);line-height:1}
+.ring-lbl{font-size:9px;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.5px}
+
+/* TABS */
+.tabs{display:flex;gap:4px;border-bottom:1px solid var(--border);margin-bottom:24px}
+.tab{padding:10px 20px;font-size:14px;font-weight:600;color:var(--text-muted);cursor:pointer;border-bottom:2px solid transparent;transition:var(--trans)}
+.tab:hover{color:var(--text)}
+.tab.active{color:var(--cyan);border-bottom-color:var(--cyan)}
+.tab-pane{display:none}
+.tab-pane.active{display:block}
+
+/* MARECOIN LOCK */
+.mc-lock{position:relative}
+.mc-lock-overlay{position:absolute;inset:0;background:rgba(10,10,15,0.85);backdrop-filter:blur(6px);border-radius:inherit;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;z-index:10}
+.mc-lock-icon{font-size:32px}
+.mc-lock-text{font-size:14px;color:var(--text-muted);text-align:center}
+.mc-lock-cost{font-size:20px;font-weight:700;color:var(--gold)}
+
+/* MC BADGE NAVBAR */
+.mc-badge{display:flex;align-items:center;gap:6px;padding:6px 14px;background:rgba(255,215,0,0.1);border:1px solid rgba(255,215,0,0.3);border-radius:20px;font-size:13px;font-weight:600;color:var(--gold);cursor:pointer;transition:var(--trans)}
+.mc-badge:hover{background:rgba(255,215,0,0.2)}
+
+/* FEATURES */
+.feature-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:24px}
+.feature-card{background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius-lg);padding:28px;transition:var(--trans)}
+.feature-card:hover{border-color:var(--border2);transform:translateY(-2px)}
+.feature-icon{font-size:32px;margin-bottom:16px}
+.feature-title{font-size:18px;font-weight:700;margin-bottom:8px}
+.feature-desc{font-size:14px;color:var(--text-muted);line-height:1.6}
+
+footer{padding:32px 20px;border-top:1px solid var(--border);text-align:center;color:var(--text-muted);font-size:13px}
+footer a{color:var(--text-muted)}
+footer a:hover{color:var(--cyan)}
+
+@media(max-width:768px){
+  .grid-2,.grid-3,.grid-4{grid-template-columns:1fr}
+  .hero-stats{gap:24px}
+  .score-number{font-size:40px}
+  .bracket{flex-direction:column}
+}
+</style>
+</head>
+<body>
+
+<!-- TOAST CONTAINER -->
+<div class="toast-container" id="toastContainer"></div>
+
+<!-- NAVBAR -->
+<nav class="navbar">
+  <div class="navbar-inner">
+    <div>
+      <div class="navbar-logo">RSMV</div>
+      <div class="navbar-tagline">Robot Soccer Mare Virtual</div>
+    </div>
+    <div class="navbar-nav">
+      <a href="#simulador">Simulador</a>
+      <a href="#torneo">Torneo</a>
+      <a href="#premios">Premios</a>
+      <span class="demo-badge">DEMO</span>
+      <div class="mc-badge" id="mcNavBadge">◈ <span id="mcNavVal">50</span> MC</div>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-content">
+    <div class="hero-eyebrow">🇨🇴 Colombia · Marelab · 2025 — Demo Interactivo</div>
+    <h1 class="hero-title">Robot Soccer<br><span>Mare Virtual</span></h1>
+    <p class="hero-sub">
+      El manager game de robots de fútbol.<br>
+      Prueba el simulador en tiempo real, sin registro.
+    </p>
+    <div class="hero-cta">
+      <a href="#simulador" class="btn btn-primary btn-lg">⚽ Simular Partido</a>
+      <a href="#torneo" class="btn btn-outline btn-lg">🏆 Ver Torneo</a>
+    </div>
+    <div class="hero-stats">
+      <div class="stat"><div class="stat-value"><span>1,024</span></div><div class="stat-label">Jugadores</div></div>
+      <div class="stat"><div class="stat-value"><span>256</span></div><div class="stat-label">Equipos</div></div>
+      <div class="stat"><div class="stat-value"><span>$6.5M</span></div><div class="stat-label">Premios COP</div></div>
+      <div class="stat"><div class="stat-value"><span>2×3</span></div><div class="stat-label">Metro campo</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- SIMULADOR -->
+<section class="demo-section container" id="simulador">
+  <div class="page-title">⚽ Simulador de Partido</div>
+  <div class="page-subtitle">Configura tu equipo, elige tus titulares y simula un partido en tiempo real</div>
+
+  <div class="grid-2" id="equiposSetup">
+    <!-- Equipo A -->
+    <div class="demo-panel">
+      <div class="demo-panel-title">🤖 Tu Equipo</div>
+      <div id="playersA"></div>
+      <div class="mt-16 flex-between">
+        <span class="text-muted" style="font-size:13px">Elige 2 titulares:</span>
+        <button class="btn btn-sm btn-outline" onclick="randomizeTeamA()">🎲 Aleatorio</button>
+      </div>
+      <div id="titularesSelector" class="mt-8"></div>
+    </div>
+
+    <!-- Equipo B -->
+    <div class="demo-panel">
+      <div class="demo-panel-title">🤖 Rival (IA)</div>
+      <div id="playersB"></div>
+      <div class="mt-16">
+        <span class="text-muted" style="font-size:13px">Controlado por la IA</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Controles -->
+  <div class="demo-panel">
+    <div class="flex-between mb-16" style="flex-wrap:wrap;gap:12px">
+      <div>
+        <label class="text-muted" style="font-size:12px;text-transform:uppercase;letter-spacing:0.5px;display:block;margin-bottom:6px">Nivel de Torneo</label>
+        <select id="nivelTorneo" style="background:var(--bg-card2);border:1px solid var(--border2);border-radius:var(--radius);color:var(--text);padding:8px 14px;font-size:14px;outline:none">
+          <option value="municipal">Municipal</option>
+          <option value="regional">Regional</option>
+          <option value="nacional">Nacional</option>
+        </select>
+      </div>
+      <div>
+        <label class="text-muted" style="font-size:12px;text-transform:uppercase;letter-spacing:0.5px;display:block;margin-bottom:6px">Fase</label>
+        <select id="fasePartido" style="background:var(--bg-card2);border:1px solid var(--border2);border-radius:var(--radius);color:var(--text);padding:8px 14px;font-size:14px;outline:none">
+          <option value="entrenamiento">Entrenamiento</option>
+          <option value="clasificacion">Clasificación</option>
+          <option value="copa">Copa</option>
+        </select>
+      </div>
+      <div>
+        <label class="text-muted" style="font-size:12px;text-transform:uppercase;letter-spacing:0.5px;display:block;margin-bottom:6px">Seed (reproducible)</label>
+        <input type="number" id="seedInput" placeholder="Auto" style="background:var(--bg-card2);border:1px solid var(--border2);border-radius:var(--radius);color:var(--text);padding:8px 14px;font-size:14px;width:120px;outline:none">
+      </div>
+      <button class="btn btn-primary btn-lg" id="btnSimular" onclick="simularDemo()">⚽ Simular</button>
+    </div>
+  </div>
+
+  <!-- RESULTADO -->
+  <div id="resultadoPartido" class="hidden">
+    <!-- Score -->
+    <div class="score-board mb-24" id="scoreBoard">
+      <div class="score-teams">
+        <div class="score-team home" id="scoreTeamA">Tu Equipo</div>
+        <div style="display:flex;align-items:center;gap:4px">
+          <span class="score-number" id="scoreA">0</span>
+          <span class="score-sep">—</span>
+          <span class="score-number" id="scoreB">0</span>
+        </div>
+        <div class="score-team away" id="scoreTeamB">Rival</div>
+      </div>
+      <div class="score-phase" id="scorePhase">Municipal · Clasificación</div>
+      <div id="scoreWinner" class="mt-8" style="font-size:14px;font-weight:700"></div>
+    </div>
+
+    <div class="grid-2">
+      <!-- Log de eventos -->
+      <div>
+        <div class="card-title mb-8">📋 Registro del Partido</div>
+        <div class="event-log" id="eventLog"></div>
+      </div>
+
+      <!-- EXP ganada -->
+      <div>
+        <div class="card-title mb-8">⭐ EXP Acumulada</div>
+        <div id="expTable"></div>
+      </div>
+    </div>
+
+    <!-- Super Penal -->
+    <div class="demo-panel mt-24" id="superPenalPanel">
+      <div class="demo-panel-title">🚀 Super Penal</div>
+      <div id="superPenalContent"></div>
+    </div>
+
+    <!-- Penales individuales -->
+    <div class="demo-panel mt-24" id="penalesPanel">
+      <div class="demo-panel-title">🎯 Penales Individuales</div>
+      <div id="penalesContent"></div>
+    </div>
+
+    <!-- Volver -->
+    <div class="text-center mt-32">
+      <button class="btn btn-outline" onclick="resetSimulador()">🔄 Nueva Simulación</button>
+      <a href="#torneo" class="btn btn-primary ml-8" style="margin-left:12px">🏆 Ver Torneo Completo →</a>
+    </div>
+  </div>
+</section>
+
+<!-- TORNEO -->
+<section class="demo-section container" id="torneo">
+  <div class="page-title">🏆 Simulador de Torneo</div>
+  <div class="page-subtitle">Genera 8 equipos y simula la Copa completa: semifinales y final</div>
+
+  <div class="demo-panel">
+    <div class="flex-between mb-16" style="flex-wrap:wrap;gap:12px">
+      <div>
+        <label class="text-muted" style="font-size:12px;text-transform:uppercase;letter-spacing:0.5px;display:block;margin-bottom:6px">Nivel</label>
+        <select id="nivelTorneo2" style="background:var(--bg-card2);border:1px solid var(--border2);border-radius:var(--radius);color:var(--text);padding:8px 14px;font-size:14px;outline:none">
+          <option value="municipal">Municipal</option>
+          <option value="regional">Regional</option>
+          <option value="nacional">Nacional</option>
+        </select>
+      </div>
+      <button class="btn btn-gold btn-lg" onclick="simularTorneoDemo()">🏆 Simular Copa</button>
+    </div>
+  </div>
+
+  <div id="torneoResult" class="hidden">
+    <div class="grid-2 mb-24">
+      <div class="card card-gold text-center">
+        <div class="card-title">🥇 Campeón Copa 1</div>
+        <div class="card-value text-gold" id="campeonCopa1">—</div>
+      </div>
+      <div class="card card-gold text-center">
+        <div class="card-title">🥇 Campeón Copa 2</div>
+        <div class="card-value text-gold" id="campeonCopa2">—</div>
+      </div>
+    </div>
+
+    <!-- Bracket -->
+    <div class="demo-panel">
+      <div class="demo-panel-title">Bracket Copa</div>
+      <div class="bracket" id="bracketView"></div>
+    </div>
+
+    <!-- Ranking EXP del torneo -->
+    <div class="demo-panel mt-24">
+      <div class="demo-panel-title">⭐ Ranking EXP del Torneo</div>
+      <div class="table-wrapper">
+        <table>
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Equipo</th>
+              <th>EXP Total</th>
+              <th>Goles</th>
+              <th>Resultado</th>
+            </tr>
+          </thead>
+          <tbody id="rankingTorneo"></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FEATURES -->
+<section class="section-dark">
+  <div class="container">
+    <h2 class="section-title">¿Cómo funciona RSMV?</h2>
+    <p class="section-sub">Un ecosistema completo de fútbol robótico — desde la academia hasta el nacional</p>
+    <div class="feature-grid">
+      <div class="feature-card"><div class="feature-icon">🤖</div><div class="feature-title">Forma tu Equipo</div><div class="feature-desc">4 jugadores por equipo: 2 titulares y 2 suplentes. Un dueño y un Director Técnico. La IA simula todos los partidos automáticamente.</div></div>
+      <div class="feature-card"><div class="feature-icon">⚽</div><div class="feature-title">Torneos en 3 Fases</div><div class="feature-desc">Municipal → Regional → Nacional. Cada torneo tiene Entrenamiento, Clasificación y Copa. Los mejores avanzan de nivel.</div></div>
+      <div class="feature-card"><div class="feature-icon">📈</div><div class="feature-title">Sistema EXP Único</div><div class="feature-desc">EXP inmediato por cada acción: penales, goles, tiempo en cancha, victorias. Nunca disminuye. Sube de Local a Estrella RSMV.</div></div>
+      <div class="feature-card"><div class="feature-icon">🎯</div><div class="feature-title">Director Técnico</div><div class="feature-desc">El DT elige titulares, decide quién corre el Super Penal y realiza cambios en tiempo real. Con datos reales de sus jugadores.</div></div>
+      <div class="feature-card"><div class="feature-icon">◈</div><div class="feature-title">Marecoin</div><div class="feature-desc">La moneda del juego. Gánala jugando o cómprala. Sin Marecoin no puedes ver estadísticas. Cada información tiene su precio.</div></div>
+      <div class="feature-card"><div class="feature-icon">🔴</div><div class="feature-title">Streaming en Vivo</div><div class="feature-desc">Modo Evento: los torneos corren en tiempo real, diseñados para transmitirse en YouTube y TikTok. Finales y semifinales EN VIVO.</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- PREMIOS -->
+<section class="demo-section container" id="premios">
+  <h2 class="section-title">Premios Reales 💰</h2>
+  <p class="section-sub">Torneos con premios en pesos colombianos</p>
+  <div style="max-width:700px;margin:0 auto">
+    <div class="prize-table">
+      <div class="prize-row" style="background:rgba(255,215,0,0.05)">
+        <div class="prize-pos" style="color:var(--gold)">🥇</div>
+        <div class="prize-name"><div style="font-weight:700">Campeón Nacional</div><div style="font-size:13px;color:var(--text-muted)">4 jugadores + Dueño + DT + MVP</div></div>
+        <div class="prize-amount">$4,000,000</div>
+      </div>
+      <div class="prize-row">
+        <div class="prize-pos" style="color:#aaa">🥈</div>
+        <div class="prize-name"><div style="font-weight:700">Subcampeón Nacional</div></div>
+        <div class="prize-amount">$2,500,000</div>
+      </div>
+      <div class="prize-row">
+        <div class="prize-pos" style="color:var(--cyan)">🏆</div>
+        <div class="prize-name"><div style="font-weight:700">Campeón Regional</div><div style="font-size:13px;color:var(--text-muted)">×2 regiones</div></div>
+        <div class="prize-amount">$400,000 c/u</div>
+      </div>
+      <div class="prize-row">
+        <div class="prize-pos" style="color:var(--text-muted)">⚽</div>
+        <div class="prize-name"><div style="font-weight:700">Campeón Municipal</div><div style="font-size:13px;color:var(--text-muted)">×16 municipios</div></div>
+        <div class="prize-amount">$100,000 c/u</div>
+      </div>
+    </div>
+    <div class="card mt-24">
+      <div class="card-title">Distribución Premio Nacional 1°</div>
+      <div class="grid-2 mt-16">
+        <div><div class="text-muted" style="font-size:13px">Jugadores (×4)</div><div style="font-size:20px;font-weight:700;color:var(--gold)">$400,000 c/u</div></div>
+        <div><div class="text-muted" style="font-size:13px">Dueño/Licenciante</div><div style="font-size:20px;font-weight:700;color:var(--gold)">$1,200,000</div></div>
+        <div><div class="text-muted" style="font-size:13px">Director Técnico</div><div style="font-size:20px;font-weight:700;color:var(--gold)">$800,000</div></div>
+        <div><div class="text-muted" style="font-size:13px">MVP del torneo</div><div style="font-size:20px;font-weight:700;color:var(--cyan)">+$400,000</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section style="padding:80px 20px;text-align:center;background:radial-gradient(ellipse 60% 40% at 50% 50%,rgba(0,212,255,0.08),transparent)">
+  <div style="background:linear-gradient(135deg,rgba(0,212,255,0.1),rgba(0,255,136,0.1));border:1px solid rgba(0,212,255,0.3);border-radius:var(--radius-lg);padding:24px 32px;margin:0 auto 40px;max-width:600px;display:flex;align-items:center;gap:20px;flex-wrap:wrap;justify-content:space-between">
+    <div style="flex:1;min-width:200px">
+      <div style="font-size:18px;font-weight:700;color:var(--cyan)">🚀 Apoya el proyecto en Vaki</div>
+      <div style="font-size:13px;color:var(--text-muted);margin-top:4px">Meta: $50,000,000 COP · Ayúdanos a llevar RSMV a toda Colombia</div>
+    </div>
+    <a href="https://vaki.co/vaki/grSrTLJbUrfbPiwhBj2A" target="_blank" rel="noopener" class="btn btn-primary">Apoyar en Vaki</a>
+  </div>
+  <h2 class="section-title mt-32">¿Listo para competir?</h2>
+  <p class="section-sub">Únete ahora y recibe 50 Marecoin de bienvenida</p>
+  <a href="https://marelab.co" target="_blank" class="btn btn-primary btn-lg">⚽ Crear mi cuenta gratis</a>
+</section>
+
+<footer>
+  <p style="margin-bottom:8px"><strong style="color:var(--cyan)">RSMV</strong> — Robot Soccer Mare Virtual | <strong>Marelab</strong> · Jhon Carlos Corzo Vega</p>
+  <p><a href="https://marelab.co" target="_blank">marelab.co</a> · <a href="https://instagram.com/marecolombia" target="_blank">@marecolombia</a> · WhatsApp: 315 2445278</p>
+  <p style="margin-top:12px;font-size:11px;color:var(--text-dim)">© 2025 Marelab. Todos los derechos reservados. · 🇨🇴 Hecho con ❤️ en Colombia</p>
+</footer>
+
+<script>
+/* ============================================================
+   MOTOR DE SIMULACIÓN — RSMV (inlined)
+   ============================================================ */
+
+class PRNG {
+  constructor(seed) {
+    this.seed = seed ?? Date.now();
+    this.state = this.seed;
+  }
+  next() {
+    this.state ^= this.state << 13;
+    this.state ^= this.state >> 17;
+    this.state ^= this.state << 5;
+    return ((this.state >>> 0) / 4294967296);
+  }
+  float(min=0,max=1){return min+this.next()*(max-min)}
+  int(min,max){return Math.floor(this.float(min,max+1))}
+  bool(p=0.5){return this.next()<p}
+  pick(arr){return arr[this.int(0,arr.length-1)]}
+  shuffle(arr){const a=[...arr];for(let i=a.length-1;i>0;i--){const j=this.int(0,i);[a[i],a[j]]=[a[j],a[i]]}return a}
+}
+
+const PROB_PENAL = 0.60;
+const GOLES_POR_MINUTO = 0.25;
+
+const EXP_TABLA = {
+  penales: {
+    municipal:{gol:3,fallo:2},
+    regional:{gol:5,fallo:2},
+    nacional:{gol:8,fallo:2}
+  },
+  super_penal:{anotador:4,companero:3,rival:2,suplente:1},
+  goles:{
+    municipal:{entrenamiento:5,clasificacion:7,copa:10},
+    regional:{entrenamiento:8,clasificacion:12,copa:15},
+    nacional:{entrenamiento:12,clasificacion:18,copa:25}
+  },
+  resultados:{
+    municipal:{ganado:5,clasificar_copa:15,campeon:20,mvp:30},
+    regional:{ganado:8,clasificar_copa:30,campeon:40,mvp:60},
+    nacional:{ganado:12,clasificar_copa:50,campeon:100,mvp:120}
+  }
+};
+
+const EXP_TIEMPO = {
+  titular_por_segundo:1/15,
+  suplente_por_segundo:1/60
+};
+
+function simularGolesPorPartido(totalMinutos,rng){
+  const lambda=GOLES_POR_MINUTO*totalMinutos;
+  let goles=0,p=Math.exp(-lambda),s=p;
+  const u=rng.next();
+  while(u>s){goles++;p*=lambda/goles;s+=p;if(goles>20)break}
+  return goles;
+}
+
+function generarMinutosGoles(cantidad,totalMinutos,rng){
+  const m=[];for(let i=0;i<cantidad;i++)m.push(rng.float(0,totalMinutos));
+  return m.sort((a,b)=>a-b);
+}
+
+function obtenerExpGol(nivel,fase,esPenal){
+  const t=EXP_TABLA.goles[nivel];return esPenal?Math.floor(t[fase]*0.7):t[fase];
+}
+
+function calcularMVP(goles,expEventos){
+  const ac={};
+  for(const e of expEventos)ac[e.jugador_id]=(ac[e.jugador_id]||0)+e.exp;
+  for(const g of goles)ac[g.jugador_id]=(ac[g.jugador_id]||0)+5;
+  let mvpId=null,maxExp=0;
+  for(const[id,exp] of Object.entries(ac)){if(exp>maxExp){maxExp=exp;mvpId=id}}
+  return mvpId;
+}
+
+function simularPenalesIndividuales(jugadores,nivel,rng){
+  const tabla=EXP_TABLA.penales[nivel];
+  return jugadores.map(j=>{
+    const prob=PROB_PENAL+(j.habilidad||0)*0.05;
+    const metio=rng.bool(Math.min(prob,0.95));
+    return{jugador_id:j.id,nombre:j.nombre,metio,exp:metio?tabla.gol:tabla.fallo,
+      descripcion:metio?`⚽ ${j.nombre} convirtió el penal (+${tabla.gol} EXP)`:`❌ ${j.nombre} falló el penal (+${tabla.fallo} EXP)`};
+  });
+}
+
+function simularSuperPenal(eqA,eqB,suplA,suplB,rng){
+  const res=rng.int(0,2);
+  const ganadorEq=res===0?null:res===1?eqA:eqB;
+  const perdedorEq=res===0?null:res===1?eqB:eqA;
+  const eventos=[];
+
+  if(ganadorEq){
+    const gc=res===1?eqA.corredores:eqB.corredores;
+    const pc=res===1?eqB.corredores:eqA.corredores;
+    const ai=rng.int(0,1);
+    const an=gc[ai],co=gc[1-ai];
+    eventos.push({tipo:'super_penal',jugador_id:an.id,rol:'anotador',exp:EXP_TABLA.super_penal.anotador,
+      descripcion:`🚀 ${an.nombre} ANOTÓ el Super Penal (+${EXP_TABLA.super_penal.anotador} EXP)`});
+    eventos.push({tipo:'super_penal',jugador_id:co.id,rol:'companero_carrera',exp:EXP_TABLA.super_penal.companero,
+      descripcion:`🏃 ${co.nombre} corrió el SP (+${EXP_TABLA.super_penal.companero} EXP)`});
+    for(const r of pc)eventos.push({tipo:'super_penal',jugador_id:r.id,rol:'rival_carrera',exp:EXP_TABLA.super_penal.rival,
+      descripcion:`😤 ${r.nombre} perdió la carrera del SP (+${EXP_TABLA.super_penal.rival} EXP)`});
+  }else{
+    for(const c of [...eqA.corredores,...eqB.corredores])
+      eventos.push({tipo:'super_penal',jugador_id:c.id,rol:'rival_carrera',exp:EXP_TABLA.super_penal.rival,
+        descripcion:`😤 ${c.nombre} corrió el SP sin gol (+${EXP_TABLA.super_penal.rival} EXP)`});
+  }
+  for(const s of [...(suplA||[]),...(suplB||[])])
+    eventos.push({tipo:'super_penal',jugador_id:s.id,rol:'suplente_observando',exp:EXP_TABLA.super_penal.suplente,
+      descripcion:`👀 ${s.nombre} observó el SP (+${EXP_TABLA.super_penal.suplente} EXP)`});
+
+  return{resultado:res,ganador_id:ganadorEq?.id||null,
+    descripcion:res===0?'🤝 Super Penal: nadie anotó':`🏆 Super Penal: ${ganadorEq.nombre} anotó`,eventos};
+}
+
+function simularPartido(eqA,eqB,durMin,nivel,fase,rng){
+  const durSeg=durMin*60*2;
+  const goles=[],expEventos=[];
+  let golesA=0,golesB=0;
+  const totalGoles=simularGolesPorPartido(durMin*2,rng);
+  const minutos=generarMinutosGoles(totalGoles,durMin*2,rng);
+
+  for(const min of minutos){
+    const eq=rng.bool(0.5)?eqA:eqB;
+    const goleador=rng.pick(eq.titulares);
+    const esPenal=rng.bool(0.15);
+    if(eq===eqA)golesA++;else golesB++;
+    const expGol=obtenerExpGol(nivel,fase,esPenal);
+    goles.push({minuto:min,equipo_id:eq.id,jugador_id:goleador.id,nombre_goleador:goleador.nombre,es_penal:esPenal,exp:expGol});
+    expEventos.push({jugador_id:goleador.id,tipo:esPenal?'gol_penal_partido':'gol_partido',exp:expGol,minuto:min});
+  }
+
+  for(const t of [...eqA.titulares,...eqB.titulares]){
+    const exp=Math.floor(durSeg*EXP_TIEMPO.titular_por_segundo);
+    if(exp>0)expEventos.push({jugador_id:t.id,tipo:'tiempo_cancha_titular',exp});
+  }
+  for(const s of [...(eqA.suplentes||[]),...(eqB.suplentes||[])]){
+    const exp=Math.floor(durSeg*EXP_TIEMPO.suplente_por_segundo);
+    if(exp>0)expEventos.push({jugador_id:s.id,tipo:'tiempo_cancha_suplente',exp});
+  }
+
+  const ganador=golesA>golesB?eqA:golesB>golesA?eqB:null;
+  if(ganador){
+    const ev=EXP_TABLA.resultados[nivel].ganado;
+    for(const j of[...ganador.titulares,...(ganador.suplentes||[])])
+      expEventos.push({jugador_id:j.id,tipo:'partido_ganado',exp:ev});
+  }
+
+  return{equipo_a_id:eqA.id,equipo_b_id:eqB.id,goles_a:golesA,goles_b:golesB,
+    ganador_id:ganador?.id||null,goles,exp_eventos:expEventos,
+    mvp_jugador_id:calcularMVP(goles,expEventos),duracion_segundos:durSeg,empate:golesA===golesB};
+}
+
+function jugarPartidoEliminatoria(ea,eb,nivel,fase,rng){
+  const r=simularPartido(
+    {id:ea.id,nombre:ea.nombre,titulares:ea.titulares||[],suplentes:ea.suplentes||[]},
+    {id:eb.id,nombre:eb.nombre,titulares:eb.titulares||[],suplentes:eb.suplentes||[]},
+    3,nivel,fase,rng);
+  if(r.empate){
+    const sp=simularSuperPenal(
+      {id:ea.id,nombre:ea.nombre,corredores:ea.titulares?.slice(0,2)||[]},
+      {id:eb.id,nombre:eb.nombre,corredores:eb.titulares?.slice(0,2)||[]},
+      ea.suplentes||[],eb.suplentes||[],rng);
+    r.ganador_id=sp.ganador_id||(rng.bool()?ea.id:eb.id);
+    r.super_penal_desempate=sp;
+  }
+  return{...r,equipo_a:ea,equipo_b:eb};
+}
+
+function simularCopa(equipos,nivel,seed=null){
+  const rng=new PRNG(seed);
+  if(equipos.length!==8)throw new Error('Copa requiere 8 equipos');
+  const mez=rng.shuffle(equipos);
+  const l1=mez.slice(0,4),l2=mez.slice(4,8);
+
+  function jugarLlave(llave,label){
+    const sf1=jugarPartidoEliminatoria(llave[0],llave[1],nivel,'copa',rng);
+    const sf2=jugarPartidoEliminatoria(llave[2],llave[3],nivel,'copa',rng);
+    const f1=equipos.find(e=>e.id===sf1.ganador_id);
+    const f2=equipos.find(e=>e.id===sf2.ganador_id);
+    const fin=jugarPartidoEliminatoria(f1,f2,nivel,'copa',rng);
+    const camp=equipos.find(e=>e.id===fin.ganador_id);
+    return{semifinales:[sf1,sf2],final:fin,campeon:camp,label,llave};
+  }
+
+  const copa1=jugarLlave(l1,'Copa 1');
+  const copa2=jugarLlave(l2,'Copa 2');
+  return{llaves:[copa1,copa2],campeones:[copa1.campeon,copa2.campeon],seed:rng.seed};
+}
+
+/* ============================================================
+   NOMBRES Y DATOS DE DEMO
+   ============================================================ */
+
+const NOMBRES = ['Carlos','Andrés','Miguel','Juan','Diego','Luis','Felipe','Sergio',
+  'Mateo','Sebastián','Camilo','Daniel','Santiago','Nicolás','David','Alejandro'];
+const APELLIDOS = ['González','Rodríguez','García','Martínez','López','Hernández',
+  'Pérez','Sánchez','Ramírez','Torres','Flores','Rivera','Moreno','Jiménez','Castro'];
+const EQUIPOS_NOMBRES = ['Galácticos FC','Halcones SC','Dragones RC','Colosos CF',
+  'Veloces RC','Titanes SC','Electrobots FC','Megabots RC','NanoKickers','Cyber Kicks',
+  'Futbots Elite','RoboStreet','Los Bólidos','Metal Storm','Iron Eleven','TurboBot FC'];
+const EMOJIS_EQUIPO = ['⚡','🔥','💎','🌟','🏹','🛡️','⚙️','🤖','🦅','🐉','🌊','🎯','🚀','💥','⚜️','🏆'];
+
+let rngNames = new PRNG(42);
+
+function nombreAleatorio(){
+  return NOMBRES[rngNames.int(0,NOMBRES.length-1)]+' '+APELLIDOS[rngNames.int(0,APELLIDOS.length-1)];
+}
+
+function generarJugador(id,equipo_idx){
+  return{id:`j${equipo_idx}_${id}`,nombre:nombreAleatorio(),habilidad:rngNames.float(-0.3,0.3),exp:rngNames.int(0,80)};
+}
+
+function generarEquipo(idx){
+  const jugadores=[0,1,2,3].map(i=>generarJugador(i,idx));
+  return{
+    id:`eq_${idx}`,
+    nombre:EQUIPOS_NOMBRES[idx%EQUIPOS_NAMES_LEN]+(idx>=EQUIPOS_NAMES_LEN?' II':''),
+    emoji:EMOJIS_EQUIPO[idx%EMOJIS_EQUIPO.length],
+    jugadores,
+    titulares:jugadores.slice(0,2),
+    suplentes:jugadores.slice(2,4)
+  };
+}
+
+const EQUIPOS_NAMES_LEN = EQUIPOS_NOMBRES.length;
+
+/* ============================================================
+   ESTADO DEL DEMO
+   ============================================================ */
+
+let equipoA = null;
+let equipoB = null;
+let mcSaldo = 50;
+let titularesSeleccionados = new Set();
+
+function getMC(){return mcSaldo}
+function gastaMC(cant){
+  if(mcSaldo<cant)return false;
+  mcSaldo-=cant;
+  document.getElementById('mcNavVal').textContent=mcSaldo;
+  return true;
+}
+function ganaMC(cant){
+  mcSaldo+=cant;
+  document.getElementById('mcNavVal').textContent=mcSaldo;
+}
+
+/* ============================================================
+   TOAST
+   ============================================================ */
+
+function toast(msg,tipo='info'){
+  const c=document.getElementById('toastContainer');
+  const t=document.createElement('div');
+  t.className=`toast toast-${tipo}`;
+  t.textContent=msg;
+  c.appendChild(t);
+  setTimeout(()=>t.remove(),4000);
+}
+
+function expFloat(x,y,txt){
+  const el=document.createElement('div');
+  el.className='exp-float';
+  el.textContent=txt;
+  el.style.left=x+'px';
+  el.style.top=y+'px';
+  document.body.appendChild(el);
+  setTimeout(()=>el.remove(),2100);
+}
+
+/* ============================================================
+   INIT
+   ============================================================ */
+
+function init(){
+  rngNames=new PRNG(Date.now());
+  equipoA=generarEquipo(0);
+  equipoA.nombre='Tu Equipo';
+  equipoA.emoji='⚽';
+  equipoB=generarEquipo(1);
+
+  titularesSeleccionados=new Set([equipoA.jugadores[0].id,equipoA.jugadores[1].id]);
+  renderEquipoA();
+  renderEquipoB();
+}
+
+function nivelBadge(exp){
+  if(exp>=500)return'<span class="badge badge-estrella">Estrella</span>';
+  if(exp>=300)return'<span class="badge badge-nacional">Nacional</span>';
+  if(exp>=150)return'<span class="badge badge-regional">Regional</span>';
+  if(exp>=50)return'<span class="badge badge-municipal">Municipal</span>';
+  return'<span class="badge badge-local">Local</span>';
+}
+
+function nivelMax(exp){
+  if(exp>=500)return{lbl:'Estrella',cur:exp-500,max:Infinity,pct:100};
+  if(exp>=300)return{lbl:'Nacional',cur:exp-300,max:200,pct:Math.min(100,((exp-300)/200)*100)};
+  if(exp>=150)return{lbl:'Regional',cur:exp-150,max:150,pct:((exp-150)/150)*100};
+  if(exp>=50)return{lbl:'Municipal',cur:exp-50,max:100,pct:((exp-50)/100)*100};
+  return{lbl:'Local',cur:exp,max:50,pct:(exp/50)*100};
+}
+
+function renderEquipoA(){
+  const div=document.getElementById('playersA');
+  div.innerHTML=equipoA.jugadores.map(j=>{
+    const nv=nivelMax(j.exp);
+    return`<div class="player-row">
+      <div class="player-avatar">🤖</div>
+      <div class="player-info">
+        <div class="player-name">${j.nombre}</div>
+        <div class="player-meta">${nivelBadge(j.exp)}</div>
+        <div class="exp-bar-container" style="margin-top:6px">
+          <div class="exp-bar"><div class="exp-bar-fill" style="width:${nv.pct}%"></div></div>
+        </div>
+      </div>
+      <div class="player-exp">
+        <div class="player-exp-val">${j.exp}</div>
+        <div class="player-exp-lbl">EXP</div>
+      </div>
+    </div>`;
+  }).join('');
+
+  // Selector de titulares
+  const sel=document.getElementById('titularesSelector');
+  sel.innerHTML=equipoA.jugadores.map(j=>`
+    <label style="display:flex;align-items:center;gap:8px;padding:6px 0;cursor:pointer;font-size:14px">
+      <input type="checkbox" data-id="${j.id}" ${titularesSeleccionados.has(j.id)?'checked':''}
+        onchange="toggleTitular('${j.id}',this)"
+        style="accent-color:var(--cyan);width:16px;height:16px">
+      <span>${j.nombre}</span>
+      <span class="text-muted" style="font-size:12px">(EXP ${j.exp})</span>
+    </label>
+  `).join('');
+}
+
+function renderEquipoB(){
+  const div=document.getElementById('playersB');
+  div.innerHTML=equipoB.jugadores.map(j=>{
+    const nv=nivelMax(j.exp);
+    return`<div class="player-row">
+      <div class="player-avatar">🤖</div>
+      <div class="player-info">
+        <div class="player-name">${j.nombre}</div>
+        <div class="player-meta">${nivelBadge(j.exp)}</div>
+        <div class="exp-bar-container" style="margin-top:6px">
+          <div class="exp-bar"><div class="exp-bar-fill" style="width:${nv.pct}%"></div></div>
+        </div>
+      </div>
+      <div class="player-exp">
+        <div class="player-exp-val">${j.exp}</div>
+        <div class="player-exp-lbl">EXP</div>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function toggleTitular(id,cb){
+  if(cb.checked){
+    if(titularesSeleccionados.size>=2){cb.checked=false;toast('Solo puedes elegir 2 titulares','error');return}
+    titularesSeleccionados.add(id);
+  }else{
+    titularesSeleccionados.delete(id);
+  }
+}
+
+function randomizeTeamA(){
+  rngNames=new PRNG(Date.now());
+  equipoA=generarEquipo(0);
+  equipoA.nombre='Tu Equipo';
+  equipoA.emoji='⚽';
+  titularesSeleccionados=new Set([equipoA.jugadores[0].id,equipoA.jugadores[1].id]);
+  renderEquipoA();
+  toast('Equipo aleatorio generado 🎲','info');
+}
+
+/* ============================================================
+   SIMULACIÓN DE PARTIDO
+   ============================================================ */
+
+function simularDemo(){
+  if(titularesSeleccionados.size!==2){toast('Elige exactamente 2 titulares','error');return}
+
+  const nivel=document.getElementById('nivelTorneo').value;
+  const fase=document.getElementById('fasePartido').value;
+  const seedVal=document.getElementById('seedInput').value;
+  const seed=seedVal?parseInt(seedVal):Date.now();
+
+  const rng=new PRNG(seed);
+
+  // Armar equipos
+  const titIds=Array.from(titularesSeleccionados);
+  const titA=equipoA.jugadores.filter(j=>titIds.includes(j.id));
+  const suplA=equipoA.jugadores.filter(j=>!titIds.includes(j.id));
+
+  const eqA={id:equipoA.id,nombre:equipoA.nombre,titulares:titA,suplentes:suplA};
+  const eqB={id:equipoB.id,nombre:equipoB.nombre,
+    titulares:equipoB.jugadores.slice(0,2),suplentes:equipoB.jugadores.slice(2,4)};
+
+  // Penales individuales
+  const penales=simularPenalesIndividuales(equipoA.jugadores,nivel,rng);
+
+  // Super Penal (corredores = titulares del equipo A)
+  const corredoresSP=rng.shuffle(equipoA.jugadores).slice(0,2);
+  const suplSP=equipoA.jugadores.filter(j=>!corredoresSP.find(c=>c.id===j.id));
+  const spResult=simularSuperPenal(
+    {id:eqA.id,nombre:eqA.nombre,corredores:corredoresSP},
+    {id:eqB.id,nombre:eqB.nombre,corredores:rng.shuffle(equipoB.jugadores).slice(0,2)},
+    suplSP,[],rng);
+
+  // Partido
+  const partido=simularPartido(eqA,eqB,3,nivel,fase,rng);
+
+  // Mostrar resultado
+  mostrarResultado(partido,penales,spResult,eqA,eqB,nivel,fase,seed);
+
+  // Ganar MC por jugar
+  ganaMC(5);
+  toast('¡Partido simulado! +5 MC ganados ◈','mc');
+}
+
+function mostrarResultado(partido,penales,spResult,eqA,eqB,nivel,fase,seed){
+  document.getElementById('equiposSetup').classList.add('hidden');
+  document.getElementById('resultadoPartido').classList.remove('hidden');
+
+  // Score
+  document.getElementById('scoreTeamA').textContent=eqA.nombre;
+  document.getElementById('scoreTeamB').textContent=eqB.nombre;
+
+  const sA=document.getElementById('scoreA');
+  const sB=document.getElementById('scoreB');
+  sA.textContent=partido.goles_a;
+  sB.textContent=partido.goles_b;
+  sA.classList.add('score-animate');
+  sB.classList.add('score-animate');
+  setTimeout(()=>{sA.classList.remove('score-animate');sB.classList.remove('score-animate')},500);
+
+  document.getElementById('scorePhase').textContent=`${nivel.charAt(0).toUpperCase()+nivel.slice(1)} · ${fase.charAt(0).toUpperCase()+fase.slice(1)} · Seed: ${seed}`;
+
+  const winEl=document.getElementById('scoreWinner');
+  if(partido.empate)winEl.innerHTML='<span style="color:var(--text-muted)">🤝 Empate — desempate por Super Penal</span>';
+  else if(partido.ganador_id===eqA.id)winEl.innerHTML='<span style="color:var(--green)">🏆 ¡Ganaste!</span>';
+  else winEl.innerHTML='<span style="color:var(--red)">😔 Derrota — sigue entrenando</span>';
+
+  // Log
+  const log=document.getElementById('eventLog');
+  const lines=[];
+  lines.push(`<div class="log-entry"><span class="log-time">[INICIO]</span> ${eqA.nombre} vs ${eqB.nombre}</div>`);
+  lines.push(`<div class="log-entry"><span class="log-time">[INFO]</span> Nivel: ${nivel} | Fase: ${fase} | Seed: ${seed}</div>`);
+
+  for(const g of partido.goles){
+    const min=g.minuto.toFixed(1);
+    const esA=g.equipo_id===eqA.id;
+    const cls=esA?'log-goal':'text-red';
+    lines.push(`<div class="log-entry"><span class="log-time">[${min}']</span> <span class="${cls}">${g.es_penal?'🅿️':'⚽'} ${g.nombre_goleador} — ${esA?eqA.nombre:eqB.nombre}</span> <span class="log-exp">+${g.exp} EXP</span></div>`);
+  }
+  lines.push(`<div class="log-entry"><span class="log-time">[FINAL]</span> <span class="log-goal">${partido.goles_a}—${partido.goles_b}</span>`+
+    (partido.empate?` Empate`:` Ganador: ${partido.ganador_id===eqA.id?eqA.nombre:eqB.nombre}`)+'</div>');
+
+  log.innerHTML=lines.join('');
+  log.scrollTop=log.scrollHeight;
+
+  // EXP tabla
+  const todos=[...eqA.titulares,...(eqA.suplentes||[]),...eqB.titulares,...(eqB.suplentes||[])];
+  const expAc={};
+  for(const ev of partido.exp_eventos)expAc[ev.jugador_id]=(expAc[ev.jugador_id]||0)+ev.exp;
+
+  const expDiv=document.getElementById('expTable');
+  expDiv.innerHTML=todos.map(j=>{
+    const gained=expAc[j.id]||0;
+    const isMVP=partido.mvp_jugador_id===j.id;
+    return`<div class="player-row">
+      <div class="player-avatar">${isMVP?'⭐':'🤖'}</div>
+      <div class="player-info">
+        <div class="player-name">${j.nombre}${isMVP?' <span style="color:var(--gold);font-size:12px">MVP</span>':''}</div>
+        <div class="player-meta" style="font-size:12px;color:var(--text-muted)">${j.id.startsWith(eqA.id)?eqA.nombre:eqB.nombre}</div>
+      </div>
+      <div class="player-exp">
+        <div class="player-exp-val text-green">+${gained}</div>
+        <div class="player-exp-lbl">EXP</div>
+      </div>
+    </div>`;
+  }).join('');
+
+  // Super Penal
+  const spDiv=document.getElementById('superPenalContent');
+  spDiv.innerHTML=`<div style="font-size:15px;margin-bottom:12px"><strong>${spResult.descripcion}</strong></div>`+
+    spResult.eventos.map(e=>`<div class="player-row">
+      <div style="flex:1">${e.descripcion}</div>
+      <div class="log-exp">+${e.exp} EXP</div>
+    </div>`).join('');
+
+  // Penales individuales
+  const penDiv=document.getElementById('penalesContent');
+  penDiv.innerHTML=penales.map(p=>`<div class="player-row">
+    <div style="flex:1">${p.descripcion}</div>
+    <div class="log-exp">+${p.exp} EXP</div>
+  </div>`).join('');
+
+  document.getElementById('resultadoPartido').scrollIntoView({behavior:'smooth'});
+}
+
+function resetSimulador(){
+  document.getElementById('equiposSetup').classList.remove('hidden');
+  document.getElementById('resultadoPartido').classList.add('hidden');
+  randomizeTeamA();
+  equipoB=generarEquipo(Math.floor(Math.random()*14)+2);
+  renderEquipoB();
+  document.getElementById('simulador').scrollIntoView({behavior:'smooth'});
+}
+
+/* ============================================================
+   SIMULADOR DE TORNEO
+   ============================================================ */
+
+function simularTorneoDemo(){
+  const nivel=document.getElementById('nivelTorneo2').value;
+  rngNames=new PRNG(Date.now());
+  const equipos=Array.from({length:8},(_,i)=>generarEquipo(i+2));
+
+  try{
+    const copa=simularCopa(equipos,nivel);
+    mostrarTorneo(copa,nivel);
+    ganaMC(10);
+    toast('¡Torneo simulado! +10 MC ganados ◈','mc');
+  }catch(e){
+    toast('Error simulando torneo: '+e.message,'error');
+  }
+}
+
+function mostrarTorneo(copa,nivel){
+  document.getElementById('torneoResult').classList.remove('hidden');
+  document.getElementById('campeonCopa1').textContent=copa.campeones[0]?.nombre||'—';
+  document.getElementById('campeonCopa2').textContent=copa.campeones[1]?.nombre||'—';
+
+  // Bracket
+  const bracket=document.getElementById('bracketView');
+  bracket.innerHTML=copa.llaves.map(llave=>{
+    const sf1=llave.semifinales[0],sf2=llave.semifinales[1],fin=llave.final;
+    const f1Id=sf1.ganador_id,f2Id=sf2.ganador_id;
+    const campId=fin.ganador_id;
+
+    function matchHTML(m,titulo){
+      const aWin=m.ganador_id===m.equipo_a.id,bWin=m.ganador_id===m.equipo_b.id;
+      return`<div>
+        <div style="font-size:11px;color:var(--text-dim);text-align:center;margin-bottom:4px;text-transform:uppercase;letter-spacing:1px">${titulo}</div>
+        <div class="bracket-match">
+          <div class="bracket-team ${aWin?'winner':''}">
+            <span>${m.equipo_a.nombre}</span>
+            <span class="bracket-score">${m.goles_a}${m.super_penal_desempate?'*':''}</span>
+          </div>
+          <div class="bracket-team ${bWin?'winner':''}">
+            <span>${m.equipo_b.nombre}</span>
+            <span class="bracket-score">${m.goles_b}${m.super_penal_desempate?'*':''}</span>
+          </div>
+        </div>
+      </div>`;
+    }
+
+    return`<div style="flex:1;min-width:320px">
+      <div style="text-align:center;font-weight:700;color:var(--cyan);margin-bottom:16px;font-size:16px">${llave.label}</div>
+      <div style="display:flex;gap:24px;align-items:center;flex-wrap:wrap">
+        <div style="display:flex;flex-direction:column;gap:16px">
+          ${matchHTML(sf1,'Semifinal 1')}
+          ${matchHTML(sf2,'Semifinal 2')}
+        </div>
+        <div style="font-size:24px;color:var(--text-dim)">→</div>
+        <div>
+          ${matchHTML(fin,'Final')}
+          <div style="text-align:center;margin-top:8px">
+            <span style="color:var(--gold);font-weight:700;font-size:13px">🥇 ${llave.campeon?.nombre||'—'}</span>
+          </div>
+        </div>
+      </div>
+    </div>`;
+  }).join('<div style="width:1px;background:var(--border);flex-shrink:0"></div>');
+
+  // Ranking EXP del torneo (aproximado por conteo de partidos/goles)
+  const rankData=[];
+  for(const llave of copa.llaves){
+    const allMatches=[...llave.semifinales,llave.final];
+    const equiposLlave=llave.llave;
+    const teamData={};
+    for(const eq of equiposLlave)teamData[eq.id]={nombre:eq.nombre,exp:0,goles:0,partidos:0};
+
+    for(const m of allMatches){
+      const eaId=m.equipo_a_id||m.equipo_a?.id;
+      const ebId=m.equipo_b_id||m.equipo_b?.id;
+      if(teamData[eaId]){teamData[eaId].goles+=m.goles_a;teamData[eaId].partidos++}
+      if(teamData[ebId]){teamData[ebId].goles+=m.goles_b;teamData[ebId].partidos++}
+      // EXP por victoria
+      if(m.ganador_id&&teamData[m.ganador_id])teamData[m.ganador_id].exp+=EXP_TABLA.resultados[nivel].ganado;
+      // EXP por goles
+      for(const g of(m.goles||[])){
+        const eqId=g.equipo_id;
+        if(teamData[eqId])teamData[eqId].exp+=g.exp||10;
+      }
+    }
+    rankData.push(...Object.values(teamData));
+  }
+
+  rankData.sort((a,b)=>b.exp-a.exp);
+  const tbody=document.getElementById('rankingTorneo');
+  tbody.innerHTML=rankData.map((t,i)=>`<tr>
+    <td><strong>${i===0?'🥇':i===1?'🥈':i===2?'🥉':(i+1)+'°'}</strong></td>
+    <td><strong>${t.nombre}</strong></td>
+    <td><span style="color:var(--cyan);font-weight:700">+${t.exp}</span></td>
+    <td>${t.goles}</td>
+    <td>${copa.campeones.find(c=>c?.nombre===t.nombre)?'<span style="color:var(--gold)">Campeón 🏆</span>':'Eliminado'}</td>
+  </tr>`).join('');
+
+  document.getElementById('torneoResult').scrollIntoView({behavior:'smooth'});
+}
+
+/* ============================================================
+   BOOT
+   ============================================================ */
+window.addEventListener('DOMContentLoaded', init);
+</script>
+</body>
+</html>
