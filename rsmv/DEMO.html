@@ -281,6 +281,7 @@ footer a:hover{color:var(--cyan)}
       <a href="#torneo">Torneo</a>
       <a href="#premios">Premios</a>
       <span class="demo-badge">DEMO</span>
+      <button class="btn btn-sm btn-green" onclick="descargarDemo()" title="Descargar para celular">⬇ Descargar</button>
       <div class="mc-badge" id="mcNavBadge">◈ <span id="mcNavVal">50</span> MC</div>
     </div>
   </div>
@@ -1165,6 +1166,23 @@ function mostrarTorneo(copa,nivel){
    BOOT
    ============================================================ */
 window.addEventListener('DOMContentLoaded', init);
+
+/* ============================================================
+   DESCARGA DEL DEMO
+   ============================================================ */
+function descargarDemo(){
+  const html = '<!DOCTYPE html>\n' + document.documentElement.outerHTML;
+  const blob = new Blob([html], {type: 'text/html;charset=utf-8'});
+  const url  = URL.createObjectURL(blob);
+  const a    = document.createElement('a');
+  a.href     = url;
+  a.download = 'RSMV-DEMO.html';
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+  toast('✅ Descargando RSMV-DEMO.html — ábrelo en el celular','success');
+}
 </script>
 </body>
 </html>
