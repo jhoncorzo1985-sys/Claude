@@ -209,6 +209,37 @@ def crear_nota_ia(vault: str, tema: str) -> str:
     return ruta
 
 
+def crear_carpeta(vault: str, nombre: str) -> str:
+    """Crea una carpeta en el vault con una nota índice para que aparezca en el grafo."""
+    carpeta = Path(vault) / nombre
+    carpeta.mkdir(parents=True, exist_ok=True)
+
+    # Nota índice — necesaria para que Obsidian la muestre en el grafo
+    nota_indice = carpeta / "indice.md"
+    contenido = f"""---
+titulo: {nombre}
+tipo: carpeta-indice
+creado: {__import__('datetime').date.today()}
+---
+
+# {nombre}
+
+> Carpeta creada por Claude AI ✨
+
+## Notas en esta carpeta
+
+*(las notas que agregues aquí aparecerán enlazadas)*
+
+## Conexiones
+
+- [[Ecosistema Marelab Celular]]
+"""
+    nota_indice.write_text(contenido, encoding="utf-8")
+    print(f"📁 Carpeta creada: {carpeta}")
+    print(f"📄 Nota índice:    {nota_indice}")
+    return str(carpeta)
+
+
 def buscar_en_vault(vault: str, consulta: str) -> str:
     """Busca información relevante en el vault usando Claude."""
     notas = listar_notas(vault)
@@ -261,6 +292,9 @@ def mostrar_ayuda():
 ║                                                           ║
 ║  python obsidian_claude.py chat                           ║
 ║      → Chat interactivo contextualizado                   ║
+║                                                           ║
+║  python obsidian_claude.py carpeta "nombre carpeta"        ║
+║      → Crea carpeta + nota índice (visible en el grafo)   ║
 ║                                                           ║
 ║  python obsidian_claude.py crear "tema de la nota"        ║
 ║      → Genera y guarda una nota nueva con IA              ║
@@ -321,6 +355,10 @@ def main():
 
     elif cmd == "chat":
         chat_con_vault(vault)
+
+    elif cmd == "carpeta":
+        nombre = " ".join(args[1:]) if len(args) > 1 else "prueba claude"
+        crear_carpeta(vault, nombre)
 
     elif cmd == "crear":
         if len(args) < 2:
