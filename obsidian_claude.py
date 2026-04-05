@@ -19,7 +19,11 @@ from pathlib import Path
 import anthropic
 
 # ── Configuración ────────────────────────────────────────────────
-VAULT_PATH = os.environ.get("OBSIDIAN_VAULT", str(Path.home() / "ObsidianVault"))
+# Ruta del vault RSMV en Android — también se puede sobreescribir con:
+#   export OBSIDIAN_VAULT="/otra/ruta"
+#   python obsidian_claude.py --vault "/otra/ruta" <comando>
+VAULT_ANDROID = "/storage/emulated/0/Download/RSMV_Obsidian_Vault/Ecosistema Marelab Celular"
+VAULT_PATH = os.environ.get("OBSIDIAN_VAULT", VAULT_ANDROID)
 MODEL = "claude-opus-4-6"
 MAX_TOKENS = 16000
 
@@ -263,20 +267,42 @@ def mostrar_ayuda():
 ║                                                           ║
 ║  python obsidian_claude.py buscar "consulta"              ║
 ║      → Búsqueda semántica en el vault                     ║
+║                                                           ║
+║  python obsidian_claude.py --vault "/ruta" <comando>      ║
+║      → Usar un vault diferente                            ║
 ╠═══════════════════════════════════════════════════════════╣
-║  Vault: $OBSIDIAN_VAULT  (por defecto: ~/ObsidianVault)   ║
-║  API:   $ANTHROPIC_API_KEY                                ║
+║  Vault por defecto (Android/RSMV):                        ║
+║  /storage/emulated/0/Download/                            ║
+║    RSMV_Obsidian_Vault/Ecosistema Marelab Celular         ║
+║                                                           ║
+║  Sobreescribir: export OBSIDIAN_VAULT="/ruta"             ║
+║  API key:       export ANTHROPIC_API_KEY="sk-..."         ║
 ╚═══════════════════════════════════════════════════════════╝
 """)
 
 
 def main():
-    vault = VAULT_PATH
     args = sys.argv[1:]
+
+    # Soporte para --vault "/ruta/al/vault" como primer argumento
+    if args and args[0] == "--vault":
+        if len(args) < 2:
+            print("❌ Uso: python obsidian_claude.py --vault \"/ruta/vault\" <comando>")
+            sys.exit(1)
+        vault = args[1]
+        args = args[2:]
+    else:
+        vault = VAULT_PATH
 
     if not args or args[0] in ("-h", "--help", "ayuda"):
         mostrar_ayuda()
+        print(f"  Vault activo: {vault}\n")
         return
+
+    # Verificar que el vault existe
+    if not Path(vault).exists():
+        print(f"⚠️  Vault no encontrado: {vault}")
+        print("   Asegúrate de que la ruta existe o define $OBSIDIAN_VAULT\n")
 
     cmd = args[0].lower()
 
