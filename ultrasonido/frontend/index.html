@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Analizador de Ultrasonido IA</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- ── Header ── -->
+  <header>
+    <a class="logo" href="#">
+      <!-- Icono de ultrasonido / onda -->
+      <svg viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="14" cy="14" r="13" stroke="currentColor" stroke-width="1.5"/>
+        <path d="M6 14 Q10 8 14 14 Q18 20 22 14" stroke="currentColor" stroke-width="2" stroke-linecap="round" fill="none"/>
+        <circle cx="14" cy="14" r="2" fill="currentColor"/>
+      </svg>
+      UltraScan IA
+    </a>
+    <div style="display:flex;gap:0.5rem;align-items:center">
+      <span class="badge">Claude Vision</span>
+      <span class="badge badge-warning">Solo Educativo</span>
+    </div>
+  </header>
+
+  <!-- ── Main ── -->
+  <main>
+
+    <!-- Panel izquierdo: upload + configuración -->
+    <div style="display:flex;flex-direction:column;gap:1.25rem">
+
+      <!-- Card: Imagen -->
+      <div class="card">
+        <div class="card-header">
+          <span class="card-title">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <rect x="3" y="3" width="18" height="18" rx="2"/>
+              <circle cx="8.5" cy="8.5" r="1.5"/>
+              <polyline points="21 15 16 10 5 21"/>
+            </svg>
+            Imagen de Ultrasonido
+          </span>
+          <button id="btn-limpiar" class="btn btn-ghost" style="display:none">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+              <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
+            </svg>
+            Limpiar
+          </button>
+        </div>
+        <div class="card-body" style="position:relative">
+          <div id="drop-zone">
+            <!-- Estado: sin imagen -->
+            <div id="drop-content" style="display:flex;flex-direction:column;align-items:center;gap:1rem">
+              <svg class="drop-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2">
+                <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/>
+                <polyline points="17 8 12 3 7 8"/>
+                <line x1="12" y1="3" x2="12" y2="15"/>
+              </svg>
+              <div class="drop-text">
+                <p>Arrastra tu imagen aquí</p>
+                <span>o haz clic para seleccionar · JPEG, PNG, WebP</span>
+              </div>
+            </div>
+
+            <!-- Preview -->
+            <img id="preview-img" alt="Vista previa del ultrasonido" />
+
+            <!-- Loading overlay sobre la imagen -->
+            <div id="loading-overlay" class="loading-overlay">
+              <div class="loading-pulse"></div>
+              <span class="loading-text">Analizando con Claude Vision...</span>
+            </div>
+          </div>
+          <input type="file" id="file-input" accept="image/jpeg,image/png,image/webp" />
+        </div>
+      </div>
+
+      <!-- Card: Configuración -->
+      <div class="card">
+        <div class="card-header">
+          <span class="card-title">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="12" cy="12" r="3"/>
+              <path d="M19.07 4.93a10 10 0 010 14.14M4.93 4.93a10 10 0 000 14.14"/>
+            </svg>
+            Contexto Clínico
+          </span>
+        </div>
+        <div class="card-body">
+          <div class="controls">
+            <div class="input-group">
+              <label>Contexto opcional (ej: paciente, motivo de consulta)</label>
+              <textarea
+                id="contexto"
+                rows="3"
+                placeholder="Ej: Paciente femenina 28 años, embarazo 20 semanas, control rutinario..."
+              ></textarea>
+            </div>
+            <button id="btn-analizar" class="btn btn-primary" disabled>
+              <div id="spinner-btn" class="spinner"></div>
+              <svg id="icono-analizar" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/>
+              </svg>
+              Analizar Imagen
+            </button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Panel derecho: reporte -->
+    <div class="card" style="height:fit-content">
+      <div class="card-header">
+        <span class="card-title">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/>
+            <polyline points="14 2 14 8 20 8"/>
+            <line x1="16" y1="13" x2="8" y2="13"/>
+            <line x1="16" y1="17" x2="8" y2="17"/>
+            <polyline points="10 9 9 9 8 9"/>
+          </svg>
+          Reporte Educativo
+        </span>
+        <span class="badge" style="font-size:0.6rem">IA · Claude Opus</span>
+      </div>
+      <div class="card-body" id="reporte-panel">
+        <div id="reporte-contenido">
+          <div class="reporte-estado">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+              <path d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+            </svg>
+            <span>Sube una imagen para comenzar el análisis</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- ── Footer ── -->
+  <footer>
+    UltraScan IA · Herramienta educativa · Powered by
+    <a href="https://anthropic.com" target="_blank" rel="noopener">Claude Vision API</a>
+    · No reemplaza diagnóstico médico profesional
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>
