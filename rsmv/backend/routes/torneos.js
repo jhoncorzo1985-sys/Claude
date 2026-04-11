@@ -14,6 +14,7 @@ const router = express.Router();
 const { supabaseAdmin } = require('../config/supabase');
 const { requireAuth } = require('../middleware/auth');
 const { emailInicioTorneo } = require('../services/email');
+const { simularTorneo } = require('../services/simulacion');
 
 // GET /api/torneos
 router.get('/', async (req, res) => {
@@ -175,6 +176,48 @@ router.post('/:id/inscribir', requireAuth, async (req, res) => {
   }
 
   res.json({ message: 'Equipo inscrito exitosamente' });
+});
+
+// POST /api/torneos/:id/iniciar — Iniciar torneo (simular todas las fases)
+router.post('/:id/iniciar', requireAuth, async (req, res) => {
+  const torneoId = req.params.id;
+  const { seed } = req.body;
+
+  try {
+    // Verificar que el torneo existe y está pendiente antes de lanzar la simulación
+    const { data: torneo } = await supabaseAdmin
+      .from('torneos')
+      .select('estado, nombre, tipo')
+      .eq('id', torneoId)
+      .single();
+
+    if (!torneo) return res.status(404).json({ error: 'Torneo no encontrado' });
+    if (torneo.estado !== 'pendiente') {
+      return res.status(400).json({
+        error: `El torneo no se puede iniciar (estado: ${torneo.estado})`,
+        estado: torneo.estado
+      });
+    }
+
+    // Ejecutar simulación completa (puede tardar varios segundos)
+    const resumen = await simularTorneo(torneoId, seed ?? null);
+
+    res.json({
+      message: `¡Torneo "${torneo.nombre}" finalizado exitosamente!`,
+      ...resumen
+    });
+  } catch (err) {
+    console.error('Error iniciando torneo:', err);
+
+    // Si el torneo quedó en en_curso por un error, revertirlo
+    await supabaseAdmin
+      .from('torneos')
+      .update({ estado: 'pendiente' })
+      .eq('id', torneoId)
+      .eq('estado', 'en_curso');
+
+    res.status(500).json({ error: err.message || 'Error simulando el torneo' });
+  }
 });
 
 module.exports = router;
