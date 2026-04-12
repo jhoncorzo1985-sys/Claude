@@ -5,60 +5,70 @@ created: 2026-04-12
 
 # 🧠 Cerebro Digital Marelab
 
-> *El sistema de conocimiento vivo de Marelab — todo lo que sabemos, construimos y soñamos.*
+> *El sistema de conocimiento vivo de Marelab.*
 
 ---
 
-## ⚡ Acceso Rápido
+## Empieza Aquí
 
-| Área | Nota |
-|------|------|
-| 🏢 Quiénes Somos | [[Marelab - Visión y Misión]] |
-| 🤖 El Juego | [[RSMV - Qué Es]] |
-| 💻 Técnico | [[Backend API]] |
-| 💰 Negocio | [[Modelo de Negocio]] |
-| 🗺️ Roadmap | [[Roadmap RSMV]] |
+> **[[Baúl de las Ideas]]** ← el origen de todo
+> **[[BMC Marelab]]** ← el negocio en un canvas
 
 ---
 
-## 🗂️ Secciones del Cerebro
+## 01 — BMC (Business Model Canvas)
 
-### 01 — Marelab
+| # | Bloque | Pregunta |
+|---|--------|----------|
+| [[BMC-1 Segmentos de Clientes]] | ¿Para quién? |
+| [[BMC-2 Propuesta de Valor]] | ¿Qué problema resuelve? |
+| [[BMC-3 Canales]] | ¿Cómo llegamos? |
+| [[BMC-4 Relación con Clientes]] | ¿Cómo nos relacionamos? |
+| [[BMC-5 Fuentes de Ingresos]] | ¿Cómo ganamos? |
+| [[BMC-6 Recursos Clave]] | ¿Qué necesitamos? |
+| [[BMC-7 Actividades Clave]] | ¿Qué hacemos? |
+| [[BMC-8 Socios Clave]] | ¿Con quién? |
+| [[BMC-9 Estructura de Costos]] | ¿Qué nos cuesta? |
+
+---
+
+## 02 — Marelab (Empresa)
 - [[Marelab - Visión y Misión]]
 - [[Marelab - Fundador]]
 - [[Marelab - Ecosistema]]
 - [[Marelab - Contacto y Redes]]
 
-### 02 — RSMV (El Juego)
+## 03 — RSMV (El Juego)
 - [[RSMV - Qué Es]]
 - [[RSMV - Arquitectura del Ecosistema]]
 - [[RSMV - Sistema EXP]]
 - [[RSMV - Marecoin]]
 - [[RSMV - Motor de Simulación]]
 - [[RSMV - Torneos y Premios]]
+- [[RSMV - Stack Técnico]]
 
-### 03 — Técnico
+## 04 — Técnico
 - [[Backend API]]
 - [[Frontend]]
 - [[Base de Datos Schema]]
 - [[Autenticación y Seguridad]]
 - [[Deploy e Infraestructura]]
 
-### 04 — Negocio
+## 05 — Negocio
 - [[Modelo de Negocio]]
 - [[Crowdfunding Vaki]]
 - [[Regulación Colombia]]
 
-### 05 — Ideas
+## 06 — Ideas y Futuro
 - [[Roadmap RSMV]]
 - [[Features Pendientes]]
 - [[Preguntas sin Resolver]]
 
 ---
 
-## 📅 Último Diario
+## Diario
 - [[2026-04-12]]
 
 ---
 
-> Marelab © 2025 | Jhon Carlos Corzo Vega | 🇨🇴
+> Marelab © 2026 | Jhon Carlos Corzo Vega | 🇨🇴
