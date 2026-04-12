@@ -56,16 +56,21 @@ Plantilla: [[Lean Canvas (Plantilla)]]
 
 ## Ideas Actuales en el Semillero
 
+### Validadas → Pasaron a BMC
+| Idea | LC | Siguiente paso |
+|------|----|----------------|
+| [[LC - RSMV v1]] | ✅ Completo | [[BMC Marelab]] activo |
+
 ### En Evaluación
-| Idea | LC | Estado |
-|------|----|--------|
-| [[LC - RSMV v1]] | Completo | ✅ Pasó a BMC |
+| Idea | LC | Hipótesis más riesgosa |
+|------|----|------------------------|
+| [[LC - Desfile de Robots v1]] | 🔄 En curso | ¿Alcaldía adopta el concepto? |
 
 ### Descartadas (con aprendizaje)
-*(vacío por ahora)*
+*(vacío por ahora — cuando haya, registrar qué aprendimos)*
 
 ### Cola de Evaluación
-*(ideas del Baúl que esperan LC)*
+*(ideas del [[Baúl de las Ideas]] que esperan su LC)*
 
 ---
 

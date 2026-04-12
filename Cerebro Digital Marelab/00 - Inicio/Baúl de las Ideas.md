@@ -116,7 +116,17 @@ Marco completo del negocio cuando la idea sobrevivió el semillero.
 
 ---
 
-*(espacio para ideas sin procesar)*
+### ~~🌸 Desfile de Robots Silleteros~~
+> *(procesada — ver [[LC - Desfile de Robots v1]] en el Semillero)*
+
+Qué tal un desfile donde los robots carguen silletas como en la Feria de Flores de Medellín.
+Robots autónomos. Silletas diseñadas digitalmente. Espectáculo + competencia.
+Fusión cultura colombiana + tecnología. Turismo. TV. Colegios.
+Puede ser evento anual. Patrocinadores. Transmisión en vivo.
+
+---
+
+*(zona libre — escribe la próxima idea aquí)*
 
 ---
 

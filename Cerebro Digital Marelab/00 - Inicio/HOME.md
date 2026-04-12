@@ -7,31 +7,65 @@ created: 2026-04-12
 
 ---
 
-## Empieza Aquí
+## Quiénes Somos
 
-> **[[Baúl de las Ideas]]** ← el origen de todo
-> **[[Protocolo del Sistema]]** ← cómo funciona este cerebro
+**[[Marelab - Empresa]]** — Estudio de innovación robótica. Colombia 🇨🇴
+**Fundador:** Jhon Carlos Corzo Vega | Superpoder: Creatividad
 
 ---
 
 ## El Flujo del Sistema
 
 ```
-🧺 Baúl → 🌱 Semillero (LC) → 📊 Modelo (BMC) → 💎 Valor → ⚙️ Procesos
+🧺 Baúl → 🌱 Semillero (LC) → 📊 Modelo (BMC) → 💎 Valor → ⚙️ SOPs → 🚀 Producto
 ```
+
+**[[Protocolo del Sistema]]** ← léelo una vez, úsalo siempre
+
+---
+
+## Portafolio Actual
+
+| Producto | Estado | Modelo |
+|----------|--------|--------|
+| [[RSMV - Qué Es\|🤖 RSMV]] | ✅ MVP activo | [[BMC Marelab]] |
+| [[LC - Desfile de Robots v1\|🌸 Desfile de Robots Silleteros]] | 🔄 Semillero | [[LC - Desfile de Robots v1]] |
+
+Ver portafolio completo: [[Marelab - Portafolio de Productos]]
 
 ---
 
 ## 00 — Centro
 
-- [[Baúl de las Ideas]]
-- [[Protocolo del Sistema]]
+- [[Baúl de las Ideas]] ← empieza aquí con una idea
+- [[Protocolo del Sistema]] ← cómo funciona el cerebro
+- [[BMC Marelab]] ← el modelo de negocio
+
+## 01 — Marelab (Empresa)
+
+- [[Marelab - Empresa]]
+- [[Marelab - Portafolio de Productos]]
+- [[Marelab - Visión y Misión]]
+- [[Marelab - Fundador]]
+- [[Marelab - Ecosistema]]
+- [[Marelab - Contacto y Redes]]
+
+## 02 — Semillero de Innovación
+
+- [[Semillero de Innovación]] ← MOC del semillero
+- [[Lean Canvas (Plantilla)]] ← plantilla reutilizable
+- [[LC - RSMV v1]] ✅ validado → pasó a BMC
+- [[LC - Desfile de Robots v1]] 🔄 en evaluación
+
+## 03 — Modelos de Negocio
+
+- [[Índice de Modelos]]
 - [[BMC Marelab]]
 
-## 01 — BMC (9 Bloques)
+## 04 — BMC (9 Bloques)
 
-| Bloque | |
-|--------|-|
+| # | Bloque |
+|---|--------|
 | [[BMC-1 Segmentos de Clientes]] | ¿Para quién? |
 | [[BMC-2 Propuesta de Valor]] | ¿Qué problema? |
 | [[BMC-3 Canales]] | ¿Cómo llegamos? |
@@ -42,25 +76,7 @@ created: 2026-04-12
 | [[BMC-8 Socios Clave]] | ¿Con quién? |
 | [[BMC-9 Estructura de Costos]] | ¿Qué nos cuesta? |
 
-## 02 — Semillero de Innovación
-
-- [[Semillero de Innovación]]
-- [[Lean Canvas (Plantilla)]]
-- [[LC - RSMV v1]] ✅
-
-## 03 — Modelos de Negocio
-
-- [[Índice de Modelos]]
-- [[BMC Marelab]]
-
-## 04 — Marelab (Empresa)
-
-- [[Marelab - Visión y Misión]]
-- [[Marelab - Fundador]]
-- [[Marelab - Ecosistema]]
-- [[Marelab - Contacto y Redes]]
-
-## 05 — RSMV (Producto)
+## 05 — RSMV (Producto #1)
 
 - [[RSMV - Qué Es]]
 - [[RSMV - Arquitectura del Ecosistema]]
@@ -105,4 +121,5 @@ created: 2026-04-12
 
 ---
 
-> Marelab © 2026 | Jhon Carlos Corzo Vega | 🇨🇴
+> Marelab © 2026 | Jhon Carlos Corzo Vega
+> *"Con Claude Code + Creatividad, el límite no existe."*
