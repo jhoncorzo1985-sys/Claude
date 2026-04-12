@@ -5,23 +5,35 @@ created: 2026-04-12
 
 # 🧠 Cerebro Digital Marelab
 
-> *El sistema de conocimiento vivo de Marelab.*
-
 ---
 
 ## Empieza Aquí
 
 > **[[Baúl de las Ideas]]** ← el origen de todo
-> **[[BMC Marelab]]** ← el negocio en un canvas
+> **[[Protocolo del Sistema]]** ← cómo funciona este cerebro
 
 ---
 
-## 01 — BMC (Business Model Canvas)
+## El Flujo del Sistema
 
-| # | Bloque | Pregunta |
-|---|--------|----------|
+```
+🧺 Baúl → 🌱 Semillero (LC) → 📊 Modelo (BMC) → 💎 Valor → ⚙️ Procesos
+```
+
+---
+
+## 00 — Centro
+
+- [[Baúl de las Ideas]]
+- [[Protocolo del Sistema]]
+- [[BMC Marelab]]
+
+## 01 — BMC (9 Bloques)
+
+| Bloque | |
+|--------|-|
 | [[BMC-1 Segmentos de Clientes]] | ¿Para quién? |
-| [[BMC-2 Propuesta de Valor]] | ¿Qué problema resuelve? |
+| [[BMC-2 Propuesta de Valor]] | ¿Qué problema? |
 | [[BMC-3 Canales]] | ¿Cómo llegamos? |
 | [[BMC-4 Relación con Clientes]] | ¿Cómo nos relacionamos? |
 | [[BMC-5 Fuentes de Ingresos]] | ¿Cómo ganamos? |
@@ -30,15 +42,26 @@ created: 2026-04-12
 | [[BMC-8 Socios Clave]] | ¿Con quién? |
 | [[BMC-9 Estructura de Costos]] | ¿Qué nos cuesta? |
 
----
+## 02 — Semillero de Innovación
 
-## 02 — Marelab (Empresa)
+- [[Semillero de Innovación]]
+- [[Lean Canvas (Plantilla)]]
+- [[LC - RSMV v1]] ✅
+
+## 03 — Modelos de Negocio
+
+- [[Índice de Modelos]]
+- [[BMC Marelab]]
+
+## 04 — Marelab (Empresa)
+
 - [[Marelab - Visión y Misión]]
 - [[Marelab - Fundador]]
 - [[Marelab - Ecosistema]]
 - [[Marelab - Contacto y Redes]]
 
-## 03 — RSMV (El Juego)
+## 05 — RSMV (Producto)
+
 - [[RSMV - Qué Es]]
 - [[RSMV - Arquitectura del Ecosistema]]
 - [[RSMV - Sistema EXP]]
@@ -47,26 +70,37 @@ created: 2026-04-12
 - [[RSMV - Torneos y Premios]]
 - [[RSMV - Stack Técnico]]
 
-## 04 — Técnico
+## 06 — Técnico
+
 - [[Backend API]]
 - [[Frontend]]
 - [[Base de Datos Schema]]
 - [[Autenticación y Seguridad]]
 - [[Deploy e Infraestructura]]
 
-## 05 — Negocio
-- [[Modelo de Negocio]]
-- [[Crowdfunding Vaki]]
-- [[Regulación Colombia]]
+## 07 — Procesos (SOPs)
 
-## 06 — Ideas y Futuro
+- [[Mejora de Procesos — Guía]]
+- [[SOP - Ejecutar Torneo]]
+- [[SOP - Onboarding Usuario]]
+- [[SOP - Pagar Premio]]
+
+## 08 — Ideas y Futuro
+
 - [[Roadmap RSMV]]
 - [[Features Pendientes]]
 - [[Preguntas sin Resolver]]
 
+## 09 — Negocio
+
+- [[Modelo de Negocio]]
+- [[Crowdfunding Vaki]]
+- [[Regulación Colombia]]
+
 ---
 
 ## Diario
+
 - [[2026-04-12]]
 
 ---

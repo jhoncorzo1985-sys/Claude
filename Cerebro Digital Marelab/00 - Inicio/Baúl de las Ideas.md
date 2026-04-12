@@ -18,23 +18,29 @@ Un cerebro sin caos pierde vida.
 
 El **Baúl** resuelve esa tensión:
 - Las ideas llegan aquí **en bruto**, sin formato, sin juicio
-- Desde aquí se **procesan** hacia el BMC
-- El BMC las **convierte en negocio**
-- Las notas de detalle las **ejecutan**
+- Desde aquí se **procesan** en el Semillero
+- El Semillero las **evalúa y valida** con LC y BMC
+- Las notas de detalle las **ejecutan** con SOPs
 
 ```
 IDEA (bruta)
     ↓
-Baúl de las Ideas   ← estás aquí
+🧺 Baúl de las Ideas     ← estás aquí
     ↓
-BMC Marelab         ← el marco racional
+🌱 Semillero (LC)        ← ¿vale la pena?
     ↓
-Notas de Detalle    ← la ejecución
+📊 Modelos de Negocio    ← LC → BMC
+    ↓
+💎 Propuesta de Valor    ← el "qué" validado
+    ↓
+⚙️ Ejecución (SOPs)      ← el "cómo" operativo
 ```
+
+Ver el protocolo completo: [[Protocolo del Sistema]]
 
 ---
 
-## El Marco que Organiza Todo: BMC
+## El Marco que Organiza Todo: LC + BMC
 
 El **Business Model Canvas** es el sistema que convierte ideas en negocio estructurado.
 
@@ -52,7 +58,15 @@ Tiene **9 bloques**. Cada bloque es una nota en este cerebro.
 | 8 | [[BMC-8 Socios Clave]] | ¿Con quién nos aliamos? |
 | 9 | [[BMC-9 Estructura de Costos]] | ¿Qué nos cuesta operar? |
 
-Ver el canvas completo: [[BMC Marelab]]
+### Lean Canvas (Semillero)
+Herramienta rápida para validar hipótesis antes de comprometerse con un modelo completo.
+→ [[Semillero de Innovación]] | [[Lean Canvas (Plantilla)]]
+
+### Business Model Canvas (Modelo)
+Marco completo del negocio cuando la idea sobrevivió el semillero.
+→ [[BMC Marelab]] | `01 - BMC/` (9 bloques)
+
+**Regla:** LC primero. BMC cuando el LC ya no cambia tanto.
 
 ---
 
@@ -78,6 +92,17 @@ Ver el canvas completo: [[BMC Marelab]]
 - [[Autenticación y Seguridad]]
 - [[Deploy e Infraestructura]]
 
+### Semillero y Modelos
+- [[Semillero de Innovación]]
+- [[LC - RSMV v1]]
+- [[Índice de Modelos]]
+
+### Procesos
+- [[Mejora de Procesos — Guía]]
+- [[SOP - Ejecutar Torneo]]
+- [[SOP - Onboarding Usuario]]
+- [[SOP - Pagar Premio]]
+
 ### Ideas y Futuro
 - [[Roadmap RSMV]]
 - [[Features Pendientes]]
@@ -97,10 +122,13 @@ Ver el canvas completo: [[BMC Marelab]]
 
 ## Protocolo: ¿Cómo uso el Baúl?
 
-1. **Llega una idea** → la escribo en "Ideas en Bruto" (arriba)
-2. **La proceso** → la muevo al bloque BMC que corresponde
-3. **La ejecuto** → creo o actualizo la nota de detalle
-4. **La borro del bruto** → el baúl siempre queda limpio para nuevas ideas
+1. **Llega una idea** → la escribo en "Ideas en Bruto" (zona libre arriba)
+2. **La evalúo** → abro [[Semillero de Innovación]] y creo un [[Lean Canvas (Plantilla)|LC]]
+3. **Si el LC aprueba** → actualizo o creo el BMC correspondiente
+4. **Si necesita proceso** → creo un SOP en `07 - Procesos/`
+5. **La borro del bruto** → el baúl queda limpio para la próxima idea
+
+Ver el protocolo completo: [[Protocolo del Sistema]]
 
 ---
 
