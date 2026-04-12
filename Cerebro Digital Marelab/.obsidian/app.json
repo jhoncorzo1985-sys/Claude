@@ -1,0 +1,11 @@
+{
+  "legacyEditor": false,
+  "livePreview": true,
+  "defaultViewMode": "preview",
+  "foldHeading": true,
+  "foldIndent": true,
+  "showFrontmatter": false,
+  "readableLineLength": true,
+  "strictLineBreaks": false,
+  "showLineNumber": false
+}
