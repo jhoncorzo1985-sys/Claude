@@ -1,0 +1,972 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MARELAB — Motívate • Aprende • Recréate • Emprende | Medellín, Colombia</title>
+  <meta name="description" content="Marelab es el Laboratorio de Innovación y Creatividad de Medellín donde la robótica, el juego y el emprendimiento se convierten en la misma cosa. Bienvenido a la Cultura MARE." />
+  
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%23001F54'/><text x='50' y='55' font-size='40' font-weight='900' fill='white' font-family='sans-serif' text-anchor='middle'>M</text><rect x='25' y='68' width='50' height='6' rx='3' fill='%2300D9FF'/><rect x='25' y='77' width='50' height='6' rx='3' fill='%23FFD700'/><rect x='25' y='86' width='50' height='6' rx='3' fill='%23FF6B35'/></svg>" />
+
+  <!-- Google Fonts: Fredoka, Space Grotesk, Plus Jakarta Sans -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;0,800;1,500&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+  
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <!-- Three.js (3D Interactive Cube Engine) with Fallback -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script>
+    if (typeof THREE === 'undefined') {
+      document.write('<script src="https://unpkg.com/three@0.128.0/build/three.min.js"><\/script>');
+    }
+  </script>
+  <!-- Canvas Confetti with Fallback -->
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+  <script>
+    if (typeof confetti === 'undefined') {
+      document.write('<script src="https://unpkg.com/canvas-confetti@1.6.0/dist/confetti.browser.js"><\/script>');
+    }
+  </script>
+
+  <!-- Stylesheet -->
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body class="dark-theme">
+  <!-- Custom Interactive Cursor -->
+  <div class="cursor-dot" id="cursorDot"></div>
+  <div class="cursor-ring" id="cursorRing"></div>
+
+  <!-- Ambient Particle Canvas Background -->
+  <canvas id="ambientCanvas" class="ambient-canvas"></canvas>
+
+  <!-- Navigation Bar -->
+  <header class="navbar" id="navbar">
+    <div class="nav-container">
+      <a href="#hero" class="brand-logo-link" aria-label="Marelab Inicio">
+        <img src="assets/logo_mare_navy_pilares.png" alt="MARELAB" class="brand-logo-img-clean" />
+      </a>
+
+      <nav class="nav-links">
+        <a href="#pilares" class="nav-link"><span class="nav-num">01</span>Cultura MARE</a>
+        <a href="#juego" class="nav-link"><span class="nav-num">02</span>Reto del Dado</a>
+        <a href="#lineas" class="nav-link"><span class="nav-num">03</span>Qué Hacemos</a>
+        <a href="#manifiesto" class="nav-link"><span class="nav-num">04</span>Manifiesto</a>
+        <a href="#contacto" class="nav-link"><span class="nav-num">05</span>Contacto</a>
+      </nav>
+
+      <div class="nav-actions">
+        <button id="soundToggle" class="icon-btn" title="Activar/Desactivar sonido sutil" aria-label="Toggle Sound">
+          <i data-lucide="volume-2" id="soundIcon"></i>
+        </button>
+        <a href="https://wa.me/573152445278?text=Hola%20Marelab%2C%20quiero%20conectar%20con%20el%20Laboratorio" target="_blank" rel="noopener" class="btn btn-primary btn-glow">
+          <i data-lucide="message-circle"></i>
+          <span>Hablemos</span>
+        </a>
+        <button class="mobile-toggle" id="mobileToggle" aria-label="Menu Mobile">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Mobile Menu Drawer -->
+  <div class="mobile-drawer" id="mobileDrawer">
+    <nav class="mobile-nav">
+      <a href="#pilares" class="mobile-link"><span class="mobile-num">01</span> Cultura MARE</a>
+      <a href="#juego" class="mobile-link"><span class="mobile-num">02</span> Reto del Dado</a>
+      <a href="#lineas" class="mobile-link"><span class="mobile-num">03</span> Qué Hacemos</a>
+      <a href="#manifiesto" class="mobile-link"><span class="mobile-num">04</span> Manifiesto</a>
+      <a href="#contacto" class="mobile-link"><span class="mobile-num">05</span> Contacto</a>
+      <a href="https://wa.me/573152445278" target="_blank" class="mobile-link btn btn-primary"><i data-lucide="message-circle"></i> Escribir al WhatsApp</a>
+    </nav>
+  </div>
+
+  <main>
+    <!-- HERO SECTION -->
+    <section class="hero-section" id="hero">
+      <div class="hero-container">
+        
+        <div class="hero-content">
+          <div class="hero-badge">
+            <span class="badge-pulse"></span>
+            <span class="badge-text">LABORATORIO DE INNOVACIÓN &amp; CREATIVIDAD • MEDELLÍN</span>
+          </div>
+
+          <h1 class="hero-title">
+            <span class="hero-line">Motívate. Aprende.</span>
+            <span class="hero-line highlight-gradient">Recréate. Emprende.</span>
+          </h1>
+
+          <p class="hero-subtitle">
+            <strong>Marelab</strong> es el Laboratorio de Innovación y Creatividad donde la <strong>robótica</strong>, el <strong>juego</strong> y el <strong>emprendimiento</strong> se convierten en la misma cosa. Bienvenido a la <strong>Cultura MARE</strong>.
+          </p>
+
+          <div class="hero-purpose-quote">
+            <i data-lucide="quote" class="quote-icon"></i>
+            <span>"Contribuir para que tengamos un futuro más innovador."</span>
+          </div>
+
+          <div class="hero-cta-group">
+            <a href="#juego" class="btn btn-primary btn-large btn-glow">
+              <i data-lucide="dice-5"></i>
+              <span>Jugar el Reto del Dado</span>
+            </a>
+            <a href="#lineas" class="btn btn-secondary btn-large">
+              <i data-lucide="sparkles"></i>
+              <span>Ver Qué Hacemos</span>
+            </a>
+          </div>
+
+          <!-- Quick Metrics / Pillars Mini Bar -->
+          <div class="hero-pillars-bar">
+            <div class="pill-badge" data-target="motivate">
+              <span class="pill-letter color-cyan">M</span>
+              <span class="pill-word">Motívate</span>
+            </div>
+            <span class="pill-sep">→</span>
+            <div class="pill-badge" data-target="aprende">
+              <span class="pill-letter color-yellow">A</span>
+              <span class="pill-word">Aprende</span>
+            </div>
+            <span class="pill-sep">→</span>
+            <div class="pill-badge" data-target="recreate">
+              <span class="pill-letter color-coral">R</span>
+              <span class="pill-word">Recréate</span>
+            </div>
+            <span class="pill-sep">→</span>
+            <div class="pill-badge" data-target="emprende">
+              <span class="pill-letter color-white">E</span>
+              <span class="pill-word">Emprende</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- 3D Hero Visual / Cube Stage -->
+        <div class="hero-visual">
+          <div class="cube-stage-wrapper">
+            <div class="stage-glow"></div>
+            <div id="threeHeroCube" class="three-cube-container"></div>
+            <div class="cube-hint">
+              <i data-lucide="move-3d"></i>
+              <span>Arrastra para rotar el dado en 3D</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- SECTION: CULTURA MARE (LOS 4 PILARES PEDAGÓGICOS) -->
+    <section class="section pilares-section" id="pilares">
+      <div class="section-container">
+        
+        <div class="section-header">
+          <div class="tag-label"><span class="tag-dot"></span> LA CULTURA MARE</div>
+          <h2 class="section-title">Cuatro pilares, <span class="gradient-text">un mismo laboratorio</span></h2>
+          <p class="section-desc">
+            Cada reto en Marelab pasa por los cuatro: no son valores de pared, son la metodología con la que diseñamos cada experiencia.
+          </p>
+        </div>
+
+        <!-- Pillars Grid -->
+        <div class="pillars-grid">
+          
+          <!-- Pilar M: Motívate -->
+          <div class="pillar-card card-motivate" data-tilt>
+            <div class="card-bg-mesh"></div>
+            <div class="card-header">
+              <div class="card-identity">
+                <div class="pillar-logo-capsule">
+                  <img src="assets/logo_mare_motivate_cyan.svg" alt="Pilar Motívate (Resaltado)" class="pillar-brand-header-img" />
+                </div>
+                <span class="pillar-tag">Pilar 01 • Motivación</span>
+              </div>
+              <div class="pillar-icon-box">
+                <i data-lucide="flame"></i>
+              </div>
+            </div>
+
+            <div class="card-body">
+              <h3 class="pillar-name">Motívate</h3>
+              <p class="pillar-subtitle">Activación de la chispa y el propósito.</p>
+              <p class="pillar-description">
+                Activamos los tres tipos de motivación: <strong>intrínseca</strong>, <strong>extrínseca</strong> y <strong>trascendental</strong>; porque si falta alguna, el reto no engancha de verdad.
+              </p>
+
+              <ul class="pillar-highlights">
+                <li><i data-lucide="zap"></i> Motivación intrínseca (placer por crear)</li>
+                <li><i data-lucide="target"></i> Motivación extrínseca (reconocimiento y logro)</li>
+                <li><i data-lucide="compass"></i> Motivación trascendental (impacto en otros)</li>
+              </ul>
+            </div>
+
+            <div class="card-footer">
+              <span class="card-status-label">FASE 1: MOTIVACIÓN</span>
+              <span class="card-energy-pulse bg-cyan"></span>
+            </div>
+          </div>
+
+          <!-- Pilar A: Aprende -->
+          <div class="pillar-card card-aprende" data-tilt>
+            <div class="card-bg-mesh"></div>
+            <div class="card-header">
+              <div class="card-identity">
+                <div class="pillar-logo-capsule">
+                  <img src="assets/logo_mare_cyan_aprende.png" alt="Pilar Aprende (STEAM)" class="pillar-brand-header-img" />
+                </div>
+                <span class="pillar-tag">Pilar 02 • Competencia</span>
+              </div>
+              <div class="pillar-icon-box">
+                <i data-lucide="brain"></i>
+              </div>
+            </div>
+
+            <div class="card-body">
+              <h3 class="pillar-name">Aprende</h3>
+              <p class="pillar-subtitle">Construcción de competencia real e integral.</p>
+              <p class="pillar-description">
+                Construimos competencia real: <strong>conocimientos</strong>, <strong>habilidades</strong> y <strong>actitud</strong> — lo que piensas, lo que deseas y lo que finalmente haces.
+              </p>
+
+              <ul class="pillar-highlights">
+                <li><i data-lucide="cpu"></i> Enfoque STEM / STEAM hands-on</li>
+                <li><i data-lucide="code-2"></i> Saber, saber hacer y saber ser</li>
+                <li><i data-lucide="palette"></i> Pensamiento crítico y computacional</li>
+              </ul>
+            </div>
+
+            <div class="card-footer">
+              <span class="card-status-label">FASE 2: COMPETENCIA</span>
+              <span class="card-energy-pulse bg-yellow"></span>
+            </div>
+          </div>
+
+          <!-- Pilar R: Recréate -->
+          <div class="pillar-card card-recreate" data-tilt>
+            <div class="card-bg-mesh"></div>
+            <div class="card-header">
+              <div class="card-identity">
+                <div class="pillar-logo-capsule">
+                  <img src="assets/logo_mare_coral_recreate.png" alt="Pilar Recréate (Robot Soccer)" class="pillar-brand-header-img" />
+                </div>
+                <span class="pillar-tag">Pilar 03 • Gamificación</span>
+              </div>
+              <div class="pillar-icon-box">
+                <i data-lucide="gamepad-2"></i>
+              </div>
+            </div>
+
+            <div class="card-body">
+              <h3 class="pillar-name">Recréate</h3>
+              <p class="pillar-subtitle">El juego no es el premio, es el método.</p>
+              <p class="pillar-description">
+                Ludificamos cada proceso para que el impacto y la innovación se sientan como diversión. Jugamos en serio para reinventar soluciones y desbloquear la curiosidad.
+              </p>
+
+              <ul class="pillar-highlights">
+                <li><i data-lucide="bot"></i> Activaciones lúdicas &amp; Robot Soccer Mare</li>
+                <li><i data-lucide="dice-5"></i> Dinámicas de juego transformadoras</li>
+                <li><i data-lucide="refresh-cw"></i> Iteración ágil sin miedo al fallo</li>
+              </ul>
+            </div>
+
+            <div class="card-footer">
+              <span class="card-status-label">FASE 3: GAMIFICACIÓN</span>
+              <span class="card-energy-pulse bg-coral"></span>
+            </div>
+          </div>
+
+          <!-- Pilar E: Emprende -->
+          <div class="pillar-card card-emprende" data-tilt>
+            <div class="card-bg-mesh"></div>
+            <div class="card-header">
+              <div class="card-identity">
+                <div class="pillar-logo-capsule">
+                  <img src="assets/logo_mare_yellow_emprende.png" alt="Pilar Emprende (Semillero)" class="pillar-brand-header-img" />
+                </div>
+                <span class="pillar-tag">Pilar 04 • Innovación</span>
+              </div>
+              <div class="pillar-icon-box">
+                <i data-lucide="rocket"></i>
+              </div>
+            </div>
+
+            <div class="card-body">
+              <h3 class="pillar-name">Emprende</h3>
+              <p class="pillar-subtitle">La creatividad como superpoder al servicio de innovar.</p>
+              <p class="pillar-description">
+                La creatividad es nuestro superpoder: <strong>fluidez</strong>, <strong>elaboración</strong>, <strong>flexibilidad</strong> y <strong>originalidad</strong>, puesta al servicio de innovar y lanzar proyectos de impacto.
+              </p>
+
+              <ul class="pillar-highlights">
+                <li><i data-lucide="layers"></i> Fluidez, flexibilidad y originalidad</li>
+                <li><i data-lucide="trending-up"></i> Pipeline: Del Cofre de Ideas al Lanzamiento</li>
+                <li><i data-lucide="globe"></i> Semillero de Innovación y Modelos Reales</li>
+              </ul>
+            </div>
+
+            <div class="card-footer">
+              <span class="card-status-label">FASE 4: INNOVACIÓN</span>
+              <span class="card-energy-pulse bg-white"></span>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Banner Horizontal Cultura MARE -->
+        <div class="pilares-horizontal-banner-card">
+          <img src="assets/logo_mare_yellow_horizontal.png" alt="Cultura MARE — Motívate • Aprende • Recréate • Emprende" class="pilares-horizontal-banner-img" />
+        </div>
+
+      </div>
+    </section>
+
+    <!-- SECTION: EL RETO DEL DADO MARE (JUEGO INTERACTIVO DE 10 TIROS) -->
+    <section class="section juego-section on-navy" id="juego">
+      <div class="section-container">
+        
+        <div class="section-header text-center">
+          <div class="tag-label centered"><span class="tag-dot"></span> RECRÉATE + APRENDE, EN ACCIÓN</div>
+          <h2 class="section-title">El Reto del <span class="gradient-text">Dado MARE</span></h2>
+          <p class="section-desc max-w-700">
+            Elige la cara que crees que va a salir, presiona <strong>Tirar</strong> y completa 10 tiros. Al final medimos tu precisión de 0 a 100% y descubrimos tu perfil intuitivo.
+          </p>
+
+          <!-- Mode Switcher: 3D vs 2D Net -->
+          <div class="cube-controls-bar">
+            <button id="btnView3D" class="tab-btn active">
+              <i data-lucide="box"></i> Vista 3D Giratoria
+            </button>
+            <button id="btnUnfoldNet" class="tab-btn">
+              <i data-lucide="layout-grid"></i> Desplegar Red Origami (Plano 2D)
+            </button>
+          </div>
+        </div>
+
+        <div class="juego-main-grid">
+          
+          <!-- LEFT COLUMN: The Dice Visual Stage (3D Canvas / 2D Net Selector) -->
+          <div class="juego-visual-col">
+            
+            <!-- 3D Canvas -->
+            <div id="cubeViewer3D" class="cube-view-mode active">
+              <div id="threeInteractiveCanvas" class="three-full-canvas"></div>
+              <p class="canvas-drag-hint"><i data-lucide="move-3d"></i> Gira el dado con tu cursor o dedo para inspeccionar las 6 caras</p>
+            </div>
+
+            <!-- 2D Unfolded Origami Net -->
+            <div id="cubeViewerNet" class="cube-view-mode">
+              <div class="origami-net-container">
+                <div class="net-grid">
+                  
+                  <!-- Top: STEAM -->
+                  <button type="button" class="net-face face-steam" data-face-id="steam" aria-label="Cara STEAM">
+                    <span class="face-badge-corner">APRENDIZAJE</span>
+                    <span class="steam-diagonal-text">STEAM</span>
+                    <span class="face-name-tag">Enfoque STEM/STEAM</span>
+                  </button>
+
+                  <!-- Middle Row: Divergencia (1->4), MARE Core, Convergencia (4->1) -->
+                  <div class="net-row-middle">
+                    <button type="button" class="net-face face-dots-left" data-face-id="divergencia_left" aria-label="Cara Divergencia (1 a 4 puntos)">
+                      <span class="face-badge-corner">DIVERGENCIA</span>
+                      <div class="dots-diagram dots-4cols">
+                        <div class="dot-col"><span class="dot"></span></div>
+                        <div class="dot-col"><span class="dot"></span><span class="dot"></span></div>
+                        <div class="dot-col"><span class="dot"></span><span class="dot"></span><span class="dot"></span></div>
+                        <div class="dot-col"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span></div>
+                        <div class="diagram-arrow-bar"><span class="arrow-line"></span><span class="arrow-head"></span></div>
+                      </div>
+                      <span class="face-name-tag">Divergencia (1→4)</span>
+                    </button>
+
+                    <button type="button" class="net-face face-center-logo active-center" data-face-id="mare_core" aria-label="Cara MARE Core">
+                      <span class="face-badge-corner core-badge">NÚCLEO</span>
+                      <img src="assets/logo_marelab_cuadrado.png" alt="Marelab Core" class="net-logo-image" />
+                      <span class="face-name-tag brand-tag">Marelab Core</span>
+                    </button>
+
+                    <button type="button" class="net-face face-dots-right" data-face-id="divergencia_right" aria-label="Cara Convergencia (4 a 1 punto)">
+                      <span class="face-badge-corner">CONVERGENCIA</span>
+                      <div class="dots-diagram dots-4cols right-aligned">
+                        <div class="dot-col"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span></div>
+                        <div class="dot-col"><span class="dot"></span><span class="dot"></span><span class="dot"></span></div>
+                        <div class="dot-col"><span class="dot"></span><span class="dot"></span></div>
+                        <div class="dot-col"><span class="dot"></span></div>
+                        <div class="diagram-arrow-bar"><span class="arrow-line"></span><span class="arrow-head"></span></div>
+                      </div>
+                      <span class="face-name-tag">Convergencia (4→1)</span>
+                    </button>
+                  </div>
+
+                  <!-- Under Center: Activaciones & Robot Soccer Mare -->
+                  <button type="button" class="net-face face-tictactoe" data-face-id="juego_robotics" aria-label="Cara Robot Soccer Mare">
+                    <span class="face-badge-corner">GAMIFICACIÓN</span>
+                    <div class="tictactoe-grid">
+                      <div class="ttt-cell"><span class="ttt-x">✕</span></div>
+                      <div class="ttt-cell"></div>
+                      <div class="ttt-cell"><span class="ttt-art">⚽</span></div>
+                      <div class="ttt-cell"></div>
+                      <div class="ttt-cell"><span class="ttt-x">✕</span></div>
+                      <div class="ttt-cell"></div>
+                      <div class="ttt-cell"><span class="ttt-art">🤖</span></div>
+                      <div class="ttt-cell"></div>
+                      <div class="ttt-cell"><span class="ttt-x">✕</span></div>
+                    </div>
+                    <span class="face-name-tag">Robot Soccer &amp; Triqui</span>
+                  </button>
+
+                  <!-- Bottom: Semillero de Innovación (De Punto A [Bombillo] a Punto B [LED]) -->
+                  <button type="button" class="net-face face-rocket" data-face-id="semillero" aria-label="Cara Semillero de Innovación (De Bombillo A a LED B)">
+                    <span class="face-badge-corner">SEMILLERO</span>
+                    <div class="semillero-a-to-b-stage">
+                      <div class="pt-node pt-a" title="Punto A: Bombillo (Ideas)">
+                        <i data-lucide="lightbulb"></i>
+                        <span class="node-lbl">A</span>
+                      </div>
+                      <div class="flight-trajectory-dash"></div>
+                      <div class="rocket-flight-vector" title="Cohete apuntando hacia el Punto B">
+                        <i data-lucide="rocket"></i>
+                      </div>
+                      <div class="pt-node pt-b" title="Punto B: LED (Mayor Potencial)">
+                        <i data-lucide="sparkles"></i>
+                        <span class="node-lbl">B</span>
+                      </div>
+                    </div>
+                    <span class="face-name-tag">Semillero (A ➔ B)</span>
+                  </button>
+
+                </div>
+              </div>
+            </div>
+
+            <!-- Face Selector Row (Quick buttons to choose prediction) -->
+            <div class="face-selector-palette" id="faceSelectorPalette">
+              <span class="palette-instruction">1. Elige la cara que predices con más opciones de ganar:</span>
+              <div class="palette-buttons" id="quickFaceSelector">
+                <button type="button" class="btn-palette-face active" data-face="mare_core">
+                  <span class="pf-dot bg-cyan"></span> MARE
+                </button>
+                <button type="button" class="btn-palette-face" data-face="steam">
+                  <span class="pf-dot bg-yellow"></span> STEAM
+                </button>
+                <button type="button" class="btn-palette-face" data-face="divergencia_left">
+                  <span class="pf-dot bg-cyan"></span> Divergencia (1→4)
+                </button>
+                <button type="button" class="btn-palette-face" data-face="divergencia_right">
+                  <span class="pf-dot bg-cyan"></span> Convergencia (4→1)
+                </button>
+                <button type="button" class="btn-palette-face" data-face="juego_robotics">
+                  <span class="pf-dot bg-coral"></span> Robot Soccer
+                </button>
+                <button type="button" class="btn-palette-face" data-face="semillero">
+                  <span class="pf-dot bg-white"></span> Semillero
+                </button>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- RIGHT COLUMN: Game Stats, Controller & Live Results -->
+          <div class="juego-control-col">
+            
+            <div class="juego-card-panel">
+              <div class="tag-label"><span class="tag-dot"></span> TU TURNO • RETO DEL DADO</div>
+              <h3 class="juego-panel-title">¿Qué tanto le atinas al dado?</h3>
+              <p class="juego-panel-desc">
+                Ingresa tu nombre y correo, selecciona la cara que crees que tiene <strong>más posibilidades de salir ganadora</strong> y presiona <strong>Tirar</strong> para completar 10 tiros en 3D.
+              </p>
+
+              <!-- PLAYER REGISTRATION FORM -->
+              <div class="player-reg-box" id="playerRegBox">
+                <div class="player-input-row">
+                  <div class="p-input-group">
+                    <label for="playerNameInput"><i data-lucide="user"></i> Tu Nombre</label>
+                    <input type="text" id="playerNameInput" placeholder="Ej: Valentina Morales" />
+                  </div>
+                  <div class="p-input-group">
+                    <label for="playerEmailInput"><i data-lucide="mail"></i> Correo Electrónico</label>
+                    <input type="email" id="playerEmailInput" placeholder="tu@correo.com" />
+                  </div>
+                </div>
+                <div class="player-status-badge" id="playerStatusBadge" style="display:none;">
+                  <span class="ps-avatar"><i data-lucide="award"></i></span>
+                  <div class="ps-info">
+                    <span class="ps-name" id="psName">Valentina</span>
+                    <span class="ps-email" id="psEmail">valentina@correo.com</span>
+                  </div>
+                  <button type="button" class="btn-text-sm" id="btnChangePlayer">Cambiar</button>
+                </div>
+              </div>
+
+              <!-- Controls -->
+              <div class="game-controls">
+                <button class="btn btn-primary btn-large btn-glow" id="rollBtn">
+                  <i data-lucide="dice-5"></i>
+                  <span id="rollBtnText">Tirar (1/10)</span>
+                </button>
+                <button class="btn btn-ghost btn-large" id="resetBtn" style="display:none;">
+                  <i data-lucide="rotate-ccw"></i>
+                  <span>Jugar de nuevo</span>
+                </button>
+              </div>
+
+              <!-- Stats Counter -->
+              <div class="game-stats-grid">
+                <div class="stat-box">
+                  <b id="statThrow">0/10</b>
+                  <span>Tiros</span>
+                </div>
+                <div class="stat-box">
+                  <b id="statHits" class="color-yellow">0</b>
+                  <span>Aciertos</span>
+                </div>
+                <div class="stat-box">
+                  <b id="statPct" class="color-cyan">—</b>
+                  <span>Precisión</span>
+                </div>
+              </div>
+
+              <!-- Result Evaluation Card (Shows upon completion) -->
+              <div class="result-card" id="resultCard">
+                <div class="pct-badge" id="resultPct">0%</div>
+                <h4 class="result-headline" id="resultHeadline">¡Evaluación de Precisión!</h4>
+                <p id="resultMsg" class="result-message"></p>
+
+                <!-- WINNING / MOST FREQUENT FACE HIGHLIGHT -->
+                <div class="most-frequent-face-banner" id="mostFrequentFaceBanner">
+                  <span class="mfb-label"><i data-lucide="trophy"></i> Cara que más salió:</span>
+                  <strong class="mfb-name" id="mfbName">—</strong>
+                  <span class="mfb-count" id="mfbCount">(0/10 veces)</span>
+                </div>
+
+                <!-- 6-FACE BREAKDOWN BARS -->
+                <div class="faces-breakdown-container">
+                  <h5 class="fbc-title"><i data-lucide="bar-chart-2"></i> Desglose de resultados por cara:</h5>
+                  <div class="fbc-bars" id="facesBreakdownBars"></div>
+                </div>
+
+                <!-- EMAIL RESULT ACTIONS -->
+                <div class="result-actions-row">
+                  <a href="#" id="btnSendAdminEmail" class="btn btn-secondary btn-sm" target="_blank" rel="noopener">
+                    <i data-lucide="send"></i>
+                    <span>Enviar resultados a soporte@marelab.co</span>
+                  </a>
+                </div>
+              </div>
+
+              <!-- Live Hint Status -->
+              <p class="game-hint" id="rollHint" role="status" aria-live="polite">
+                Cada cara tiene 1 en 6 de probabilidad. Hasta el mejor emprendedor falla más de lo que acierta antes de encontrar el patrón.
+              </p>
+
+              <!-- Live Selected Face Detail Box -->
+              <div class="active-face-explanation" id="faceDetailBox">
+                <div class="afe-header">
+                  <span class="afe-badge" id="fdBadge">CARA SELECCIONADA: NÚCLEO MARELAB</span>
+                </div>
+                <h4 class="afe-title" id="fdTitle">Marelab — El Núcleo de la Creatividad</h4>
+                <p class="afe-desc" id="fdDesc">
+                  El corazón integrador donde convergen los 4 pilares: <strong>Motívate, Aprende, Recréate y Emprende</strong>.
+                </p>
+                <div class="afe-tags" id="fdTags">
+                  <span class="afe-tag"><i data-lucide="check"></i> Método MARE</span>
+                  <span class="afe-tag"><i data-lucide="check"></i> Superpoder Creativo</span>
+                  <span class="afe-tag"><i data-lucide="check"></i> Medellín</span>
+                </div>
+              </div>
+
+            </div>
+
+          </div>
+
+        </div>
+
+        <!-- LEADERBOARD RANKING TABLE -->
+        <div class="ranking-leaderboard-wrapper" id="rankingSection">
+          <div class="ranking-header">
+            <div class="tag-label centered"><span class="tag-dot"></span> TABLA DE LÍDERES</div>
+            <h3 class="ranking-title">Ranking del <span class="gradient-text">Dado MARE</span></h3>
+            <p class="ranking-desc">
+              Tus partidas se acumularán permanentemente y tu mejor récord quedará registrado en la tabla.
+            </p>
+          </div>
+
+          <div class="ranking-table-card">
+            <div class="table-responsive">
+              <table class="ranking-table">
+                <thead>
+                  <tr>
+                    <th>Pos</th>
+                    <th>Jugador</th>
+                    <th>Partidas</th>
+                    <th>Mejor Precisión</th>
+                    <th>Aciertos Totales</th>
+                    <th>Cara Favorita</th>
+                    <th>Último Intento</th>
+                  </tr>
+                </thead>
+                <tbody id="rankingTableBody">
+                  <!-- Dynamic ranking rows -->
+                </tbody>
+              </table>
+            </div>
+            
+            <!-- SECURE ADMIN FOOTER BAR -->
+            <div class="ranking-footer-bar">
+              <span class="rf-admin-note">
+                <i data-lucide="shield-check"></i> Base de datos de resultados permanente • Administrada por <strong>soporte@marelab.co</strong>
+              </span>
+              
+              <div class="rf-admin-controls-area">
+                <!-- User View: Discreet admin lock button -->
+                <button type="button" class="btn-admin-access" id="btnOpenAdminModal" title="Panel exclusivo para administradores">
+                  <i data-lucide="lock"></i> <span>Acceso Administrador</span>
+                </button>
+
+                <!-- Admin Session Active Bar (hidden by default) -->
+                <div class="admin-session-badge" id="adminSessionBadge" style="display:none;">
+                  <span class="as-label"><i data-lucide="shield-alert"></i> Admin Activo</span>
+                  <button type="button" class="btn-admin-action" id="btnExportRankingCSV" title="Exportar Ranking a CSV"><i data-lucide="download"></i> Exportar CSV</button>
+                  <button type="button" class="btn-admin-action danger" id="btnClearRankingAdmin" title="Reiniciar base de datos permanentemente"><i data-lucide="trash-2"></i> Reiniciar Ranking</button>
+                  <button type="button" class="btn-admin-action logout" id="btnLogoutAdmin" title="Cerrar sesión de administrador"><i data-lucide="log-out"></i> Salir</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ADMIN LOGIN MODAL -->
+    <div class="admin-modal-overlay" id="adminModal" style="display:none;">
+      <div class="admin-modal-card">
+        <div class="admin-modal-header">
+          <div class="admin-modal-title">
+            <i data-lucide="shield-lock"></i>
+            <h4>Panel de Control Administrador</h4>
+          </div>
+          <button type="button" class="admin-modal-close" id="btnCloseAdminModal">&times;</button>
+        </div>
+        <p class="admin-modal-desc">
+          Ingresa el PIN de seguridad de <strong>soporte@marelab.co</strong> para desbloquear las opciones de exportación y mantenimiento permanente del ranking.
+        </p>
+        <form id="adminLoginForm" class="admin-login-form">
+          <div class="form-group">
+            <label for="adminPinInput"><i data-lucide="key"></i> PIN / Clave Administrador</label>
+            <input type="password" id="adminPinInput" placeholder="Ingresa PIN..." autocomplete="current-password" required />
+          </div>
+          <div class="admin-modal-error" id="adminModalError" style="display:none;">
+            <i data-lucide="alert-circle"></i> Clave incorrecta. Contacta a soporte@marelab.co.
+          </div>
+          <div class="admin-modal-actions">
+            <button type="button" class="btn btn-secondary" id="btnCancelAdmin">Cancelar</button>
+            <button type="submit" class="btn btn-primary"><i data-lucide="unlock"></i> Desbloquear Panel</button>
+          </div>
+        </form>
+        <div class="admin-modal-footer">
+          <small>PIN por defecto del laboratorio: <code>marelab2026</code></small>
+        </div>
+      </div>
+    </div>
+
+      </div>
+    </section>
+
+    <!-- SECTION: TRES FORMAS DE VIVIR MARELAB (LÍNEAS DE IMPACTO) -->
+    <section class="section lineas-section" id="lineas">
+      <div class="section-container">
+        
+        <div class="section-header">
+          <div class="tag-label"><span class="tag-dot"></span> ELIGE TU PRÓXIMO MOVIMIENTO</div>
+          <h2 class="section-title">Tres formas de vivir <span class="gradient-text">Marelab</span></h2>
+          <p class="section-desc">
+            Sin importar por dónde entres, terminas pasando por los cuatro pilares:
+          </p>
+        </div>
+
+        <div class="lineas-grid">
+          
+          <!-- Line 1: Activaciones & Robot Soccer Mare -->
+          <div class="linea-card">
+            <div class="linea-card-header">
+              <div class="linea-icon icon-rsm">
+                <i data-lucide="bot"></i>
+              </div>
+              <span class="linea-tag-badge bg-coral">ACTIVACIONES</span>
+            </div>
+            <h3 class="linea-title">Robot Soccer Mare</h3>
+            <div class="linea-sub">Deporte Tecnológico &amp; Robótica Lúdica</div>
+            <p class="linea-description">
+              El torneo de robótica más grande de Colombia, con proyección internacional. Llevamos la activación insignia de Marelab a tu evento, colegio, universidad o empresa para aprender jugando.
+            </p>
+            <div class="linea-features">
+              <span><i data-lucide="check-circle-2"></i> Torneos masivos y canchas interactivas</span>
+              <span><i data-lucide="check-circle-2"></i> Trabajo en equipo y estrategia ágil</span>
+            </div>
+            <a class="btn btn-primary btn-block btn-glow" href="https://wa.me/573152445278?text=Hola%20Marelab%2C%20quiero%20una%20activaci%C3%B3n%20de%20Robot%20Soccer%20Mare%20para%20mi%20evento" target="_blank" rel="noopener">
+              <i data-lucide="message-circle"></i>
+              <span>Quiero una activación</span>
+            </a>
+          </div>
+
+          <!-- Line 2: Talleres y Cursos STEM / STEAM -->
+          <div class="linea-card">
+            <div class="linea-card-header">
+              <div class="linea-icon icon-steam">
+                <i data-lucide="atom"></i>
+              </div>
+              <span class="linea-tag-badge bg-yellow">TALLERES Y CURSOS</span>
+            </div>
+            <h3 class="linea-title">STEM · STEAM</h3>
+            <div class="linea-sub">Experiencias de Aprendizaje Hands-on</div>
+            <p class="linea-description">
+              Experiencias prácticas donde ciencia, tecnología, ingeniería, arte y matemáticas se aprenden construyendo y prototipando, no memorizando. Formamos pensadores críticos del siglo XXI.
+            </p>
+            <div class="linea-features">
+              <span><i data-lucide="check-circle-2"></i> Metodologías pedagógicas inmersivas</span>
+              <span><i data-lucide="check-circle-2"></i> Formación docente y rutas escolares</span>
+            </div>
+            <a class="btn btn-primary btn-block btn-glow" href="https://wa.me/573152445278?text=Hola%20Marelab%2C%20quiero%20informaci%C3%B3n%20sobre%20una%20experiencia%20STEM-STEAM" target="_blank" rel="noopener">
+              <i data-lucide="message-circle"></i>
+              <span>Quiero mi experiencia STEM-STEAM</span>
+            </a>
+          </div>
+
+          <!-- Line 3: Semillero de Innovación -->
+          <div class="linea-card">
+            <div class="linea-card-header">
+              <div class="linea-icon icon-semillero">
+                <i data-lucide="rocket"></i>
+              </div>
+              <span class="linea-tag-badge bg-white text-dark">SEMILLERO</span>
+            </div>
+            <h3 class="linea-title">Semillero de Innovación</h3>
+            <div class="linea-sub">Del Baúl de las Ideas al Lanzamiento</div>
+            <p class="linea-description">
+              ¿Tienes una idea? La llevamos por el pipeline completo: <strong>Cofre / Baúl de Ideas → Modelo de Negocio → Prototipo → Lanzamiento</strong>. Aceleramos proyectos para llevarlos a la órbita.
+            </p>
+            <div class="linea-features">
+              <span><i data-lucide="check-circle-2"></i> Mentoría y aceleración de prototipos MVP</span>
+              <span><i data-lucide="check-circle-2"></i> Conexión con ecosistemas de emprendimiento</span>
+            </div>
+            <a class="btn btn-primary btn-block btn-glow" href="https://wa.me/573152445278?text=Hola%20Marelab%2C%20quiero%20llevar%20mi%20idea%20al%20Semillero%20de%20Innovaci%C3%B3n" target="_blank" rel="noopener">
+              <i data-lucide="message-circle"></i>
+              <span>Llevar mi idea al siguiente nivel</span>
+            </a>
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+    <!-- SECTION: MANIFIESTO MARELAB -->
+    <section class="section manifiesto-section" id="manifiesto">
+      <div class="section-container">
+        
+        <div class="manifiesto-card">
+          <div class="manifiesto-watermark">CREATIVIDAD</div>
+          <div class="tag-label"><span class="tag-dot"></span> NUESTRO MANIFIESTO</div>
+
+          <blockquote class="manifiesto-quote">
+            "No creemos en las recetas prefabricadas ni en el talento como un privilegio exclusivo. Creemos en la <strong>Divergencia</strong>, en el poder educativo del <strong>STEAM</strong>, en el aprendizaje a través del <strong>Juego</strong> y en impulsar <strong>Semilleros de Emprendimiento</strong> que lleven las ideas a la órbita."
+          </blockquote>
+
+          <div class="manifiesto-points-grid">
+            <div class="m-point">
+              <span class="m-point-num">01</span>
+              <h4>La Creatividad es Divergente</h4>
+              <p>No buscamos una sola respuesta correcta; abrimos abanicos infinitos de posibilidades antes de converger.</p>
+            </div>
+
+            <div class="m-point">
+              <span class="m-point-num">02</span>
+              <h4>El Juego es Cosa Seria</h4>
+              <p>A través de dinámicas como Robot Soccer Mare, el juego desbloquea la curiosidad y acelera la comprensión técnica.</p>
+            </div>
+
+            <div class="m-point">
+              <span class="m-point-num">03</span>
+              <h4>STEAM para Transformar</h4>
+              <p>Fusionar ciencia y arte nos permite construir puentes entre la lógica rigurosa y la emoción humana.</p>
+            </div>
+
+            <div class="m-point">
+              <span class="m-point-num">04</span>
+              <h4>Sembrar para Emprender</h4>
+              <p>Convertimos el potencial de las personas en proyectos tangibles que generan impacto en sus comunidades.</p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- SECTION: CONTACTO / FORMULARIO -->
+    <section class="section contacto-section" id="contacto">
+      <div class="section-container">
+        
+        <div class="contact-box">
+          <div class="contact-grid">
+            
+            <div class="contact-lead">
+              <div class="tag-label"><span class="tag-dot"></span> VAMOS A CREAR JUNTOS</div>
+              <h2 class="contact-title">¿Listo para activar tu <span class="gradient-text">Superpoder</span>?</h2>
+              <p class="contact-desc">
+                ¿Quieres llevar <strong>Robot Soccer Mare</strong> a tu evento, capacitarte en <strong>STEM/STEAM</strong>, o acelerar tu proyecto en nuestro <strong>Semillero</strong>? Estamos en Medellín, Colombia para el mundo.
+              </p>
+
+              <div class="contact-details">
+                <div class="c-detail-item">
+                  <i data-lucide="map-pin" class="c-icon"></i>
+                  <div>
+                    <span class="c-label">Ubicación</span>
+                    <span class="c-val">Medellín, Colombia • Cobertura Global</span>
+                  </div>
+                </div>
+
+                <div class="c-detail-item">
+                  <i data-lucide="message-circle" class="c-icon"></i>
+                  <div>
+                    <span class="c-label">WhatsApp Directo</span>
+                    <a href="https://wa.me/573152445278?text=Hola%20Marelab%2C%20quiero%20conectar%20con%20el%20Laboratorio" target="_blank" rel="noopener" class="c-val highlight-val">+57 315 244 5278 (3152445278)</a>
+                  </div>
+                </div>
+
+                <div class="c-detail-item">
+                  <i data-lucide="mail" class="c-icon"></i>
+                  <div>
+                    <span class="c-label">Correo Institucional</span>
+                    <a href="mailto:soporte@marelab.co" class="c-val">soporte@marelab.co</a>
+                  </div>
+                </div>
+
+                <div class="c-detail-item">
+                  <i data-lucide="send" class="c-icon"></i>
+                  <div>
+                    <span class="c-label">Correo Personal / Dirección</span>
+                    <a href="mailto:jhoncorzo1985@gmail.com" class="c-val">jhoncorzo1985@gmail.com</a>
+                  </div>
+                </div>
+
+                <div class="c-detail-item">
+                  <i data-lucide="globe" class="c-icon"></i>
+                  <div>
+                    <span class="c-label">Dominio Oficial</span>
+                    <a href="https://www.marelab.co" target="_blank" rel="noopener" class="c-val highlight-val">www.marelab.co</a>
+                  </div>
+                </div>
+
+                <div class="c-detail-item">
+                  <i data-lucide="bot" class="c-icon"></i>
+                  <div>
+                    <span class="c-label">Subdominio Robot Soccer Mare</span>
+                    <a href="https://rsm.marelab.co" target="_blank" rel="noopener" class="c-val">rsm.marelab.co</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="contact-form-card">
+              <form id="mareContactForm" class="c-form">
+                <h3 class="form-title">Inicia la Conversación</h3>
+
+                <div class="form-group">
+                  <label for="userName">Tu Nombre / Organización o Colegio</label>
+                  <input type="text" id="userName" name="name" required placeholder="Ej: Valentina / Colegio Innova" />
+                </div>
+
+                <div class="form-group">
+                  <label for="userEmail">Correo Electrónico</label>
+                  <input type="email" id="userEmail" name="email" required placeholder="tu@correo.com" />
+                </div>
+
+                <div class="form-group">
+                  <label for="userPillarInterest">¿Qué línea te interesa potenciar?</label>
+                  <select id="userPillarInterest" name="pillar">
+                    <option value="robot_soccer">Activaciones: Robot Soccer Mare</option>
+                    <option value="steam">Talleres y Cursos: STEM · STEAM</option>
+                    <option value="semillero">Semillero de Innovación (Del Baúl al Lanzamiento)</option>
+                    <option value="cultura_mare">Cultura MARE (Completa)</option>
+                  </select>
+                </div>
+
+                <div class="form-group">
+                  <label for="userMsg">Cuéntanos sobre tu idea o evento</label>
+                  <textarea id="userMsg" name="message" rows="4" required placeholder="Queremos organizar una activación de Robot Soccer y talleres STEAM para..."></textarea>
+                </div>
+
+                <button type="submit" class="btn btn-primary btn-large btn-block btn-glow">
+                  <i data-lucide="send"></i>
+                  <span>Enviar al Laboratorio</span>
+                </button>
+
+                <div id="formFeedback" class="form-feedback"></div>
+              </form>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+    </section>
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="footer-container">
+      <div class="footer-top">
+        <div class="footer-brand">
+          <a href="#hero" class="brand-logo-link">
+            <img src="assets/logo_mare_navy_pilares.png" alt="MARELAB" class="footer-brand-logo-img" />
+          </a>
+          <p class="footer-tagline">
+            Laboratorio de Innovación y Creatividad. Medellín, Colombia.<br>
+            Motívate • Aprende • Recréate • Emprende.
+          </p>
+        </div>
+
+        <div class="footer-links-col">
+          <h4>Líneas</h4>
+          <a href="#lineas">Robot Soccer Mare</a>
+          <a href="#lineas">STEM · STEAM</a>
+          <a href="#lineas">Semillero de Innovación</a>
+          <a href="#juego">Reto del Dado MARE</a>
+        </div>
+
+        <div class="footer-links-col">
+          <h4>Cultura MARE</h4>
+          <a href="#pilares">Motívate (Motivación)</a>
+          <a href="#pilares">Aprende (Competencia)</a>
+          <a href="#pilares">Recréate (Gamificación)</a>
+          <a href="#pilares">Emprende (Innovación)</a>
+        </div>
+
+        <div class="footer-links-col">
+          <h4>Canales Directos</h4>
+          <a href="https://wa.me/573152445278" target="_blank" rel="noopener"><i data-lucide="message-circle"></i> WhatsApp: 3152445278</a>
+          <a href="mailto:soporte@marelab.co"><i data-lucide="mail"></i> soporte@marelab.co</a>
+          <a href="mailto:jhoncorzo1985@gmail.com"><i data-lucide="mail"></i> jhoncorzo1985@gmail.com</a>
+          <div class="rsm-subdomain-pill">
+            <span>Subdominio: <strong>rsm.marelab.co</strong></span>
+          </div>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <p>&copy; 2026 MARELAB. Todos los derechos reservados. Medellín, Colombia. 🚀⚽🤖🎨</p>
+        <a href="https://wa.me/573152445278" target="_blank" rel="noopener" class="footer-wa-link">Escríbenos por WhatsApp (315 244 5278) →</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Main JavaScript File -->
+  <script src="app.js"></script>
+</body>
+</html>
