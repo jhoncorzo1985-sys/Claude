@@ -1,0 +1,17 @@
+﻿<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 540 270" width="540" height="270">
+  <g transform="translate(15, 15)">
+    <rect x="0" y="0" width="240" height="240" rx="50" fill="#001F54" />
+    <text x="65" y="110" font-family="'Fredoka', 'Plus Jakarta Sans', sans-serif" font-size="105" font-weight="800" fill="#FFFFFF" text-anchor="middle">M</text>
+    <text x="175" y="110" font-family="'Fredoka', 'Plus Jakarta Sans', sans-serif" font-size="105" font-weight="800" fill="#FFFFFF" text-anchor="middle">A</text>
+    <text x="65" y="205" font-family="'Fredoka', 'Plus Jakarta Sans', sans-serif" font-size="105" font-weight="800" fill="#FFFFFF" text-anchor="middle">R</text>
+    <rect x="135" y="140" width="80" height="18" rx="9" fill="#00D9FF" />
+    <rect x="135" y="168" width="80" height="18" rx="9" fill="#FFD700" />
+    <rect x="135" y="196" width="80" height="18" rx="9" fill="#FF6B35" />
+  </g>
+  <g transform="translate(290, 30)">
+    <text x="0" y="45" font-family="'Plus Jakarta Sans', 'Fredoka', sans-serif" font-size="44" font-weight="800" fill="#00D9FF">Motívate</text>
+    <text x="0" y="102" font-family="'Plus Jakarta Sans', 'Fredoka', sans-serif" font-size="44" font-weight="800" fill="#001F54">Aprende</text>
+    <text x="0" y="159" font-family="'Plus Jakarta Sans', 'Fredoka', sans-serif" font-size="44" font-weight="800" fill="#001F54">Recréate</text>
+    <text x="0" y="216" font-family="'Plus Jakarta Sans', 'Fredoka', sans-serif" font-size="44" font-weight="800" fill="#001F54">Emprende</text>
+  </g>
+</svg>
