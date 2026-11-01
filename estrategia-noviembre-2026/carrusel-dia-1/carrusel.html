@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="es"><head><meta charset="utf-8">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Plus+Jakarta+Sans:wght@500;600;700&family=Space+Grotesk:wght@600;700&display=swap">
+<style>
+:root{--navy:#001F54;--deep:#00102b;--gold:#FFD700;--goldd:#c9a400;--cyan:#00D9FF;--coral:#FF6B35;--blue:#5b8cff;--fg:#f4f7fc;--soft:#b6c4de}
+*{box-sizing:border-box;margin:0}
+body{background:#222;display:grid;gap:40px;padding:40px;font-family:'Plus Jakarta Sans',system-ui,sans-serif;color:var(--fg)}
+.s{width:1080px;height:1350px;position:relative;overflow:hidden;padding:96px 90px;display:flex;flex-direction:column;
+  background:radial-gradient(900px 700px at 80% 0%,rgba(255,215,0,.16),transparent 60%),radial-gradient(800px 600px at 0% 100%,rgba(0,217,255,.12),transparent 60%),linear-gradient(170deg,var(--navy),var(--deep))}
+.dots{position:absolute;inset:0;background-image:radial-gradient(rgba(255,255,255,.06) 2px,transparent 2px);background-size:44px 44px;pointer-events:none}
+.eye{font-family:'Space Grotesk',monospace;font-weight:700;letter-spacing:.2em;font-size:34px;color:var(--cyan);text-transform:uppercase}
+h1,h2{font-family:'Fredoka',ui-rounded,sans-serif;font-weight:700;line-height:1.02;letter-spacing:-.01em}
+h1{font-size:150px} h2{font-size:96px}
+.gold{color:var(--gold)}
+p{font-size:44px;line-height:1.35;color:var(--soft)}
+.foot{margin-top:auto;padding-top:36px;display:flex;justify-content:space-between;align-items:center;font-family:'Space Grotesk',monospace;font-weight:700;font-size:30px;letter-spacing:.12em;color:var(--soft);text-transform:uppercase}
+.brand{display:flex;gap:10px;align-items:center}
+.pill{width:44px;height:44px;border-radius:12px;display:grid;place-items:center;font-family:'Fredoka';font-size:28px;color:#06122b}
+.coin{position:absolute;border-radius:50%;background:radial-gradient(circle at 35% 30%,#fff6b0,var(--gold) 45%,var(--goldd));border:6px solid #8a6f00;box-shadow:0 18px 40px rgba(0,0,0,.45);display:grid;place-items:center;font-family:'Fredoka';font-weight:700;color:#6a5400}
+.page{position:absolute;top:96px;right:90px;font-family:'Space Grotesk';font-weight:700;font-size:28px;color:rgba(255,255,255,.45)}
+/* vault door */
+.vault{position:absolute;right:-170px;bottom:250px;width:720px;height:720px;border-radius:50%;background:radial-gradient(circle,#2a4c8f 0 38%,#13306b 39% 58%,#0b2353 59%);border:16px solid #3a5fa8;box-shadow:inset 0 0 0 30px rgba(0,0,0,.15),0 0 120px rgba(255,215,0,.25)}
+.vault::before{content:"";position:absolute;inset:200px;border-radius:50%;border:14px solid var(--gold);opacity:.85}
+.vault::after{content:"";position:absolute;left:50%;top:50%;width:300px;height:22px;background:var(--gold);transform:translate(-50%,-50%) rotate(-30deg);border-radius:11px;box-shadow:0 0 0 0 transparent}
+.spoke{position:absolute;left:50%;top:50%;width:300px;height:22px;background:var(--gold);transform:translate(-50%,-50%) rotate(60deg);border-radius:11px}
+/* board */
+.board{display:grid;grid-template-columns:repeat(6,1fr);gap:12px;margin:80px 80px 36px}
+.sq{aspect-ratio:1;border-radius:20px;background:rgba(255,255,255,.06);border:2px solid rgba(160,195,255,.2);display:grid;place-items:center;font-family:'Space Grotesk';font-weight:700;font-size:38px;color:var(--soft);position:relative}
+.sq.m{border-color:var(--cyan)} .sq.a{border-color:var(--blue)} .sq.r{border-color:var(--coral)} .sq.e{border-color:var(--gold)}
+.sq.here{background:var(--gold);color:#3a2e00;border-color:var(--gold);box-shadow:0 0 50px rgba(255,215,0,.5)}
+.sq.hito::after{content:"";position:absolute;right:12px;top:12px;width:14px;height:14px;border-radius:50%;background:var(--gold)}
+.robot{position:absolute;left:50%;top:-58px;transform:translateX(-50%);width:70px}
+.stat{display:grid;grid-template-columns:300px 1fr;gap:34px;align-items:center;padding:38px 0;border-bottom:2px solid rgba(160,195,255,.15)}
+.stat b{font-family:'Fredoka';font-size:118px;line-height:1;color:var(--gold)}
+.stat span{font-size:40px;line-height:1.3;color:var(--fg)}
+.list{display:grid;gap:30px;margin-top:60px}
+.li{display:flex;gap:30px;align-items:center;background:rgba(255,255,255,.05);border:2px solid rgba(160,195,255,.16);border-radius:28px;padding:30px 36px;font-size:46px;font-weight:600}
+.li .pill{width:76px;height:76px;font-size:44px;border-radius:20px;flex:none}
+.cta{margin-top:70px;background:var(--gold);color:#2a2000;border-radius:36px;padding:44px 50px;font-family:'Fredoka';font-weight:700;font-size:68px;line-height:1.1;box-shadow:0 30px 70px rgba(255,215,0,.25)}
+.cta small{display:block;font-family:'Plus Jakarta Sans';font-weight:600;font-size:38px;margin-top:12px;color:#4a3c00}
+.mare{display:flex;gap:16px;margin-top:60px}
+.mare div{flex:1;border-radius:24px;padding:26px 10px;text-align:center;font-family:'Fredoka';font-weight:600;font-size:36px;color:#06122b}
+</style></head><body>
+
+<!-- 1 PORTADA -->
+<section class="s" id="s1"><div class="dots"></div>
+  <div class="vault"><div class="spoke"></div></div>
+  <div class="coin" style="width:170px;height:170px;left:640px;top:330px;font-size:84px">M</div>
+  <div class="coin" style="width:110px;height:110px;left:820px;top:560px;font-size:54px">A</div>
+  <div class="coin" style="width:90px;height:90px;left:560px;top:620px;font-size:44px">R</div>
+  <div class="coin" style="width:130px;height:130px;left:880px;top:200px;font-size:62px">E</div>
+  <span class="eye" style="position:relative">Día 1 de 30</span>
+  <h1 style="margin-top:40px;position:relative;max-width:640px">Abrimos la <span class="gold">bóveda</span></h1>
+  <p style="margin-top:40px;position:relative;max-width:560px;color:var(--fg)">30 casillas.<br>Un paso por día.</p>
+  <div class="foot" style="position:relative"><span class="brand"><i class="pill" style="background:var(--gold)">E</i>Emprende · Marelab</span><span>Desliza →</span></div>
+</section>
+
+<!-- 2 EL SUEÑO -->
+<section class="s" id="s2"><div class="dots"></div><span class="page">2/6</span>
+  <span class="eye">El sueño</span>
+  <h2 style="margin-top:50px">Uno de mis sueños favoritos</h2>
+  <p style="margin-top:50px;font-size:54px;color:var(--fg);max-width:820px">Estar en la bóveda del Tío Rico, nadando entre monedas.</p>
+  <p style="margin-top:40px;font-size:54px;max-width:820px"><span class="gold" style="font-weight:700">Hoy abrimos la nuestra.</span> Aquí las monedas son ideas, libros, robots y personas.</p>
+  <div class="coin" style="width:240px;height:240px;right:90px;bottom:220px;font-size:120px">M</div>
+  <div class="coin" style="width:130px;height:130px;right:330px;bottom:170px;font-size:64px">E</div>
+  <div class="foot"><span class="brand"><i class="pill" style="background:var(--gold)">E</i>Emprende · Marelab</span><span></span></div>
+</section>
+
+<!-- 3 LO QUE YA TENEMOS -->
+<section class="s" id="s3"><div class="dots"></div><span class="page">3/6</span>
+  <span class="eye">Ya en la bóveda</span>
+  <h2 style="margin-top:40px;font-size:84px">Lo que ya tenemos guardado</h2>
+  <div style="margin-top:40px">
+    <div class="stat"><b>1.º</b><span>Premio INN-GAME 2026 con <strong>Robot Soccer Mare</strong></span></div>
+    <div class="stat"><b>95,27</b><span>Fondo Emprender 2026, mejor puntaje de Medellín</span></div>
+    <div class="stat" style="border:0"><b>45.000</b><span>personas impactadas en 10 departamentos de Colombia</span></div>
+  </div>
+  <div class="foot"><span class="brand"><i class="pill" style="background:var(--gold)">E</i>Emprende · Marelab</span><span></span></div>
+</section>
+
+<!-- 4 TABLERO -->
+<section class="s" id="s4"><div class="dots"></div><span class="page">4/6</span>
+  <span class="eye">El tablero</span>
+  <h2 style="margin-top:40px;font-size:88px">30 casillas.<br><span class="gold">Un paso por día.</span></h2>
+  <div class="board" id="board"></div>
+  <p style="font-size:40px;color:var(--fg)"><span class="gold" style="font-weight:700">13 de noviembre:</span> Marelab se constituye como empresa.</p>
+  <div class="foot"><span class="brand"><i class="pill" style="background:var(--gold)">E</i>Emprende · Marelab</span><span></span></div>
+</section>
+
+<!-- 5 ESTE MES -->
+<section class="s" id="s5"><div class="dots"></div><span class="page">5/6</span>
+  <span class="eye">Noviembre</span>
+  <h2 style="margin-top:40px">Este mes</h2>
+  <div class="list">
+    <div class="li"><i class="pill" style="background:var(--blue)">A</i>Leer 20 minutos cada día</div>
+    <div class="li"><i class="pill" style="background:var(--gold)">E</i>Construir tu Canvas personal</div>
+    <div class="li"><i class="pill" style="background:var(--cyan)">M</i>Mega Clase de Robótica</div>
+    <div class="li"><i class="pill" style="background:var(--coral)">R</i>Gamer Med: ganen un Tío Rico</div>
+  </div>
+  <div class="foot"><span class="brand"><i class="pill" style="background:var(--gold)">E</i>Emprende · Marelab</span><span></span></div>
+</section>
+
+<!-- 6 CTA -->
+<section class="s" id="s6"><div class="dots"></div><span class="page">6/6</span>
+  <span class="eye">La comunidad</span>
+  <h1 style="margin-top:50px;font-size:128px">¿Te sumas a la <span class="gold">Marea</span>?</h1>
+  <div class="cta">Comenta MAREA<small>y te enviamos el tablero de los 30 días</small></div>
+  <div class="mare">
+    <div style="background:var(--cyan)">Motívate</div><div style="background:var(--blue)">Aprende</div><div style="background:var(--coral)">Recréate</div><div style="background:var(--gold)">Emprende</div>
+  </div>
+  <div class="coin" style="width:200px;height:200px;right:120px;bottom:230px;font-size:100px">M</div><div class="coin" style="width:120px;height:120px;right:360px;bottom:190px;font-size:60px">E</div><div class="coin" style="width:90px;height:90px;left:110px;bottom:260px;font-size:44px">A</div>
+  <div class="foot"><span class="brand"><i class="pill" style="background:var(--gold)">E</i>#Emprende #CulturaMARE</span><span>Marelab</span></div>
+</section>
+
+<script>
+const P='RMRAERMAEMEAEMAEAEARMRRARREMAE'; // pilar por día (tablero MARE)
+const hitos=[1,13,22,25,26,27,30];
+const b=document.getElementById('board');const order=[];
+for(let r=0;r<5;r++){const row=[];for(let i=0;i<6;i++)row.push(r*6+i+1);if(r%2)row.reverse();order.push(...row)}
+order.forEach(d=>{const e=document.createElement('div');e.className='sq '+P[d-1].toLowerCase()+(d===1?' here':'')+(hitos.includes(d)&&d!==1?' hito':'');e.textContent=d;
+ if(d===1)e.innerHTML='1<svg class="robot" viewBox="0 0 70 60"><rect x="8" y="14" width="54" height="30" rx="8" fill="#00D9FF" stroke="#00102b" stroke-width="4"/><circle cx="25" cy="29" r="6" fill="#00102b"/><circle cx="45" cy="29" r="6" fill="#00102b"/><circle cx="18" cy="50" r="8" fill="#FF6B35" stroke="#00102b" stroke-width="4"/><circle cx="52" cy="50" r="8" fill="#FF6B35" stroke="#00102b" stroke-width="4"/><line x1="35" y1="14" x2="35" y2="4" stroke="#00102b" stroke-width="4"/><circle cx="35" cy="4" r="4" fill="#FFD700"/></svg>';
+ b.appendChild(e)});
+</script>
+</body></html>
