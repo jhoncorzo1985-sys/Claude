@@ -130,6 +130,26 @@ input[type=range]{width:100%;accent-color:var(--gold)}
 .ask{background:rgba(0,217,255,.07);border:1px solid rgba(0,217,255,.35);border-radius:16px;padding:16px;display:grid;gap:8px}
 .ask ul{margin:0;padding-left:18px;display:grid;gap:4px;font-size:.88rem}
 footer{color:var(--fg-mute);font-size:.82rem;text-align:center}
+.habits{display:grid;gap:6px;font-size:.88rem}
+.habits b{font-family:var(--f-data);font-size:.7rem;letter-spacing:.12em;text-transform:uppercase;color:var(--cyan);font-weight:600}
+.habits label{display:flex;align-items:center;gap:8px}
+.habits input,.toggle input{width:18px;height:18px;accent-color:var(--gold)}
+.toggle{display:flex;align-items:center;gap:8px;font-size:.86rem;font-weight:600}
+.thermo{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:12px}
+.th{background:var(--bg-2);border:1px solid var(--line);border-radius:14px;padding:14px;display:grid;gap:8px;align-content:start}
+.th-top{display:flex;justify-content:space-between;gap:8px}
+.th-top .num{color:var(--fg);font-weight:600}
+.th small{color:var(--fg-mute);font-size:.76rem;line-height:1.35}
+.th.read{border-color:rgba(91,140,255,.5)}
+.th.read .num{color:var(--blue)}
+.ai{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.ai div{background:var(--bg-2);border:1px solid var(--line);border-radius:14px;padding:14px;display:grid;gap:4px;font-size:.88rem;color:var(--fg-soft)}
+.ai b{color:var(--fg);font-family:var(--f-display);font-size:1rem;font-weight:600}
+.slides{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:8px}
+.slide{aspect-ratio:4/5;max-width:100%;border-radius:12px;padding:10px;display:flex;flex-direction:column;justify-content:space-between;font-size:.74rem;line-height:1.3;border:1px solid var(--line);background:linear-gradient(170deg,#13306b,#071c45)}
+.slide b{font-family:var(--f-display);font-size:.9rem;color:var(--gold);line-height:1.1}
+.slide span{color:var(--fg-soft)}
+@media (max-width:900px){.thermo{grid-template-columns:repeat(2,minmax(0,1fr))}.ai{grid-template-columns:1fr}.slides{grid-template-columns:repeat(3,minmax(0,1fr))}}
 
 @media (max-width:900px){
   .hero,.board-grid,.sim,.post{grid-template-columns:1fr}
@@ -153,7 +173,7 @@ footer{color:var(--fg-mute);font-size:.82rem;text-align:center}
 
   <header class="hero">
     <div>
-      <p class="eyebrow">Marelab · Estrategia comercial · Noviembre 2026</p>
+      <p class="eyebrow">Estrategia Emprende · Marelab · Noviembre 2026</p>
       <h1>Hoy abrimos la <span>Bóveda MARE</span></h1>
       <p class="lede">30 casillas, un paso por día. Cada casilla es una misión de marketing o ventas con su publicación, su palanca de ingreso y su meta. Abajo, el simulador muestra cuántas monedas habría en la bóveda si sostenemos la estrategia los 30 días.</p>
     </div>
@@ -188,6 +208,15 @@ footer{color:var(--fg-mute);font-size:.82rem;text-align:center}
     </div>
   </section>
 
+  <section aria-labelledby="hThermo" style="display:grid;gap:18px">
+    <div>
+      <p class="eyebrow">Propósito, enfoque, disciplina y medición</p>
+      <h2 id="hThermo">Termómetro MARE</h2>
+      <p class="muted" style="max-width:70ch;margin-top:8px">Cada día marca 4 hábitos en el panel de la casilla. El termómetro mide desde el día 1 hasta la casilla donde está la ficha. Las marcas se guardan en este navegador.</p>
+    </div>
+    <div class="thermo" id="thermo"></div>
+  </section>
+
   <section aria-labelledby="hSim" style="display:grid;gap:18px">
     <div>
       <p class="eyebrow">El simulador</p>
@@ -210,6 +239,7 @@ footer{color:var(--fg-mute);font-size:.82rem;text-align:center}
         <div class="inp"><label for="ticket">Ticket experiencia RSM <output id="ticketO"></output></label><input type="range" id="ticket" min="1000000" max="8000000" step="250000" value="3500000"></div>
         <div class="inp"><label for="price">Precio Mega Clase en Hotmart <output id="priceO"></output></label><input type="range" id="price" min="19900" max="199900" step="10000" value="59900"><small>Preventa desde el día 18. Conversión del 4% de los leads. Hotmart retiene ~12%.</small></div>
         <div class="inp"><label for="spons">Patrocinios cerrados (Tronex, TD Robótica) <output id="sponsO"></output></label><input type="range" id="spons" min="0" max="3" step="1" value="0"><small>$4 M cada uno, se cuentan el día 30.</small></div>
+        <label class="toggle" for="maybe"><input type="checkbox" id="maybe"> Contar Gamer Med e Inmerxia (aún por confirmar)</label>
         <div class="inp"><label for="goal">Meta de ingresos noviembre <output id="goalO"></output></label><input type="range" id="goal" min="2000000" max="40000000" step="1000000" value="10000000"></div>
       </form>
       <div class="out">
@@ -217,7 +247,7 @@ footer{color:var(--fg-mute);font-size:.82rem;text-align:center}
         <div class="chartbox"><svg id="chart" viewBox="0 0 680 280" role="img" aria-label="Ingresos acumulados contra inversión acumulada por día"></svg></div>
         <div class="streams" id="streams"></div>
         <p class="insight" id="insight"></p>
-        <p class="note">Supuestos: CTR 0,8% · 25% de los clics deja su WhatsApp · 0,6% del alcance se une a La Marea · Expl-AI-n suma 3.000 de alcance y 40 leads por día · dropshipping Vita XtraT con 1,5% de los leads y $35.000 de margen. Gamer Med, ITM y UNAL no se cuentan hasta confirmar fechas.</p>
+        <p class="note">Supuestos: CTR 0,8% · 25% de los clics deja su WhatsApp · 0,6% del alcance se une a La Marea · Expl-AI-n suma 3.000 de alcance y 40 leads por día · dropshipping Vita XtraT con 1,5% de los leads y $35.000 de margen. Si activas los eventos posibles, Gamer Med suma 2.500 de alcance y 60 leads, e Inmerxia 1.500 y 20.</p>
       </div>
     </div>
   </section>
@@ -229,10 +259,10 @@ footer{color:var(--fg-mute);font-size:.82rem;text-align:center}
       <p class="muted" style="max-width:72ch;margin-top:8px">Posicionamos con lo que ya ganamos (INN-GAME, Fondo Emprender, 45.000 personas impactadas) y convertimos esa atención en tres cajas: experiencias B2B que pagan este mes, un producto digital que vende mientras dormimos y una comunidad, La Marea, que es el activo de largo plazo.</p>
     </div>
     <div class="weeks">
-      <div class="week"><span class="when">1–7 nov</span><h3>Abrir la bóveda</h3><ul><li>Lanzamiento del tablero en público</li><li>Ganadores INN-GAME: la historia</li><li>Unboxing #1 de la colección de juegos</li><li>Reto "Enciende una luz" + guía gratis</li><li>Canal de WhatsApp La Marea</li></ul><p class="goal">Meta: 100 personas en La Marea · 5 propuestas B2B</p></div>
-      <div class="week"><span class="when">8–14 nov</span><h3>Constituir la empresa</h3><ul><li>13 nov: Marelab constituida</li><li>Fábrica de Ventas: embudo y CRM</li><li>Bibliotecas digitales gratis</li><li>Activar Vita XtraT</li><li>Live: del proyecto de grado ITM a empresa</li></ul><p class="goal">Meta: empresa, RUT y cuenta · primera venta online</p></div>
-      <div class="week"><span class="when">15–21 nov</span><h3>Aprender y vender</h3><ul><li>Libro: enseñar a leer con IA (capítulo 0)</li><li>Mega Clase de Robótica mBot en vivo</li><li>Preventa en Hotmart</li><li>Libro Robot Soccer Mare: convocatoria de historias</li></ul><p class="goal">Meta: 100 registros a la Mega Clase · 10 ventas Hotmart</p></div>
-      <div class="week"><span class="when">22–30 nov</span><h3>Escalar la Marea</h3><ul><li>Expl-AI-n, Plaza Mayor (25 y 26)</li><li>Gamer Med e Inmerxia</li><li>Black Friday Marelab (27)</li><li>Balance real de la bóveda (30)</li></ul><p class="goal">Meta: 150 leads en evento · 10 reuniones B2B</p></div>
+      <div class="week"><span class="when">1–7 nov</span><h3>Abrir la bóveda</h3><ul><li>Lanzamiento del tablero en público</li><li>Ganadores INN-GAME: la historia</li><li>Unboxing del Tío Rico</li><li>Reto "Enciende una luz" + guía gratis</li><li>Canal de WhatsApp La Marea</li></ul><p class="goal">Meta: 100 personas en La Marea · 5 propuestas B2B</p></div>
+      <div class="week"><span class="when">8–14 nov</span><h3>Constituir la empresa</h3><ul><li>13 nov: Marelab constituida</li><li>Casa Marelab: espacio de trabajo</li><li>BMY: tu Canvas personal</li><li>Fábrica de Ventas y Vita XtraT</li><li>Live: del proyecto de grado ITM a empresa</li></ul><p class="goal">Meta: empresa, RUT y cuenta · primera venta online</p></div>
+      <div class="week"><span class="when">15–21 nov</span><h3>Aprender y vender</h3><ul><li>Libro: enseñar a leer con IA (capítulo 0)</li><li>Hora de poder con Gemini + Canva</li><li>Mega Clase de Robótica mBot en vivo</li><li>Preventa en Hotmart</li><li>Libro Robot Soccer Mare: convocatoria de historias</li></ul><p class="goal">Meta: 100 registros a la Mega Clase · 10 ventas Hotmart</p></div>
+      <div class="week"><span class="when">22–30 nov</span><h3>Escalar la Marea</h3><ul><li>Ganen Tío Rico en Gamer Med</li><li>Inmerxia</li><li>Expl-AI-n, Plaza Mayor (25 y 26)</li><li>Black Friday Marelab (27)</li><li>Balance real de la bóveda (30)</li></ul><p class="goal">Meta: 150 leads en evento · 10 reuniones B2B</p></div>
     </div>
     <div>
       <h3 style="margin-bottom:6px">La Fábrica de Ventas, en una línea</h3>
@@ -251,32 +281,41 @@ footer{color:var(--fg-mute);font-size:.82rem;text-align:center}
       <p class="eyebrow">Casilla 1 · domingo 1 de noviembre</p>
       <h2 id="hPost">La publicación de hoy</h2>
     </div>
+    <div style="display:grid;gap:8px">
+      <h3>El carrusel, lámina por lámina</h3>
+      <div class="slides">
+        <div class="slide"><span>1 · Portada</span><b>Día 1 de 30. Abrimos la bóveda</b><span>Tablero del Tío Rico, mBot en la salida</span></div>
+        <div class="slide"><span>2 · El sueño</span><b>Nadar entre monedas</b><span>Foto tuya con la caja del juego</span></div>
+        <div class="slide"><span>3 · Lo que ya ganamos</span><b>INN-GAME · Fondo Emprender · 45.000</b><span>Trofeo y cifras grandes</span></div>
+        <div class="slide"><span>4 · El tablero</span><b>30 casillas, un paso diario</b><span>Captura del tablero MARE</span></div>
+        <div class="slide"><span>5 · Este mes</span><b>Leer · Canvas personal · Gamer Med</b><span>"Ganen un Tío Rico"</span></div>
+        <div class="slide"><span>6 · Llamado</span><b>Comenta MAREA</b><span>Súmate a la comunidad</span></div>
+      </div>
+    </div>
     <div class="post">
-      <div class="copy" id="postCopy"><button class="cbtn" type="button" id="copyBtn">Copiar texto</button>Uno de mis sueños favoritos fue estar en la bóveda del Tío Rico, nadando entre monedas. 🪙
+      <div class="copy" id="postCopy"><button class="cbtn" type="button" id="copyBtn">Copiar texto</button>Uno de mis sueños favoritos fue estar en la bóveda del Tío Rico. 🪙
 
-Hoy, 1 de noviembre, abrimos la nuestra.
+Hoy, 1 de noviembre, empieza EMPRENDE: 30 días, 30 casillas, un paso diario. Como en el tablero de @Ronda, pero aquí las monedas son ideas, libros, robots y personas.
 
-Durante 30 días vamos a avanzar un paso diario en el tablero de la Bóveda MARE: juegos, robótica, libros, electrónica y emprendimiento. Todo en público y con números reales.
-
-Las monedas que ya tenemos guardadas:
+Lo que ya tenemos guardado en la bóveda:
 🏆 Primer puesto Premio INN-GAME 2026 con Robot Soccer Mare
 🚀 Fondo Emprender 2026, mejor puntaje de Medellín (95,27)
 🤖 Casi 45.000 personas impactadas en 10 departamentos
-📅 13 de noviembre: constituimos Marelab como empresa
+📅 13 de noviembre: Marelab se constituye como empresa
 
-La meta es llevar estos proyectos a millones de personas, y queremos hacerlo con una Marea de gente.
+Este mes vamos a leer todos los días, a construir tu Canvas personal, a jugar en Gamer Med (y regalar un Tío Rico 👀) y a contar cómo usamos la IA para crear.
 
-¿Te subes? Comenta MAREA y te enviamos el tablero completo.
+La meta es inspirar a millones de personas, y eso no se hace solo.
 
-@Ronda, esta bóveda también tiene tu nombre.
+¿Te sumas a la Marea? Comenta MAREA y te enviamos el tablero de los 30 días.
 
-#Marelab #CulturaMARE #Emprende #RobotSoccerMare #STEAM #Medellín</div>
+#Emprende #Marelab #CulturaMARE #TíoRico #RobotSoccerMare #Medellín</div>
       <div class="side">
         <div class="box"><h3>Reel de 30 segundos</h3><ol>
-          <li>0–3 s: puerta o caja cerrada, texto "Día 1 de 30".</li>
-          <li>3–10 s: "Uno de mis sueños era la bóveda del Tío Rico".</li>
-          <li>10–22 s: se abre, aparecen el trofeo INN-GAME, un mBot y los juegos.</li>
-          <li>22–30 s: el tablero en pantalla y "Comenta MAREA".</li>
+          <li>0–3 s: plano cenital de la caja del Tío Rico cerrada. Texto: "Día 1 de 30".</li>
+          <li>3–10 s: tú, a cámara: "Uno de mis sueños era la bóveda del Tío Rico".</li>
+          <li>10–22 s: se abre la caja; sobre el tablero aparecen el trofeo INN-GAME, un mBot como ficha, un libro y billetes del juego.</li>
+          <li>22–30 s: el mBot avanza a la casilla 1. Texto: "EMPRENDE · ¿Te sumas a la Marea?".</li>
         </ol></div>
         <div class="box"><h3>Historias de hoy</h3><ol>
           <li>Encuesta: "¿Qué abrimos primero? Juego o robot".</li>
@@ -284,13 +323,29 @@ La meta es llevar estos proyectos a millones de personas, y queremos hacerlo con
           <li>Enlace al canal La Marea.</li>
         </ol></div>
         <div class="ask"><h3>Para cerrar el plan necesito saber</h3><ul>
-          <li>El usuario exacto de Ronda para etiquetar.</li>
-          <li>Fecha de Gamer Med en el Inder.</li>
+          <li>El usuario exacto de Ronda en Instagram.</li>
+          <li>Fechas de Gamer Med e Inmerxia.</li>
           <li>Fecha de la charla de convocatorias del ITM.</li>
           <li>Qué es Vita XtraT y su margen real.</li>
-          <li>Qué hacemos con Inmerxia y Bindec.</li>
+          <li>Si el espacio de trabajo se confirma esta semana.</li>
         </ul></div>
       </div>
+    </div>
+  </section>
+
+  <section aria-labelledby="hAI" style="display:grid;gap:18px">
+    <div>
+      <p class="eyebrow">Lo que recomendamos</p>
+      <h2 id="hAI">Cómo usamos la IA en Emprende</h2>
+      <p class="muted" style="max-width:70ch;margin-top:8px">La IA es parte del contenido: mostramos cómo la usamos para aprender, leer y crear. Estas son nuestras reglas.</p>
+    </div>
+    <div class="ai">
+      <div><b>Nos ayuda, no nos reemplaza</b>Una persona del equipo revisa todo lo que publicamos.</div>
+      <div><b>Decimos cuándo la usamos</b>Lo hecho con IA lleva #HechoConIA, y además mostramos el proceso.</div>
+      <div><b>Solo datos reales</b>No inventamos cifras, testimonios ni resultados. El simulador es un simulador.</div>
+      <div><b>Cuidamos a los niños</b>Fotos de menores solo con autorización de sus acudientes. Sus datos no entran en ninguna IA.</div>
+      <div><b>Damos crédito</b>Tío Rico es de Ronda; mBot, de Makeblock; LEGO, de LEGO. Las etiquetamos y no usamos sus logos como propios.</div>
+      <div><b>Herramientas del mes</b>Gemini para simular e idear, Canva para las plantillas de la hora de poder, Claude para estrategia y textos, NotebookLM para leer y estudiar libros.</div>
     </div>
   </section>
 
@@ -302,27 +357,27 @@ La meta es llevar estos proyectos a millones de personas, y queremos hacerlo con
 const DAYS = [
  {p:'R',t:'Abrimos la bóveda',m:'Lanzar el tablero en público y abrir el canal de WhatsApp La Marea.',pub:'Reel "Día 1 de 30: abrimos la bóveda" + carrusel con las monedas ya ganadas. Etiquetar a Ronda.',$:'Construir la lista: cada comentario MAREA es un contacto.',k:'50 personas en La Marea',ev:1},
  {p:'M',t:'Ganadores INN-GAME',m:'Contar la historia del primer puesto INN-GAME 2026 y convertirla en oferta B2B.',pub:'Carrusel "Cómo un juego de robots ganó el premio a formación organizacional".',$:'Enviar 5 propuestas RSM a empresas para cierres de año y fiestas de diciembre.',k:'5 propuestas enviadas'},
- {p:'R',t:'Unboxing #1',m:'Primer unboxing de la colección de juegos.',pub:'Video unboxing de 45 s con reacción real y "¿lo jugamos en vivo?".',$:'Enlace a experiencias de juego para colegios y empresas.',k:'1.000 vistas'},
+ {p:'R',t:'Unboxing Tío Rico',m:'Primer unboxing: el Tío Rico de Ronda. Explicar por qué nuestro tablero tiene 30 casillas.',pub:'Video unboxing de 45 s: "abrimos el juego con el que nació esta estrategia". Etiquetar a Ronda.',$:'Enlace a experiencias de juego para colegios y empresas.',k:'1.000 vistas'},
  {p:'A',t:'Enciende una luz',m:'Reto de electrónica en 60 segundos: un LED, una pila, una sonrisa.',pub:'Reel tutorial + guía PDF gratis a cambio del WhatsApp.',$:'Imán de leads para la Mega Clase.',k:'30 leads'},
  {p:'E',t:'Convocatorias ITM',m:'Responder la invitación del ITM y proponer la charla sobre convocatorias.',pub:'Post "Cómo ganamos Fondo Emprender con 95,27": 5 lecciones.',$:'Posicionamiento como referente; abre puertas a mentorías pagas.',k:'Fecha de charla agendada',tbc:1},
  {p:'R',t:'El Rocket League real',m:'Mostrar Robot Soccer Mare en acción.',pub:'Clip con goles y gritos: "el Rocket League de la vida real".',$:'Cotizaciones RSM para fin de año.',k:'3 cotizaciones'},
  {p:'M',t:'Cierre semana 1',m:'Primer en vivo con La Marea: qué aprendimos en 7 días.',pub:'Live de 20 minutos + resumen en historias.',$:'Invitar a la Mega Clase (registro gratis).',k:'100 personas en La Marea'},
  {p:'A',t:'Libros gratis',m:'Compartir dónde leer libros gratis y legales.',pub:'Carrusel guardable con 10 bibliotecas digitales gratuitas.',$:'Contenido que se guarda y se comparte: alcance orgánico.',k:'50 guardados'},
  {p:'E',t:'Fábrica de Ventas',m:'Montar el embudo: contenido, imán, La Marea, oferta y cierre. CRM en una hoja.',pub:'Historia "detrás de cámaras: así organizamos las ventas".',$:'Seguimiento a todas las propuestas a 48 horas.',k:'Embudo y CRM listos'},
- {p:'R',t:'Unboxing #2: Neuron',m:'Unboxing del kit Neuron.',pub:'Video "qué se puede crear con Neuron en 10 minutos".',$:'Preventa de kits con TD Robótica.',k:'5 interesados en kits'},
+ {p:'M',t:'Casa Marelab',m:'Anunciar el espacio de trabajo de noviembre (por confirmar) e invitar a la Marea a conocerlo.',pub:'Video "tenemos casa": recorrido de 20 s con la llave en la mano.',$:'Sede para talleres pequeños y reuniones B2B.',k:'Espacio confirmado',tbc:1},
  {p:'E',t:'Activar Vita XtraT',m:'Abrir el catálogo de dropshipping con enlace de pago.',pub:'Publicación de producto en un canal separado de la marca educativa.',$:'Margen por pedido sin inventario.',k:'Primera venta'},
- {p:'A',t:'Diario del emprendedor',m:'Documentar lo que estamos aprendiendo al constituir.',pub:'Post "Lo que nadie te dice antes de crear tu empresa".',$:'Autoridad para el futuro curso de emprendimiento.',k:'20 comentarios'},
+ {p:'A',t:'BMY: tu Canvas personal',m:'Enseñar a construir el Modelo de Negocio Canvas Personal (Business Model You). Plantilla gratis para la Marea.',pub:'Carrusel "Tu vida en 9 bloques" + plantilla descargable en el canal.',$:'Taller BMY pago para equipos y universidades.',k:'50 plantillas pedidas'},
  {p:'E',t:'Marelab constituida',m:'Constitución de Marelab. RUT, cuenta bancaria, facturación.',pub:'Foto del hito + video de 15 s "hoy Marelab es empresa".',$:'Podemos facturar a empresas y entidades.',k:'Empresa constituida',ev:1},
  {p:'M',t:'Del ITM a empresa',m:'En vivo: de proyecto de grado a 45.000 personas impactadas.',pub:'Live + clip de los 3 mejores momentos.',$:'Invitar a la Mega Clase y a contratar RSM.',k:'200 vistas del live'},
  {p:'A',t:'Libro: leer con IA',m:'Arrancar el libro "Enseñar a leer con las herramientas de hoy". Capítulo 0: el método.',pub:'Post de anuncio y primera página en historias.',$:'Futuro producto en Hotmart; hoy suma Marea.',k:'Introducción publicada'},
- {p:'E',t:'Fondo Emprender en público',m:'Publicar los hitos de ejecución del Fondo Emprender. Segunda ronda de propuestas B2B.',pub:'Carrusel "Qué vamos a hacer con el Fondo Emprender".',$:'5 propuestas nuevas.',k:'10 propuestas acumuladas'},
+ {p:'E',t:'Hora de poder con IA',m:'Mostrar el experimento Gemini + Canva: plantillas para planear la hora de poder. Segunda ronda de propuestas B2B.',pub:'Reel "Así planeo mi hora de poder con IA" + plantilla gratis. Etiqueta #HechoConIA.',$:'5 propuestas nuevas y futura plantilla paga.',k:'10 propuestas acumuladas'},
  {p:'A',t:'Anuncio Mega Clase',m:'Abrir el registro gratis a la Mega Clase de Robótica (mBot, mBot 2, LEGO, Neuron).',pub:'Reel con los 4 kits sobre la mesa.',$:'Registro = lead caliente para la preventa.',k:'100 registros'},
  {p:'E',t:'Preventa Hotmart',m:'Abrir la preventa del curso en Hotmart con precio de fundador.',pub:'Post de lanzamiento con cuenta regresiva.',$:'Producto digital: vende sin límite de cupo.',k:'10 ventas'},
  {p:'A',t:'Mega Clase en vivo',m:'Clase en vivo de robótica. Oferta al final.',pub:'Live + reels cortos de la clase al día siguiente.',$:'Ventas Hotmart y kits.',k:'30% de asistencia'},
- {p:'R',t:'Unboxing #3: mBot 2',m:'Unboxing del mBot 2 y reto a la comunidad.',pub:'Video "mBot vs mBot 2" y reto con premio.',$:'Kits y cupos de taller.',k:'20 participantes en el reto'},
+ {p:'R',t:'Unboxing: mBot 2 y Neuron',m:'Unboxing de mBot 2 y kit Neuron, y reto a la comunidad.',pub:'Video "qué creamos en 10 minutos" y reto con premio.',$:'Preventa de kits con TD Robótica.',k:'20 participantes en el reto'},
  {p:'M',t:'Libro Robot Soccer Mare',m:'Anunciar el libro de RSM y recoger historias de jugadores.',pub:'Post "Robot Soccer Mare se merece un libro. ¿Cuál es tu historia?".',$:'Patrocinadores del libro y del torneo.',k:'20 historias recibidas'},
- {p:'R',t:'Gamer Med',m:'Arena RSM en Gamer Med (Inder Medellín). Fecha por confirmar.',pub:'Cobertura en vivo + "ven a jugar contra un robot".',$:'Leads con QR hacia La Marea.',k:'Fecha confirmada',tbc:1},
- {p:'E',t:'Inmerxia',m:'Reunión de alianza con Inmerxia para una experiencia conjunta.',pub:'Historia de la reunión (si hay acuerdo).',$:'Nuevo canal de distribución.',k:'Acuerdo definido',tbc:1},
+ {p:'R',t:'Ganen Tío Rico en Gamer Med',m:'Arena RSM en Gamer Med (Inder Medellín): quien meta gol al robot entra al sorteo de un Tío Rico. Fecha por confirmar.',pub:'Cobertura en vivo + "ven, mete un gol y gánate un Tío Rico". Ganador anunciado en vivo.',$:'Para participar: unirse a La Marea con el QR.',k:'200 participantes en el sorteo',tbc:1,ev:1},
+ {p:'R',t:'Inmerxia',m:'Participación en Inmerxia: experiencia RSM inmersiva. Fecha por confirmar.',pub:'Reel de la experiencia y entrevistas cortas.',$:'Leads B2B y nuevo canal de distribución.',k:'5 reuniones agendadas',tbc:1},
  {p:'A',t:'Enciende una luz a escala',m:'Proyecto Bindec y electrónica para millones: campaña de prerregistro.',pub:'Reel "Queremos que un millón de personas enciendan su primera luz".',$:'Lista de espera para kit propio.',k:'100 prerregistros'},
  {p:'R',t:'Expl-AI-n día 1',m:'Zona MARE en Plaza Mayor. Captar leads con QR.',pub:'Historias en vivo cada hora + reel de cierre.',$:'Leads y reuniones B2B.',k:'150 leads',ev:1},
  {p:'R',t:'Expl-AI-n día 2',m:'Caso de IA controlando robots. Agendar reuniones.',pub:'Reel "La IA jugando fútbol con robots".',$:'Reuniones con empresas y universidades.',k:'10 reuniones agendadas',ev:1},
@@ -344,6 +399,8 @@ let pos=store.get('boveda.pos',todayStep());
 let sel=pos;
 let done=new Set(store.get('boveda.done',[]));
 let sc=1;
+const HABITS=['Leí 20 minutos','Publiqué para inspirar','Hice una acción de venta','Cumplí mi hora de poder'];
+let habits=store.get('boveda.habits',{});
 
 const $=id=>document.getElementById(id);
 const board=$('board'), panel=$('panel');
@@ -373,15 +430,17 @@ function renderPanel(){
   <div class="field"><b>Palanca de ingreso</b><p>${x.$}</p></div>
   <div class="field"><b>Meta del día</b><p>${x.k}</p></div>
   <p class="sim-at">En el simulador, al terminar este día la bóveda tendría <strong>${short(s.cumRev[sel-1])}</strong> con <strong>${fmtN(s.cumLeads[sel-1])}</strong> leads y <strong>${fmtN(s.cumMarea[sel-1])}</strong> personas en La Marea.</p>
-  <label class="check"><input type="checkbox" id="doneBox" ${done.has(sel)?'checked':''}> Misión cumplida</label>`;
+  <label class="check"><input type="checkbox" id="doneBox" ${done.has(sel)?'checked':''}> Misión cumplida</label>
+  <div class="habits"><b>Hábitos del día ${sel}</b>${HABITS.map((h,i)=>`<label><input type="checkbox" data-h="${i}" ${(habits[sel]||[])[i]?'checked':''}> ${h}</label>`).join('')}</div>`;
   $('doneBox').onchange=e=>{e.target.checked?done.add(sel):done.delete(sel);store.set('boveda.done',[...done]);render()};
+  panel.querySelectorAll('[data-h]').forEach(cb=>cb.onchange=()=>{const a=habits[sel]||[0,0,0,0];a[+cb.dataset.h]=cb.checked?1:0;habits[sel]=a;store.set('boveda.habits',habits);render()});
 }
 
 /* ---------- SIMULADOR ---------- */
 const V=id=>+$(id).value;
 let SIM=null;
 function simulate(){
-  const ads=V('ads'), other=V('other'), posts=V('posts'), props=V('props'), ticket=V('ticket'), price=V('price'), spons=V('spons');
+  const ads=V('ads'), other=V('other'), posts=V('posts'), props=V('props'), ticket=V('ticket'), price=V('price'), spons=V('spons'), maybe=$('maybe').checked;
   const cumRev=[],cumInv=[],cumLeads=[],cumMarea=[];
   let rev=0,inv=0,leads=0,marea=0,reach=0,hot=0,hotN=0,drop=0,b2b=0,b2bN=0,sp=0;
   const paidDaily=(ads/30)/9000*1000;
@@ -390,6 +449,8 @@ function simulate(){
     if(d===1||d===13)org*=1.5;
     let r=org+paidDaily, evLeads=0;
     if(d===25||d===26){r+=3000;evLeads=40*sc}
+    if(maybe&&d===22){r+=2500;evLeads+=60*sc}
+    if(maybe&&d===23){r+=1500;evLeads+=20*sc}
     reach+=r;
     const newLeads=r*0.008*0.25*sc+evLeads;
     leads+=newLeads;
@@ -455,7 +516,20 @@ function drawChart(){
   $('chart').innerHTML=g;
 }
 
-function render(){renderSim();renderBoard();renderPanel()}
+function renderThermo(){
+  const n=pos, cnt=[0,0,0,0]; let full=0;
+  for(let d=1;d<=n;d++){const a=habits[d]||[];a.forEach((v,i)=>{if(v)cnt[i]++});if([0,1,2,3].every(i=>a[i]))full++}
+  let streak=0;for(let d=n;d>=1;d--){if((habits[d]||[])[0])streak++;else break}
+  const items=[
+    ['Propósito','Días que publicamos para inspirar',cnt[1]/n,'var(--cyan)'],
+    ['Enfoque','Días con al menos una acción de venta',cnt[2]/n,'var(--gold)'],
+    ['Disciplina','Días con los 4 hábitos cumplidos',full/n,'var(--coral)'],
+    ['Medición','Misiones del tablero cumplidas',[...done].filter(d=>d<=n).length/n,'var(--ok)']
+  ];
+  $('thermo').innerHTML=items.map(([t,s,v,c])=>`<div class="th"><div class="th-top"><b>${t}</b><span class="num">${Math.round(v*100)}%</span></div><div class="meter"><i style="width:${v*100}%;background:${c}"></i></div><small>${s}</small></div>`).join('')
+   +`<div class="th read"><div class="th-top"><b>Racha de lectura</b><span class="num">${streak} ${streak===1?'día':'días'}</span></div><small>${cnt[0]} de ${n} días con 20 minutos de lectura. Leer es la actividad clave del mes.</small></div>`;
+}
+function render(){renderSim();renderBoard();renderPanel();renderThermo()}
 function move(n){pos=Math.min(30,Math.max(1,n));sel=pos;store.set('boveda.pos',pos);render()}
 $('next').onclick=()=>move(pos+1);
 $('back').onclick=()=>move(pos-1);
