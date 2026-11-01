@@ -1,0 +1,473 @@
+<title>Bóveda MARE Noviembre</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap">
+<style>
+/* Layout: una bóveda nocturna de marca Marelab. Tablero serpenteante de 30 casillas + panel del día, luego simulador y plan. Diseño deliberadamente de un solo tema (navy de marca). */
+:root{
+  color-scheme: dark;
+  --bg:#00102b; --bg-2:#04193f; --card:#0b2c66; --line:rgba(160,195,255,.16);
+  --fg:#f4f7fc; --fg-soft:#a9b8d4; --fg-mute:#7586a6;
+  --gold:#FFD700; --gold-deep:#c9a400; --cyan:#00D9FF; --blue:#5b8cff; --coral:#FF6B35; --ok:#3ddc97;
+  --f-display:'Fredoka', ui-rounded, 'Segoe UI', sans-serif;
+  --f-body:'Plus Jakarta Sans', system-ui, sans-serif;
+  --f-data:'Space Grotesk', ui-monospace, monospace;
+  --r:14px;
+}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--fg);font-family:var(--f-body);font-size:15px;line-height:1.55;
+  background-image:radial-gradient(1200px 500px at 85% -10%, rgba(255,215,0,.10), transparent 60%),radial-gradient(900px 400px at -10% 30%, rgba(0,217,255,.07), transparent 60%);}
+.wrap{max-width:1180px;margin:0 auto;padding-block:28px 64px;padding-left:max(16px, env(safe-area-inset-left, 0px));padding-right:max(16px, env(safe-area-inset-right, 0px));display:grid;gap:56px}
+h1,h2,h3{font-family:var(--f-display);text-wrap:balance;margin:0;line-height:1.1}
+h1{font-size:clamp(2rem,5vw,3.4rem);font-weight:700}
+h2{font-size:clamp(1.5rem,3vw,2.1rem);font-weight:600}
+h3{font-size:1.15rem;font-weight:600}
+p{margin:0}
+.eyebrow{font-family:var(--f-data);font-size:.75rem;letter-spacing:.14em;text-transform:uppercase;color:var(--cyan)}
+.num{font-family:var(--f-data);font-variant-numeric:tabular-nums}
+.muted{color:var(--fg-soft)}
+button,input{font:inherit}
+button{cursor:pointer}
+:focus-visible{outline:2px solid var(--cyan);outline-offset:2px}
+
+/* HERO */
+.hero{display:grid;grid-template-columns:1.4fr 1fr;gap:28px;align-items:end}
+.hero h1 span{color:var(--gold)}
+.hero .lede{max-width:60ch;color:var(--fg-soft);margin-top:14px;font-size:1.05rem}
+.vault{background:linear-gradient(160deg,#13306b,#071c45);border:1px solid var(--line);border-radius:22px;padding:20px;display:grid;gap:12px;position:relative;overflow:hidden}
+.vault .label{font-family:var(--f-data);font-size:.75rem;letter-spacing:.12em;text-transform:uppercase;color:var(--fg-soft)}
+.vault .big{font-family:var(--f-display);font-size:clamp(2rem,4.5vw,2.8rem);color:var(--gold);line-height:1}
+.meter{height:14px;border-radius:99px;background:rgba(255,255,255,.08);overflow:hidden}
+.meter i{display:block;height:100%;background:linear-gradient(90deg,var(--gold-deep),var(--gold));border-radius:99px;transition:width .5s ease}
+.vault .row{display:flex;justify-content:space-between;gap:10px;font-size:.85rem;color:var(--fg-soft);flex-wrap:wrap}
+.coins{position:absolute;right:-18px;top:-18px;width:120px;height:120px;opacity:.18;pointer-events:none}
+
+/* BOARD */
+.board-sec{display:grid;gap:18px}
+.board-head{display:flex;justify-content:space-between;align-items:end;gap:16px;flex-wrap:wrap}
+.controls{display:flex;gap:8px;flex-wrap:wrap}
+.btn{border:1px solid var(--line);background:var(--bg-2);color:var(--fg);padding:10px 16px;border-radius:99px;font-weight:600}
+.btn:hover{border-color:var(--cyan)}
+.btn.primary{background:var(--gold);color:#1a1300;border-color:var(--gold)}
+.btn.primary:hover{filter:brightness(1.08)}
+.board-grid{display:grid;grid-template-columns:minmax(0,1.6fr) minmax(0,1fr);gap:20px;align-items:start}
+.board{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:8px}
+.sq{position:relative;border:1px solid var(--line);background:var(--bg-2);border-radius:12px;padding:8px 8px 10px;min-height:96px;text-align:left;color:var(--fg);display:flex;flex-direction:column;gap:4px;transition:transform .15s ease,border-color .15s}
+.sq:hover{transform:translateY(-2px);border-color:rgba(255,255,255,.35)}
+.sq .top{display:flex;justify-content:space-between;align-items:center;gap:4px}
+.sq .n{font-family:var(--f-data);font-weight:700;font-size:.95rem}
+.sq .d{font-family:var(--f-data);font-size:.66rem;color:var(--fg-mute);letter-spacing:.04em}
+.sq .t{font-size:.74rem;line-height:1.25;color:var(--fg-soft)}
+.pill{font-family:var(--f-display);font-weight:700;font-size:.7rem;width:20px;height:20px;border-radius:6px;display:grid;place-items:center;color:#06122b}
+.pM{background:var(--cyan)} .pA{background:var(--blue)} .pR{background:var(--coral)} .pE{background:var(--gold)}
+.sq.ev::after{content:"";position:absolute;right:7px;bottom:7px;width:7px;height:7px;border-radius:50%;background:var(--gold);box-shadow:0 0 8px var(--gold)}
+.sq.done{background:linear-gradient(160deg,rgba(61,220,151,.16),var(--bg-2))}
+.sq.done .n::after{content:" ✓";color:var(--ok)}
+.sq.sel{border-color:var(--cyan);box-shadow:0 0 0 1px var(--cyan) inset}
+.sq.here{border-color:var(--gold);box-shadow:0 0 0 2px var(--gold) inset,0 8px 24px rgba(255,215,0,.18)}
+.token{position:absolute;left:50%;top:-11px;transform:translateX(-50%);width:22px;height:22px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#fff3a0,var(--gold) 45%,var(--gold-deep));border:2px solid #7a6200;display:grid;place-items:center;font-family:var(--f-display);font-size:.62rem;font-weight:700;color:#5a4700;box-shadow:0 3px 10px rgba(0,0,0,.4)}
+.legend{display:flex;gap:14px;flex-wrap:wrap;font-size:.8rem;color:var(--fg-soft)}
+.legend span{display:inline-flex;align-items:center;gap:6px}
+
+.panel{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:20px;display:grid;gap:14px;position:sticky;top:calc(env(safe-area-inset-top, 0px) + 14px)}
+.panel .meta{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.chip{font-family:var(--f-data);font-size:.72rem;letter-spacing:.06em;text-transform:uppercase;padding:4px 10px;border-radius:99px;border:1px solid var(--line);color:var(--fg-soft)}
+.chip.warn{border-color:rgba(255,107,53,.6);color:#ffb08f}
+.chip.star{border-color:rgba(255,215,0,.6);color:var(--gold)}
+.field{display:grid;gap:3px}
+.field b{font-family:var(--f-data);font-size:.7rem;letter-spacing:.12em;text-transform:uppercase;color:var(--cyan);font-weight:600}
+.field p{font-size:.92rem}
+.check{display:flex;align-items:center;gap:10px;padding-top:6px;border-top:1px solid var(--line);font-weight:600}
+.check input{width:20px;height:20px;accent-color:var(--ok)}
+.sim-at{font-size:.85rem;color:var(--fg-soft);background:rgba(0,0,0,.18);border-radius:10px;padding:10px 12px}
+.sim-at strong{color:var(--gold);font-family:var(--f-data)}
+
+/* SIM */
+.sim{display:grid;grid-template-columns:minmax(0,340px) minmax(0,1fr);gap:24px;align-items:start}
+.inputs{background:var(--bg-2);border:1px solid var(--line);border-radius:18px;padding:18px;display:grid;gap:16px}
+.inp{display:grid;gap:6px}
+.inp label{display:flex;justify-content:space-between;gap:8px;font-size:.86rem;font-weight:600}
+.inp label output{font-family:var(--f-data);color:var(--gold);font-weight:600}
+.inp small{color:var(--fg-mute);font-size:.75rem;line-height:1.35}
+input[type=range]{width:100%;accent-color:var(--gold)}
+.seg{display:grid;grid-template-columns:repeat(3,1fr);border:1px solid var(--line);border-radius:99px;overflow:hidden}
+.seg button{background:transparent;border:0;color:var(--fg-soft);padding:9px 4px;font-weight:600;font-size:.85rem}
+.seg button[aria-pressed=true]{background:var(--gold);color:#1a1300}
+.out{display:grid;gap:18px;min-width:0}
+.kpis{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}
+.kpi{background:var(--bg-2);border:1px solid var(--line);border-radius:14px;padding:12px 14px;display:grid;gap:2px}
+.kpi span{font-size:.74rem;color:var(--fg-soft)}
+.kpi strong{font-family:var(--f-data);font-size:1.3rem;font-variant-numeric:tabular-nums}
+.kpi.hl{border-color:rgba(255,215,0,.5)} .kpi.hl strong{color:var(--gold)}
+.chartbox{background:var(--bg-2);border:1px solid var(--line);border-radius:18px;padding:16px;overflow-x:auto}
+.chartbox svg{display:block;width:100%;min-width:480px;height:auto}
+.chartbox text{font-family:var(--f-data);font-size:11px;fill:var(--fg-mute)}
+.streams{display:grid;gap:10px}
+.stream{display:grid;grid-template-columns:minmax(0,180px) minmax(0,1fr) 110px;gap:10px;align-items:center;font-size:.86rem}
+.stream .bar{height:12px;border-radius:99px;background:rgba(255,255,255,.07);overflow:hidden}
+.stream .bar i{display:block;height:100%;border-radius:99px}
+.stream .v{text-align:right;font-family:var(--f-data);font-variant-numeric:tabular-nums}
+.insight{border-left:3px solid var(--gold);padding:10px 14px;background:rgba(255,215,0,.06);border-radius:0 12px 12px 0;font-size:.92rem}
+.note{font-size:.78rem;color:var(--fg-mute)}
+
+/* PLAN */
+.weeks{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px}
+.week{background:var(--bg-2);border:1px solid var(--line);border-radius:16px;padding:16px;display:grid;gap:8px;align-content:start}
+.week .when{font-family:var(--f-data);font-size:.72rem;color:var(--fg-mute);letter-spacing:.08em;text-transform:uppercase}
+.week ul{margin:0;padding-left:18px;display:grid;gap:4px;font-size:.88rem;color:var(--fg-soft)}
+.week .goal{font-size:.82rem;border-top:1px solid var(--line);padding-top:8px;color:var(--fg)}
+.funnel{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:8px;margin-top:6px}
+.funnel div{background:var(--bg-2);border:1px solid var(--line);border-radius:12px;padding:12px;font-size:.84rem;color:var(--fg-soft)}
+.funnel b{display:block;font-family:var(--f-display);color:var(--fg);font-size:1rem;margin-bottom:2px}
+
+/* POST */
+.post{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,1fr);gap:20px;align-items:start}
+.copy{background:#fdfcf7;color:#14213d;border-radius:18px;padding:22px;white-space:pre-wrap;font-size:.95rem;line-height:1.6;position:relative}
+.copy .cbtn{position:absolute;right:12px;top:12px;background:#14213d;color:#fff;border:0;border-radius:99px;padding:7px 14px;font-weight:600;font-size:.8rem}
+.side{display:grid;gap:12px}
+.box{background:var(--bg-2);border:1px solid var(--line);border-radius:16px;padding:16px;display:grid;gap:8px}
+.box ol{margin:0;padding-left:20px;display:grid;gap:4px;font-size:.88rem;color:var(--fg-soft)}
+.ask{background:rgba(0,217,255,.07);border:1px solid rgba(0,217,255,.35);border-radius:16px;padding:16px;display:grid;gap:8px}
+.ask ul{margin:0;padding-left:18px;display:grid;gap:4px;font-size:.88rem}
+footer{color:var(--fg-mute);font-size:.82rem;text-align:center}
+
+@media (max-width:900px){
+  .hero,.board-grid,.sim,.post{grid-template-columns:1fr}
+  .panel{position:static}
+  .weeks{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .kpis{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .funnel{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media (max-width:560px){
+  .board{grid-template-columns:repeat(5,minmax(0,1fr));gap:6px}
+  .sq{min-height:74px;padding:6px}
+  .sq .t{display:none}
+  .weeks{grid-template-columns:1fr}
+  .stream{grid-template-columns:minmax(0,1fr) 96px}
+  .stream .bar{grid-column:1 / -1;order:3}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+
+<div class="wrap">
+
+  <header class="hero">
+    <div>
+      <p class="eyebrow">Marelab · Estrategia comercial · Noviembre 2026</p>
+      <h1>Hoy abrimos la <span>Bóveda MARE</span></h1>
+      <p class="lede">30 casillas, un paso por día. Cada casilla es una misión de marketing o ventas con su publicación, su palanca de ingreso y su meta. Abajo, el simulador muestra cuántas monedas habría en la bóveda si sostenemos la estrategia los 30 días.</p>
+    </div>
+    <aside class="vault" aria-live="polite">
+      <svg class="coins" viewBox="0 0 100 100" aria-hidden="true"><circle cx="50" cy="50" r="46" fill="#FFD700"/><circle cx="50" cy="50" r="34" fill="none" stroke="#7a6200" stroke-width="4"/><text x="50" y="62" text-anchor="middle" font-size="34" font-family="Fredoka" font-weight="700" fill="#7a6200">M</text></svg>
+      <span class="label" id="vLabel">Bóveda simulada · día 1 de 30</span>
+      <span class="big num" id="vBig">$0</span>
+      <div class="meter" role="progressbar" aria-label="Avance hacia la meta" aria-valuemin="0" aria-valuemax="100"><i id="vMeter" style="width:0%"></i></div>
+      <div class="row"><span>Meta noviembre: <b class="num" id="vGoal">$10 M</b></span><span><b class="num" id="vDone">0</b>/30 misiones cumplidas</span></div>
+    </aside>
+  </header>
+
+  <section class="board-sec" aria-labelledby="hBoard">
+    <div class="board-head">
+      <div>
+        <p class="eyebrow">El tablero</p>
+        <h2 id="hBoard">30 pasos de noviembre</h2>
+      </div>
+      <div class="controls">
+        <button class="btn" id="back" type="button">◀ Paso atrás</button>
+        <button class="btn" id="toToday" type="button">Ir a hoy</button>
+        <button class="btn primary" id="next" type="button">Avanzar 1 paso ▶</button>
+      </div>
+    </div>
+    <div class="legend">
+      <span><i class="pill pM">M</i>Motívate</span><span><i class="pill pA">A</i>Aprende</span><span><i class="pill pR">R</i>Recréate</span><span><i class="pill pE">E</i>Emprende</span>
+      <span><i style="width:8px;height:8px;border-radius:50%;background:var(--gold);display:inline-block"></i>Hito</span>
+    </div>
+    <div class="board-grid">
+      <div class="board" id="board" role="list"></div>
+      <article class="panel" id="panel" aria-live="polite"></article>
+    </div>
+  </section>
+
+  <section aria-labelledby="hSim" style="display:grid;gap:18px">
+    <div>
+      <p class="eyebrow">El simulador</p>
+      <h2 id="hSim">¿Qué pasa si invertimos 30 días?</h2>
+      <p class="muted" style="max-width:70ch;margin-top:8px">Mueve los supuestos y mira cómo se llena la bóveda día a día. Son supuestos editables, no una promesa: el 30 de noviembre comparamos esta curva con los números reales.</p>
+    </div>
+    <div class="sim">
+      <form class="inputs" id="simForm" onsubmit="return false">
+        <div class="inp"><span style="font-size:.86rem;font-weight:600">Escenario</span>
+          <div class="seg" role="group" aria-label="Escenario">
+            <button type="button" data-sc="0.6" aria-pressed="false">Conservador</button>
+            <button type="button" data-sc="1" aria-pressed="true">Base</button>
+            <button type="button" data-sc="1.5" aria-pressed="false">Optimista</button>
+          </div>
+        </div>
+        <div class="inp"><label for="ads">Pauta del mes <output id="adsO"></output></label><input type="range" id="ads" min="0" max="2000000" step="50000" value="600000"><small>Meta Ads / TikTok. CPM supuesto de $9.000.</small></div>
+        <div class="inp"><label for="other">Otros costos del mes <output id="otherO"></output></label><input type="range" id="other" min="0" max="3000000" step="50000" value="500000"><small>Producción de contenido, juegos para unboxing, logística de eventos.</small></div>
+        <div class="inp"><label for="posts">Publicaciones por día <output id="postsO"></output></label><input type="range" id="posts" min="1" max="3" step="1" value="1"><small>Alcance orgánico de 400 por publicación, crece 4% diario si hay constancia.</small></div>
+        <div class="inp"><label for="props">Propuestas B2B por semana <output id="propsO"></output></label><input type="range" id="props" min="0" max="20" step="1" value="5"><small>Experiencias RSM y talleres para empresas, colegios y cajas. Cierre del 10% a los 10 días.</small></div>
+        <div class="inp"><label for="ticket">Ticket experiencia RSM <output id="ticketO"></output></label><input type="range" id="ticket" min="1000000" max="8000000" step="250000" value="3500000"></div>
+        <div class="inp"><label for="price">Precio Mega Clase en Hotmart <output id="priceO"></output></label><input type="range" id="price" min="19900" max="199900" step="10000" value="59900"><small>Preventa desde el día 18. Conversión del 4% de los leads. Hotmart retiene ~12%.</small></div>
+        <div class="inp"><label for="spons">Patrocinios cerrados (Tronex, TD Robótica) <output id="sponsO"></output></label><input type="range" id="spons" min="0" max="3" step="1" value="0"><small>$4 M cada uno, se cuentan el día 30.</small></div>
+        <div class="inp"><label for="goal">Meta de ingresos noviembre <output id="goalO"></output></label><input type="range" id="goal" min="2000000" max="40000000" step="1000000" value="10000000"></div>
+      </form>
+      <div class="out">
+        <div class="kpis" id="kpis"></div>
+        <div class="chartbox"><svg id="chart" viewBox="0 0 680 280" role="img" aria-label="Ingresos acumulados contra inversión acumulada por día"></svg></div>
+        <div class="streams" id="streams"></div>
+        <p class="insight" id="insight"></p>
+        <p class="note">Supuestos: CTR 0,8% · 25% de los clics deja su WhatsApp · 0,6% del alcance se une a La Marea · Expl-AI-n suma 3.000 de alcance y 40 leads por día · dropshipping Vita XtraT con 1,5% de los leads y $35.000 de margen. Gamer Med, ITM y UNAL no se cuentan hasta confirmar fechas.</p>
+      </div>
+    </div>
+  </section>
+
+  <section aria-labelledby="hPlan" style="display:grid;gap:18px">
+    <div>
+      <p class="eyebrow">La propuesta</p>
+      <h2 id="hPlan">Noviembre en 4 sprints</h2>
+      <p class="muted" style="max-width:72ch;margin-top:8px">Posicionamos con lo que ya ganamos (INN-GAME, Fondo Emprender, 45.000 personas impactadas) y convertimos esa atención en tres cajas: experiencias B2B que pagan este mes, un producto digital que vende mientras dormimos y una comunidad, La Marea, que es el activo de largo plazo.</p>
+    </div>
+    <div class="weeks">
+      <div class="week"><span class="when">1–7 nov</span><h3>Abrir la bóveda</h3><ul><li>Lanzamiento del tablero en público</li><li>Ganadores INN-GAME: la historia</li><li>Unboxing #1 de la colección de juegos</li><li>Reto "Enciende una luz" + guía gratis</li><li>Canal de WhatsApp La Marea</li></ul><p class="goal">Meta: 100 personas en La Marea · 5 propuestas B2B</p></div>
+      <div class="week"><span class="when">8–14 nov</span><h3>Constituir la empresa</h3><ul><li>13 nov: Marelab constituida</li><li>Fábrica de Ventas: embudo y CRM</li><li>Bibliotecas digitales gratis</li><li>Activar Vita XtraT</li><li>Live: del proyecto de grado ITM a empresa</li></ul><p class="goal">Meta: empresa, RUT y cuenta · primera venta online</p></div>
+      <div class="week"><span class="when">15–21 nov</span><h3>Aprender y vender</h3><ul><li>Libro: enseñar a leer con IA (capítulo 0)</li><li>Mega Clase de Robótica mBot en vivo</li><li>Preventa en Hotmart</li><li>Libro Robot Soccer Mare: convocatoria de historias</li></ul><p class="goal">Meta: 100 registros a la Mega Clase · 10 ventas Hotmart</p></div>
+      <div class="week"><span class="when">22–30 nov</span><h3>Escalar la Marea</h3><ul><li>Expl-AI-n, Plaza Mayor (25 y 26)</li><li>Gamer Med e Inmerxia</li><li>Black Friday Marelab (27)</li><li>Balance real de la bóveda (30)</li></ul><p class="goal">Meta: 150 leads en evento · 10 reuniones B2B</p></div>
+    </div>
+    <div>
+      <h3 style="margin-bottom:6px">La Fábrica de Ventas, en una línea</h3>
+      <div class="funnel">
+        <div><b>1. Contenido</b>Unboxing, retos, RSM, libros</div>
+        <div><b>2. Imán</b>Guía gratis "Enciende una luz"</div>
+        <div><b>3. La Marea</b>Canal de WhatsApp y lista</div>
+        <div><b>4. Oferta</b>Mega Clase Hotmart · kits · RSM</div>
+        <div><b>5. Cierre</b>Propuesta B2B y seguimiento a 48 h</div>
+      </div>
+    </div>
+  </section>
+
+  <section aria-labelledby="hPost" style="display:grid;gap:18px">
+    <div>
+      <p class="eyebrow">Casilla 1 · domingo 1 de noviembre</p>
+      <h2 id="hPost">La publicación de hoy</h2>
+    </div>
+    <div class="post">
+      <div class="copy" id="postCopy"><button class="cbtn" type="button" id="copyBtn">Copiar texto</button>Uno de mis sueños favoritos fue estar en la bóveda del Tío Rico, nadando entre monedas. 🪙
+
+Hoy, 1 de noviembre, abrimos la nuestra.
+
+Durante 30 días vamos a avanzar un paso diario en el tablero de la Bóveda MARE: juegos, robótica, libros, electrónica y emprendimiento. Todo en público y con números reales.
+
+Las monedas que ya tenemos guardadas:
+🏆 Primer puesto Premio INN-GAME 2026 con Robot Soccer Mare
+🚀 Fondo Emprender 2026, mejor puntaje de Medellín (95,27)
+🤖 Casi 45.000 personas impactadas en 10 departamentos
+📅 13 de noviembre: constituimos Marelab como empresa
+
+La meta es llevar estos proyectos a millones de personas, y queremos hacerlo con una Marea de gente.
+
+¿Te subes? Comenta MAREA y te enviamos el tablero completo.
+
+@Ronda, esta bóveda también tiene tu nombre.
+
+#Marelab #CulturaMARE #Emprende #RobotSoccerMare #STEAM #Medellín</div>
+      <div class="side">
+        <div class="box"><h3>Reel de 30 segundos</h3><ol>
+          <li>0–3 s: puerta o caja cerrada, texto "Día 1 de 30".</li>
+          <li>3–10 s: "Uno de mis sueños era la bóveda del Tío Rico".</li>
+          <li>10–22 s: se abre, aparecen el trofeo INN-GAME, un mBot y los juegos.</li>
+          <li>22–30 s: el tablero en pantalla y "Comenta MAREA".</li>
+        </ol></div>
+        <div class="box"><h3>Historias de hoy</h3><ol>
+          <li>Encuesta: "¿Qué abrimos primero? Juego o robot".</li>
+          <li>Caja de preguntas: "¿Qué quieres aprender en noviembre?".</li>
+          <li>Enlace al canal La Marea.</li>
+        </ol></div>
+        <div class="ask"><h3>Para cerrar el plan necesito saber</h3><ul>
+          <li>El usuario exacto de Ronda para etiquetar.</li>
+          <li>Fecha de Gamer Med en el Inder.</li>
+          <li>Fecha de la charla de convocatorias del ITM.</li>
+          <li>Qué es Vita XtraT y su margen real.</li>
+          <li>Qué hacemos con Inmerxia y Bindec.</li>
+        </ul></div>
+      </div>
+    </div>
+  </section>
+
+  <footer>CEO Marelab · Laboratorio de Innovación y Creatividad · "Contribuir para que tengamos un futuro más innovador."</footer>
+</div>
+
+<script>
+(function(){
+const DAYS = [
+ {p:'R',t:'Abrimos la bóveda',m:'Lanzar el tablero en público y abrir el canal de WhatsApp La Marea.',pub:'Reel "Día 1 de 30: abrimos la bóveda" + carrusel con las monedas ya ganadas. Etiquetar a Ronda.',$:'Construir la lista: cada comentario MAREA es un contacto.',k:'50 personas en La Marea',ev:1},
+ {p:'M',t:'Ganadores INN-GAME',m:'Contar la historia del primer puesto INN-GAME 2026 y convertirla en oferta B2B.',pub:'Carrusel "Cómo un juego de robots ganó el premio a formación organizacional".',$:'Enviar 5 propuestas RSM a empresas para cierres de año y fiestas de diciembre.',k:'5 propuestas enviadas'},
+ {p:'R',t:'Unboxing #1',m:'Primer unboxing de la colección de juegos.',pub:'Video unboxing de 45 s con reacción real y "¿lo jugamos en vivo?".',$:'Enlace a experiencias de juego para colegios y empresas.',k:'1.000 vistas'},
+ {p:'A',t:'Enciende una luz',m:'Reto de electrónica en 60 segundos: un LED, una pila, una sonrisa.',pub:'Reel tutorial + guía PDF gratis a cambio del WhatsApp.',$:'Imán de leads para la Mega Clase.',k:'30 leads'},
+ {p:'E',t:'Convocatorias ITM',m:'Responder la invitación del ITM y proponer la charla sobre convocatorias.',pub:'Post "Cómo ganamos Fondo Emprender con 95,27": 5 lecciones.',$:'Posicionamiento como referente; abre puertas a mentorías pagas.',k:'Fecha de charla agendada',tbc:1},
+ {p:'R',t:'El Rocket League real',m:'Mostrar Robot Soccer Mare en acción.',pub:'Clip con goles y gritos: "el Rocket League de la vida real".',$:'Cotizaciones RSM para fin de año.',k:'3 cotizaciones'},
+ {p:'M',t:'Cierre semana 1',m:'Primer en vivo con La Marea: qué aprendimos en 7 días.',pub:'Live de 20 minutos + resumen en historias.',$:'Invitar a la Mega Clase (registro gratis).',k:'100 personas en La Marea'},
+ {p:'A',t:'Libros gratis',m:'Compartir dónde leer libros gratis y legales.',pub:'Carrusel guardable con 10 bibliotecas digitales gratuitas.',$:'Contenido que se guarda y se comparte: alcance orgánico.',k:'50 guardados'},
+ {p:'E',t:'Fábrica de Ventas',m:'Montar el embudo: contenido, imán, La Marea, oferta y cierre. CRM en una hoja.',pub:'Historia "detrás de cámaras: así organizamos las ventas".',$:'Seguimiento a todas las propuestas a 48 horas.',k:'Embudo y CRM listos'},
+ {p:'R',t:'Unboxing #2: Neuron',m:'Unboxing del kit Neuron.',pub:'Video "qué se puede crear con Neuron en 10 minutos".',$:'Preventa de kits con TD Robótica.',k:'5 interesados en kits'},
+ {p:'E',t:'Activar Vita XtraT',m:'Abrir el catálogo de dropshipping con enlace de pago.',pub:'Publicación de producto en un canal separado de la marca educativa.',$:'Margen por pedido sin inventario.',k:'Primera venta'},
+ {p:'A',t:'Diario del emprendedor',m:'Documentar lo que estamos aprendiendo al constituir.',pub:'Post "Lo que nadie te dice antes de crear tu empresa".',$:'Autoridad para el futuro curso de emprendimiento.',k:'20 comentarios'},
+ {p:'E',t:'Marelab constituida',m:'Constitución de Marelab. RUT, cuenta bancaria, facturación.',pub:'Foto del hito + video de 15 s "hoy Marelab es empresa".',$:'Podemos facturar a empresas y entidades.',k:'Empresa constituida',ev:1},
+ {p:'M',t:'Del ITM a empresa',m:'En vivo: de proyecto de grado a 45.000 personas impactadas.',pub:'Live + clip de los 3 mejores momentos.',$:'Invitar a la Mega Clase y a contratar RSM.',k:'200 vistas del live'},
+ {p:'A',t:'Libro: leer con IA',m:'Arrancar el libro "Enseñar a leer con las herramientas de hoy". Capítulo 0: el método.',pub:'Post de anuncio y primera página en historias.',$:'Futuro producto en Hotmart; hoy suma Marea.',k:'Introducción publicada'},
+ {p:'E',t:'Fondo Emprender en público',m:'Publicar los hitos de ejecución del Fondo Emprender. Segunda ronda de propuestas B2B.',pub:'Carrusel "Qué vamos a hacer con el Fondo Emprender".',$:'5 propuestas nuevas.',k:'10 propuestas acumuladas'},
+ {p:'A',t:'Anuncio Mega Clase',m:'Abrir el registro gratis a la Mega Clase de Robótica (mBot, mBot 2, LEGO, Neuron).',pub:'Reel con los 4 kits sobre la mesa.',$:'Registro = lead caliente para la preventa.',k:'100 registros'},
+ {p:'E',t:'Preventa Hotmart',m:'Abrir la preventa del curso en Hotmart con precio de fundador.',pub:'Post de lanzamiento con cuenta regresiva.',$:'Producto digital: vende sin límite de cupo.',k:'10 ventas'},
+ {p:'A',t:'Mega Clase en vivo',m:'Clase en vivo de robótica. Oferta al final.',pub:'Live + reels cortos de la clase al día siguiente.',$:'Ventas Hotmart y kits.',k:'30% de asistencia'},
+ {p:'R',t:'Unboxing #3: mBot 2',m:'Unboxing del mBot 2 y reto a la comunidad.',pub:'Video "mBot vs mBot 2" y reto con premio.',$:'Kits y cupos de taller.',k:'20 participantes en el reto'},
+ {p:'M',t:'Libro Robot Soccer Mare',m:'Anunciar el libro de RSM y recoger historias de jugadores.',pub:'Post "Robot Soccer Mare se merece un libro. ¿Cuál es tu historia?".',$:'Patrocinadores del libro y del torneo.',k:'20 historias recibidas'},
+ {p:'R',t:'Gamer Med',m:'Arena RSM en Gamer Med (Inder Medellín). Fecha por confirmar.',pub:'Cobertura en vivo + "ven a jugar contra un robot".',$:'Leads con QR hacia La Marea.',k:'Fecha confirmada',tbc:1},
+ {p:'E',t:'Inmerxia',m:'Reunión de alianza con Inmerxia para una experiencia conjunta.',pub:'Historia de la reunión (si hay acuerdo).',$:'Nuevo canal de distribución.',k:'Acuerdo definido',tbc:1},
+ {p:'A',t:'Enciende una luz a escala',m:'Proyecto Bindec y electrónica para millones: campaña de prerregistro.',pub:'Reel "Queremos que un millón de personas enciendan su primera luz".',$:'Lista de espera para kit propio.',k:'100 prerregistros'},
+ {p:'R',t:'Expl-AI-n día 1',m:'Zona MARE en Plaza Mayor. Captar leads con QR.',pub:'Historias en vivo cada hora + reel de cierre.',$:'Leads y reuniones B2B.',k:'150 leads',ev:1},
+ {p:'R',t:'Expl-AI-n día 2',m:'Caso de IA controlando robots. Agendar reuniones.',pub:'Reel "La IA jugando fútbol con robots".',$:'Reuniones con empresas y universidades.',k:'10 reuniones agendadas',ev:1},
+ {p:'E',t:'Black Friday Marelab',m:'Oferta de 48 horas: Mega Clase + kits.',pub:'Post y historias con cuenta regresiva.',$:'Pico de ventas digitales.',k:'Pico de ventas del mes',ev:1},
+ {p:'M',t:'Seguimiento',m:'Enviar propuesta a cada lead de Expl-AI-n y pedir testimonios.',pub:'Carrusel con testimonios del evento.',$:'Pipeline de diciembre (Tronex RSM dic/ene).',k:'100% de leads contactados'},
+ {p:'A',t:'Lo que aprendimos',m:'Documentar los 30 días con números reales.',pub:'Post "30 días abriendo la bóveda: lo que funcionó y lo que no".',$:'Confianza y autoridad.',k:'Post publicado'},
+ {p:'E',t:'Balance de la bóveda',m:'Contar las monedas reales contra el simulador y armar diciembre.',pub:'Live de cierre y anuncio del plan de diciembre.',$:'Decidir qué escalar.',k:'Informe de cierre',ev:1}
+];
+const PNAME={M:'Motívate',A:'Aprende',R:'Recréate',E:'Emprende'};
+const WD=['dom','lun','mar','mié','jue','vie','sáb'];
+const dateOf=d=>new Date(2026,10,d);
+const cop=new Intl.NumberFormat('es-CO',{style:'currency',currency:'COP',maximumFractionDigits:0});
+const short=v=>{const a=Math.abs(v);if(a>=1e6)return '$'+(v/1e6).toLocaleString('es-CO',{maximumFractionDigits:1})+' M';if(a>=1e3)return '$'+Math.round(v/1e3).toLocaleString('es-CO')+' mil';return cop.format(v)};
+const fmtN=v=>Math.round(v).toLocaleString('es-CO');
+
+const store={get(k,d){try{const v=localStorage.getItem(k);return v?JSON.parse(v):d}catch(e){return d}},set(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}};
+function todayStep(){const n=new Date();if(n.getFullYear()===2026&&n.getMonth()===10)return n.getDate();if(n<new Date(2026,10,1))return 1;return 30}
+let pos=store.get('boveda.pos',todayStep());
+let sel=pos;
+let done=new Set(store.get('boveda.done',[]));
+let sc=1;
+
+const $=id=>document.getElementById(id);
+const board=$('board'), panel=$('panel');
+
+function cols(){return matchMedia('(max-width:560px)').matches?5:6}
+function renderBoard(){
+  const c=cols(), rows=30/c, order=[];
+  for(let r=0;r<rows;r++){const row=[];for(let i=0;i<c;i++)row.push(r*c+i+1);if(r%2)row.reverse();order.push(...row)}
+  board.innerHTML='';
+  order.forEach(d=>{
+    const x=DAYS[d-1], dt=dateOf(d);
+    const b=document.createElement('button');
+    b.type='button';b.setAttribute('role','listitem');
+    b.className='sq'+(x.ev?' ev':'')+(done.has(d)?' done':'')+(d===sel?' sel':'')+(d===pos?' here':'');
+    b.setAttribute('aria-label',`Día ${d}, ${WD[dt.getDay()]} ${d} de noviembre: ${x.t}${done.has(d)?', cumplida':''}${d===pos?', posición actual':''}`);
+    b.innerHTML=`${d===pos?'<span class="token" aria-hidden="true">M</span>':''}<span class="top"><span class="n">${d}</span><i class="pill p${x.p}">${x.p}</i></span><span class="d">${WD[dt.getDay()]} ${d} nov</span><span class="t">${x.t}</span>`;
+    b.onclick=()=>{sel=d;render()};
+    board.appendChild(b);
+  });
+}
+function renderPanel(){
+  const x=DAYS[sel-1], dt=dateOf(sel), s=SIM;
+  panel.innerHTML=`<div class="meta"><i class="pill p${x.p}">${x.p}</i><span class="chip">${PNAME[x.p]}</span><span class="chip">${WD[dt.getDay()]} ${sel} nov</span>${x.ev?'<span class="chip star">Hito</span>':''}${x.tbc?'<span class="chip warn">Por confirmar</span>':''}</div>
+  <h3>Casilla ${sel}: ${x.t}</h3>
+  <div class="field"><b>Misión</b><p>${x.m}</p></div>
+  <div class="field"><b>Publicación</b><p>${x.pub}</p></div>
+  <div class="field"><b>Palanca de ingreso</b><p>${x.$}</p></div>
+  <div class="field"><b>Meta del día</b><p>${x.k}</p></div>
+  <p class="sim-at">En el simulador, al terminar este día la bóveda tendría <strong>${short(s.cumRev[sel-1])}</strong> con <strong>${fmtN(s.cumLeads[sel-1])}</strong> leads y <strong>${fmtN(s.cumMarea[sel-1])}</strong> personas en La Marea.</p>
+  <label class="check"><input type="checkbox" id="doneBox" ${done.has(sel)?'checked':''}> Misión cumplida</label>`;
+  $('doneBox').onchange=e=>{e.target.checked?done.add(sel):done.delete(sel);store.set('boveda.done',[...done]);render()};
+}
+
+/* ---------- SIMULADOR ---------- */
+const V=id=>+$(id).value;
+let SIM=null;
+function simulate(){
+  const ads=V('ads'), other=V('other'), posts=V('posts'), props=V('props'), ticket=V('ticket'), price=V('price'), spons=V('spons');
+  const cumRev=[],cumInv=[],cumLeads=[],cumMarea=[];
+  let rev=0,inv=0,leads=0,marea=0,reach=0,hot=0,hotN=0,drop=0,b2b=0,b2bN=0,sp=0;
+  const paidDaily=(ads/30)/9000*1000;
+  for(let d=1;d<=30;d++){
+    let org=400*posts*Math.pow(1.04,d-1);
+    if(d===1||d===13)org*=1.5;
+    let r=org+paidDaily, evLeads=0;
+    if(d===25||d===26){r+=3000;evLeads=40*sc}
+    reach+=r;
+    const newLeads=r*0.008*0.25*sc+evLeads;
+    leads+=newLeads;
+    marea+=r*0.006*sc+evLeads*0.6;
+    // Hotmart desde el día 18; el día 18 convierte la base acumulada
+    if(d>=18){const base=d===18?leads:newLeads*(d===27?2:1);const n=base*0.04*sc;hotN+=n;const v=n*price*0.88;hot+=v;rev+=v}
+    // Dropshipping desde el día 11
+    if(d>=11){const v=newLeads*0.015*sc*35000;drop+=v;rev+=v}
+    // B2B: lotes semanales enviados los días 2, 9, 16, 23; cierran a los 10 días
+    if([12,19,26].includes(d)){const n=props*0.10*sc;b2bN+=n;const v=n*ticket;b2b+=v;rev+=v}
+    if(d===30&&spons){sp=spons*4000000;rev+=sp}
+    inv+=(ads+other)/30;
+    cumRev.push(rev);cumInv.push(inv);cumLeads.push(leads);cumMarea.push(marea);
+  }
+  const pipeline=props*0.10*sc*ticket; // lote del día 23, cierra en diciembre
+  return {cumRev,cumInv,cumLeads,cumMarea,reach,leads,marea,hot,hotN,drop,b2b,b2bN,sp,pipeline,inv,rev};
+}
+function renderSim(){
+  SIM=simulate();const s=SIM;
+  const roi=s.inv>0?(s.rev-s.inv)/s.inv:0;
+  $('kpis').innerHTML=[
+    ['Ingresos simulados',short(s.rev),1],['Inversión',short(s.inv)],['Retorno',(s.inv>0?(roi*100).toFixed(0)+'%':'—')],['Personas en La Marea',fmtN(s.marea)],
+    ['Alcance total',fmtN(s.reach)],['Leads',fmtN(s.leads)],['Ventas Hotmart',fmtN(s.hotN)],['Experiencias B2B',s.b2bN.toLocaleString('es-CO',{maximumFractionDigits:1})]
+  ].map(([a,b,h])=>`<div class="kpi${h?' hl':''}"><span>${a}</span><strong>${b}</strong></div>`).join('');
+  const rows=[['Experiencias B2B (RSM, talleres)',s.b2b,'var(--gold)'],['Patrocinios',s.sp,'var(--cyan)'],['Mega Clase en Hotmart',s.hot,'var(--blue)'],['Dropshipping Vita XtraT',s.drop,'var(--coral)'],['Pipeline para diciembre',s.pipeline,'rgba(255,255,255,.35)']];
+  const mx=Math.max(...rows.map(r=>r[1]),1);
+  $('streams').innerHTML=rows.map(([n,v,c])=>`<div class="stream"><span>${n}</span><span class="bar"><i style="width:${v/mx*100}%;background:${c}"></i></span><span class="v">${short(v)}</span></div>`).join('');
+  const b2bShare=s.rev?s.b2b/s.rev:0;
+  $('insight').innerHTML=s.rev<=0?'Con estos supuestos la bóveda queda vacía: sube las propuestas B2B, que son la palanca más rápida.':
+    `${(b2bShare*100).toFixed(0)}% del ingreso de noviembre viene de vender experiencias a empresas. Hotmart y Vita XtraT suman poco este mes, pero construyen el activo que vende en diciembre. Cada propuesta B2B semanal adicional vale cerca de <b>${short(0.3*sc*V('ticket'))}</b> en noviembre.`;
+  drawChart();
+  // bóveda
+  const v=s.cumRev[pos-1], goal=V('goal');
+  $('vLabel').textContent=`Bóveda simulada · día ${pos} de 30`;
+  $('vBig').textContent=cop.format(Math.round(v));
+  $('vMeter').style.width=Math.min(100,v/goal*100)+'%';
+  $('vMeter').parentElement.setAttribute('aria-valuenow',Math.round(Math.min(100,v/goal*100)));
+  $('vGoal').textContent=short(goal);
+  $('vDone').textContent=done.size;
+  // outputs
+  $('adsO').textContent=short(V('ads'));$('otherO').textContent=short(V('other'));$('postsO').textContent=V('posts');
+  $('propsO').textContent=V('props');$('ticketO').textContent=short(V('ticket'));$('priceO').textContent=cop.format(V('price'));
+  $('sponsO').textContent=V('spons');$('goalO').textContent=short(goal);
+}
+function niceMax(v){if(v<=0)return 1e6;const e=Math.pow(10,Math.floor(Math.log10(v)));const m=v/e;return (m<=1?1:m<=2?2:m<=2.5?2.5:m<=5?5:10)*e}
+function drawChart(){
+  const s=SIM,W=680,H=280,L=64,R=20,T=22,B=34,goal=V('goal');
+  const ymax=niceMax(Math.max(s.cumRev[29],s.cumInv[29],goal)*1.05);
+  const x=d=>L+(d-1)/29*(W-L-R), y=v=>T+(1-v/ymax)*(H-T-B);
+  let g='';
+  for(let i=0;i<=4;i++){const v=ymax*i/4;g+=`<line x1="${L}" x2="${W-R}" y1="${y(v)}" y2="${y(v)}" stroke="rgba(160,195,255,.12)"/><text x="${L-8}" y="${y(v)+4}" text-anchor="end">${short(v)}</text>`}
+  [1,5,10,15,20,25,30].forEach(d=>{g+=`<text x="${x(d)}" y="${H-12}" text-anchor="middle">${d} nov</text>`});
+  const pts=a=>a.map((v,i)=>`${x(i+1).toFixed(1)},${y(v).toFixed(1)}`).join(' ');
+  g+=`<line x1="${L}" x2="${W-R}" y1="${y(goal)}" y2="${y(goal)}" stroke="#00D9FF" stroke-dasharray="2 5" opacity=".7"/><text x="${W-R}" y="${y(goal)-6}" text-anchor="end" style="fill:#00D9FF">Meta ${short(goal)}</text>`;
+  g+=`<polygon points="${x(1)},${y(0)} ${pts(s.cumRev)} ${x(30)},${y(0)}" fill="rgba(255,215,0,.12)"/>`;
+  g+=`<polyline points="${pts(s.cumInv)}" fill="none" stroke="#FF6B35" stroke-width="2" stroke-dasharray="6 5"/>`;
+  g+=`<polyline points="${pts(s.cumRev)}" fill="none" stroke="#FFD700" stroke-width="3" stroke-linejoin="round"/>`;
+  const px=x(pos),py=y(s.cumRev[pos-1]);
+  g+=`<line x1="${px}" x2="${px}" y1="${T}" y2="${y(0)}" stroke="rgba(255,255,255,.35)"/><circle cx="${px}" cy="${py}" r="6" fill="#FFD700" stroke="#00102b" stroke-width="2"/>`;
+  const lx=Math.min(Math.max(px,L+60),W-R-60);
+  g+=`<text x="${lx}" y="${T-6}" text-anchor="middle" style="fill:#f4f7fc;font-weight:600">Día ${pos}: ${short(s.cumRev[pos-1])}</text>`;
+  g+=`<g transform="translate(${L+8},${T+12})"><rect width="10" height="3" y="-2" fill="#FFD700"/><text x="16" y="2" style="fill:#a9b8d4">Ingresos acumulados</text><rect x="150" width="10" height="3" y="-2" fill="#FF6B35"/><text x="166" y="2" style="fill:#a9b8d4">Inversión acumulada</text></g>`;
+  $('chart').innerHTML=g;
+}
+
+function render(){renderSim();renderBoard();renderPanel()}
+function move(n){pos=Math.min(30,Math.max(1,n));sel=pos;store.set('boveda.pos',pos);render()}
+$('next').onclick=()=>move(pos+1);
+$('back').onclick=()=>move(pos-1);
+$('toToday').onclick=()=>move(todayStep());
+document.querySelectorAll('#simForm input').forEach(i=>i.addEventListener('input',render));
+document.querySelectorAll('.seg button').forEach(b=>b.onclick=()=>{sc=+b.dataset.sc;document.querySelectorAll('.seg button').forEach(o=>o.setAttribute('aria-pressed',o===b));render()});
+matchMedia('(max-width:560px)').addEventListener('change',renderBoard);
+$('copyBtn').onclick=()=>{
+  const txt=$('postCopy').innerText.replace(/^Copiar texto\s*|^¡Copiado!\s*/,'');
+  const ok=()=>{$('copyBtn').textContent='¡Copiado!';setTimeout(()=>$('copyBtn').textContent='Copiar texto',1800)};
+  navigator.clipboard?.writeText(txt).then(ok).catch(()=>{const r=document.createRange();r.selectNodeContents($('postCopy'));const s=getSelection();s.removeAllRanges();s.addRange(r)});
+};
+render();
+})();
+</script>
