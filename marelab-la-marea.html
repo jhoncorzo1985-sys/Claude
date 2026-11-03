@@ -1,0 +1,613 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>La Marea — Marelab EMPRENDE</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap">
+    <style>
+        :root {
+            --navy: #001F54;
+            --deep: #00102b;
+            --cyan: #00D9FF;
+            --gold: #FFD700;
+            --coral: #FF6B35;
+            --blue: #5b8cff;
+            --ok: #3ddc97;
+            --fg: #f4f7fc;
+            --soft: #a9b8d4;
+            --line: rgba(160, 195, 255, 0.16);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: var(--deep);
+            color: var(--fg);
+            font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
+            line-height: 1.6;
+            background-image:
+                radial-gradient(1200px 500px at 85% -10%, rgba(255, 215, 0, 0.1), transparent 60%),
+                radial-gradient(900px 400px at -10% 30%, rgba(0, 217, 255, 0.07), transparent 60%);
+        }
+
+        header {
+            background: linear-gradient(135deg, var(--navy) 0%, var(--deep) 100%);
+            padding: 40px 20px;
+            text-align: center;
+            border-bottom: 1px solid var(--line);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            backdrop-filter: blur(10px);
+        }
+
+        header h1 {
+            font-family: 'Fredoka', sans-serif;
+            font-size: 2.8rem;
+            margin-bottom: 8px;
+            background: linear-gradient(135deg, var(--cyan), var(--gold));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        header p {
+            color: var(--soft);
+            font-size: 1.1rem;
+            margin-bottom: 16px;
+        }
+
+        .badge {
+            display: inline-block;
+            background: rgba(0, 217, 255, 0.1);
+            border: 1px solid var(--cyan);
+            color: var(--cyan);
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-family: 'Space Grotesk', monospace;
+            font-weight: 600;
+            letter-spacing: 0.1em;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        section {
+            margin-bottom: 60px;
+        }
+
+        h2 {
+            font-family: 'Fredoka', sans-serif;
+            font-size: 2rem;
+            margin-bottom: 24px;
+            color: var(--gold);
+        }
+
+        /* HERO */
+        .hero {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            align-items: center;
+            margin-bottom: 60px;
+        }
+
+        .hero-text h3 {
+            font-family: 'Fredoka', sans-serif;
+            font-size: 2.4rem;
+            line-height: 1.2;
+            margin-bottom: 20px;
+            color: var(--fg);
+        }
+
+        .hero-text p {
+            font-size: 1.05rem;
+            color: var(--soft);
+            margin-bottom: 16px;
+            line-height: 1.8;
+        }
+
+        .cta-button {
+            display: inline-block;
+            background: linear-gradient(135deg, var(--gold), var(--coral));
+            color: #1a1300;
+            padding: 16px 32px;
+            border-radius: 12px;
+            font-weight: 700;
+            font-size: 1.05rem;
+            border: none;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+            text-decoration: none;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 30px rgba(255, 215, 0, 0.3);
+        }
+
+        .mare-pillars {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 16px;
+        }
+
+        .pillar {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--line);
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .pillar span {
+            font-size: 2rem;
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        .pillar strong {
+            font-family: 'Fredoka', sans-serif;
+            font-size: 1.2rem;
+            display: block;
+            margin-bottom: 4px;
+        }
+
+        .pillar p {
+            font-size: 0.9rem;
+            color: var(--soft);
+        }
+
+        /* METRICS */
+        .metrics {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 16px;
+            margin-bottom: 40px;
+        }
+
+        .metric {
+            background: rgba(0, 217, 255, 0.1);
+            border: 1px solid var(--cyan);
+            border-radius: 12px;
+            padding: 24px;
+            text-align: center;
+        }
+
+        .metric strong {
+            font-family: 'Space Grotesk', monospace;
+            font-size: 2rem;
+            display: block;
+            margin-bottom: 8px;
+            color: var(--gold);
+        }
+
+        .metric span {
+            font-size: 0.85rem;
+            color: var(--soft);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        /* BOARD */
+        .board-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+            gap: 8px;
+            margin-bottom: 40px;
+        }
+
+        .sq {
+            aspect-ratio: 1;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.02));
+            border: 1px solid var(--line);
+            border-radius: 10px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Space Grotesk', monospace;
+            font-weight: 700;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.2s;
+            position: relative;
+        }
+
+        .sq:hover {
+            transform: translateY(-2px);
+            border-color: var(--cyan);
+        }
+
+        .sq.done {
+            background: linear-gradient(135deg, rgba(61, 220, 151, 0.2), rgba(0, 217, 255, 0.1));
+            border-color: var(--ok);
+        }
+
+        .sq.done::after {
+            content: "✓";
+            position: absolute;
+            top: -4px;
+            right: 0;
+            color: var(--ok);
+            font-size: 1.2rem;
+        }
+
+        .sq.m { border-color: var(--cyan); }
+        .sq.a { border-color: var(--blue); }
+        .sq.r { border-color: var(--coral); }
+        .sq.e { border-color: var(--gold); }
+
+        /* FORM */
+        .form-section {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--line);
+            border-radius: 16px;
+            padding: 40px;
+            max-width: 500px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: var(--fg);
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px 16px;
+            border: 1px solid var(--line);
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.05);
+            color: var(--fg);
+            font-family: inherit;
+            font-size: 1rem;
+            transition: border-color 0.2s;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--cyan);
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 80px;
+        }
+
+        /* ACTIVITY FEED */
+        .activity-feed {
+            display: grid;
+            gap: 16px;
+            max-width: 600px;
+        }
+
+        .activity-item {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--line);
+            border-radius: 12px;
+            padding: 16px;
+            border-left: 4px solid var(--cyan);
+        }
+
+        .activity-item strong {
+            color: var(--gold);
+            display: block;
+            margin-bottom: 4px;
+        }
+
+        .activity-item small {
+            color: var(--soft);
+            font-size: 0.85rem;
+        }
+
+        /* MOBILE */
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 1.8rem;
+            }
+
+            .hero {
+                grid-template-columns: 1fr;
+            }
+
+            .metrics {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .board-grid {
+                grid-template-columns: repeat(auto-fit, minmax(70px, 1fr));
+            }
+
+            .mare-pillars {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        footer {
+            text-align: center;
+            padding: 40px 20px;
+            border-top: 1px solid var(--line);
+            color: var(--soft);
+            font-size: 0.9rem;
+        }
+
+        footer a {
+            color: var(--cyan);
+            text-decoration: none;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>🌊 LA MAREA</h1>
+    <p>Comunidad EMPRENDE — Marelab Medellín</p>
+    <span class="badge">📅 30 días • Día 2 de 30</span>
+</header>
+
+<div class="container">
+
+    <!-- HERO -->
+    <section class="hero">
+        <div class="hero-text">
+            <h3>Me tiré a la piscina de monedas y sentí abundancia 🪙</h3>
+            <p>Ese sueño fue parte de mi infancia. Hace poco lo viví de nuevo cuando ganamos el Premio Nacional INN-GAME 2026.</p>
+            <p>Hoy activamos <strong>EMPRENDE</strong>: 30 días para construir abundancia real con La Marea.</p>
+            <p style="margin-top: 24px;">
+                <strong>¿Qué es La Marea?</strong><br>
+                Una comunidad de emprendedores, lectores y soñadores que se lanzan juntos a crear valor real en noviembre. No es un reto de redes. Es un sistema operativo para tu mentalidad, tus ventas y tus conexiones.
+            </p>
+            <a href="#unirse" class="cta-button" style="margin-top: 24px;">Únete a La Marea</a>
+        </div>
+
+        <div>
+            <div class="mare-pillars">
+                <div class="pillar">
+                    <span>⚡</span>
+                    <strong>Motívate</strong>
+                    <p>Energía, propósito, inspiración diaria</p>
+                </div>
+                <div class="pillar">
+                    <span>📚</span>
+                    <strong>Aprende</strong>
+                    <p>20 min de lectura + IA responsable</p>
+                </div>
+                <div class="pillar">
+                    <span>🎮</span>
+                    <strong>Recréate</strong>
+                    <p>Robótica, electrónica, juego</p>
+                </div>
+                <div class="pillar">
+                    <span>🚀</span>
+                    <strong>Emprende</strong>
+                    <p>Canvas, ventas, ingresos reales</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- METRICS -->
+    <section>
+        <h2>Termómetro de La Marea</h2>
+        <div class="metrics">
+            <div class="metric">
+                <strong id="count-marea">0</strong>
+                <span>En La Marea</span>
+            </div>
+            <div class="metric">
+                <strong>Día 2</strong>
+                <span>de 30</span>
+            </div>
+            <div class="metric">
+                <strong id="count-propuestas">0</strong>
+                <span>Propuestas B2B</span>
+            </div>
+            <div class="metric">
+                <strong>∞</strong>
+                <span>Potencial</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- BOARD -->
+    <section>
+        <h2>El Tablero EMPRENDE</h2>
+        <p style="color: var(--soft); margin-bottom: 24px;">30 casillas. 1 paso cada día. <strong>Haz click para marcar completado.</strong></p>
+        <div class="board-grid" id="board"></div>
+    </section>
+
+    <!-- UNIRSE -->
+    <section id="unirse">
+        <h2>Súmate a La Marea</h2>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: start;">
+            <div class="form-section">
+                <form id="marea-form" onsubmit="handleSubmit(event)">
+                    <div class="form-group">
+                        <label>Tu nombre</label>
+                        <input type="text" id="name" required placeholder="Jhon Carlos">
+                    </div>
+                    <div class="form-group">
+                        <label>WhatsApp</label>
+                        <input type="tel" id="whatsapp" required placeholder="+57 310 1234567">
+                    </div>
+                    <div class="form-group">
+                        <label>¿Qué quieres aprender en noviembre?</label>
+                        <textarea id="learn" placeholder="Robótica, leer con IA, vender, etc..."></textarea>
+                    </div>
+                    <button type="submit" class="cta-button" style="width: 100%; text-align: center;">Enviar</button>
+                </form>
+            </div>
+
+            <div>
+                <h3 style="color: var(--gold); margin-bottom: 16px;">Qué pasa cuando te unes:</h3>
+                <div class="activity-feed">
+                    <div class="activity-item">
+                        <strong>✅ Acceso inmediato</strong>
+                        <p>Grupo WhatsApp privado de La Marea con 50+ miembros activos</p>
+                    </div>
+                    <div class="activity-item">
+                        <strong>📊 Tracking diario</strong>
+                        <p>Tablero interactivo de los 30 días + métricas en vivo</p>
+                    </div>
+                    <div class="activity-item">
+                        <strong>🤝 Alianzas</strong>
+                        <p>Conexión con Librería la Obra, Bindec, eventos y más</p>
+                    </div>
+                    <div class="activity-item">
+                        <strong>💰 Oportunidades</strong>
+                        <p>Acceso a Hotmart, dropshipping, propuestas B2B</p>
+                    </div>
+                    <div class="activity-item">
+                        <strong>📚 Contenido</strong>
+                        <p>30 contenidos + Mega Clase gratis de Robótica</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- PRÓXIMOS HITOS -->
+    <section>
+        <h2>Próximos hitos</h2>
+        <div class="activity-feed">
+            <div class="activity-item">
+                <strong>🎉 Mañana: Día 3 (Cumpleaños + Unboxing Tío Rico)</strong>
+                <p>Video especial: abrimos el juego que ganamos en INN-GAME. Contenido que no querían dejar mostrar. 👀</p>
+            </div>
+            <div class="activity-item">
+                <strong>📚 Días 15-21: Aprender y vender</strong>
+                <p>Libro "Enseñar a leer con IA" • Mega Clase de Robótica • Preventa Hotmart</p>
+            </div>
+            <div class="activity-item">
+                <strong>🚀 Días 22-30: Escalar la Marea</strong>
+                <p>Robot Soccer Mare en Gamer Med • Inmerxia • Expl-AI-n • Black Friday</p>
+            </div>
+        </div>
+    </section>
+
+</div>
+
+<footer>
+    <p><strong>La Marea</strong> — Estrategia EMPRENDE 2026</p>
+    <p style="margin-top: 12px;">Marelab | Medellín, Colombia</p>
+    <p style="margin-top: 16px; font-size: 0.8rem;">
+        <a href="#privacy">Privacidad</a> •
+        <a href="#terms">Términos</a> •
+        <a href="https://www.marelab.co">Marelab.co</a>
+    </p>
+</footer>
+
+<script>
+    // TABLERO DINÁMICO
+    const DAYS = [
+        { p: 'r', t: 'Abrimos la bóveda', done: true },
+        { p: 'm', t: 'El sueño que regresó', done: false },
+        { p: 'r', t: 'Unboxing Tío Rico', done: false },
+        { p: 'a', t: 'Enciende una luz', done: false },
+        { p: 'e', t: 'Convocatorias ITM', done: false },
+        { p: 'r', t: 'El Rocket League real', done: false },
+        { p: 'm', t: 'Cierre semana 1', done: false },
+        { p: 'a', t: 'Libros gratis', done: false },
+        { p: 'e', t: 'Fábrica de Ventas', done: false },
+        { p: 'm', t: 'Casa Marelab', done: false },
+        { p: 'e', t: 'Activar Vita XtraT', done: false },
+        { p: 'a', t: 'BMY Canvas personal', done: false },
+        { p: 'e', t: 'Marelab constituida', done: false },
+        { p: 'm', t: 'Del ITM a empresa', done: false },
+        { p: 'a', t: 'Libro: leer con IA', done: false },
+        { p: 'e', t: 'Hora de poder con IA', done: false },
+        { p: 'a', t: 'Anuncio Mega Clase', done: false },
+        { p: 'e', t: 'Preventa Hotmart', done: false },
+        { p: 'a', t: 'Mega Clase en vivo', done: false },
+        { p: 'r', t: 'Unboxing mBot 2', done: false },
+        { p: 'm', t: 'Libro Robot Soccer Mare', done: false },
+        { p: 'r', t: 'Arena RSM en Gamer Med', done: false },
+        { p: 'r', t: 'Inmerxia', done: false },
+        { p: 'a', t: 'Enciende una luz (escala)', done: false },
+        { p: 'r', t: 'Expl-AI-n día 1', done: false },
+        { p: 'r', t: 'Expl-AI-n día 2', done: false },
+        { p: 'e', t: 'Black Friday Marelab', done: false },
+        { p: 'm', t: 'Seguimiento', done: false },
+        { p: 'a', t: 'Lo que aprendimos', done: false },
+        { p: 'e', t: 'Balance de la bóveda', done: false }
+    ];
+
+    const board = document.getElementById('board');
+    DAYS.forEach((day, i) => {
+        const sq = document.createElement('div');
+        sq.className = `sq ${day.p} ${day.done ? 'done' : ''}`;
+        sq.textContent = i + 1;
+        sq.title = day.t;
+        sq.onclick = () => {
+            day.done = !day.done;
+            sq.classList.toggle('done');
+            localStorage.setItem('board', JSON.stringify(DAYS));
+        };
+        board.appendChild(sq);
+    });
+
+    // LOAD FROM LOCAL STORAGE
+    const saved = localStorage.getItem('board');
+    if (saved) {
+        const loaded = JSON.parse(saved);
+        loaded.forEach((day, i) => {
+            DAYS[i].done = day.done;
+            if (day.done) board.children[i].classList.add('done');
+        });
+    }
+
+    // FORM HANDLER
+    function handleSubmit(e) {
+        e.preventDefault();
+        const name = document.getElementById('name').value;
+        const whatsapp = document.getElementById('whatsapp').value;
+        const learn = document.getElementById('learn').value;
+
+        // GUARDAR EN LOCAL STORAGE (en producción sería backend)
+        let members = JSON.parse(localStorage.getItem('marea-members') || '[]');
+        members.push({ name, whatsapp, learn, date: new Date().toLocaleString() });
+        localStorage.setItem('marea-members', JSON.stringify(members));
+
+        // ACTUALIZAR CONTADOR
+        document.getElementById('count-marea').textContent = members.length;
+
+        // MOSTRAR MENSAJE
+        alert(`¡Bienvenido ${name}! Te escribiremos al WhatsApp ${whatsapp} con los detalles del grupo.`);
+        document.getElementById('marea-form').reset();
+
+        // GENERAR LINK DE WHATSAPP (opcional)
+        const waLink = `https://wa.me/57${whatsapp.replace(/\D/g, '').slice(-10)}?text=Hola%20${name}%2C%20bienvenido%20a%20La%20Marea%20%F0%9F%8C%8A`;
+        console.log('WhatsApp link:', waLink);
+    }
+
+    // LOAD MEMBERS COUNT ON PAGE LOAD
+    window.addEventListener('load', () => {
+        const members = JSON.parse(localStorage.getItem('marea-members') || '[]');
+        document.getElementById('count-marea').textContent = members.length;
+    });
+</script>
+
+</body>
+</html>
