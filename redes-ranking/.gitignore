@@ -1,0 +1,5 @@
+# Datos personales de terceros: nunca se suben al repositorio.
+# Rutas ancladas a esta carpeta (no afectan a ejemplo/).
+/datos/
+/salida/
+__pycache__/

@@ -1,0 +1,30 @@
+{
+  "_comentario": "Ajusta las metas y los pesos a tu realidad. Los pesos deben sumar 1.0.",
+  "pesos": {
+    "afinidad": 0.4,
+    "relevancia": 0.35,
+    "interaccion": 0.2,
+    "reciproco": 0.05
+  },
+  "palabras_clave_metas": [
+    "emprendimiento",
+    "emprendedor",
+    "founder",
+    "ceo",
+    "negocio",
+    "marketing",
+    "ventas",
+    "startup",
+    "inversion",
+    "creativo",
+    "diseno",
+    "branding",
+    "producto",
+    "tecnologia",
+    "inteligencia artificial",
+    "educacion"
+  ],
+  "kw_para_maximo": 3,
+  "umbral_eliminar": 25,
+  "top_n": 100
+}
