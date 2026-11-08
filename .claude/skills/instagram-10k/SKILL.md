@@ -73,11 +73,14 @@ Proporción semanal: ~40% Aprende (crecimiento), ~25% Recréate (alcance), ~20% 
 - Alianzas y distribuidores (colegios, empresas, creadores) entran como colaboraciones y como prospectos.
 - La revisión del viernes es una **revisión comercial**: reporta al director/a del área con resultados, no solo métricas de vanidad.
 
+## Equipo de agentes (modo autónomo)
+Subagentes en `.claude/agents/`: **ig-estratega, ig-creador, ig-publicador, ig-comunidad, ig-analista**. Operan sobre la cola `plan/cola/` bajo `plan/politica-autonomia.md` (autorización de Jhon para publicar automáticamente piezas aprobadas por política; interruptor `plan/PAUSA`). Ciclo y requisitos: `references/ciclo-autonomo.md`.
+
 ## Reglas de honestidad (innegociables)
 
 - **Solo crecimiento orgánico y legítimo.** Nada de comprar seguidores, bots, "follow/unfollow" masivo ni granjas de engagement: dañan el alcance y la marca.
 - **Nadie puede garantizar 10.000 en una fecha.** Este skill maximiza la probabilidad con un sistema, datos y ajuste continuo, y dice la verdad si el ritmo no alcanza.
-- **No publica solo:** este skill prepara todo (contenido, calendario, análisis). Publicar en Instagram lo hace Jhon (o una herramienta que él conecte, como Meta Business Suite) y se confirma antes de enviar nada a terceros.
+- **Publicación automática solo dentro de `plan/politica-autonomia.md`** (autorizada por Jhon) y con el conector verificado; fuera de esas reglas, se escala a Jhon.
 - Si faltan datos (seguidores actuales, @usuarios, fotos/videos disponibles, métricas), **pregunta antes de suponer**.
 
 ## Datos que necesita al arrancar (pregúntalos una vez, guárdalos en `plan/perfil.md`)
