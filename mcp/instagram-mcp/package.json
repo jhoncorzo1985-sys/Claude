@@ -1,0 +1,12 @@
+{
+  "name": "marelab-instagram-mcp",
+  "version": "0.1.0",
+  "description": "MCP server (Instagram API with Instagram Login) para @marecolombia y @jhoncorzo1985",
+  "type": "module",
+  "main": "src/index.js",
+  "scripts": { "start": "node src/index.js", "test": "node src/selftest.js" },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.32.2",
+    "zod": "^3.25.0"
+  }
+}

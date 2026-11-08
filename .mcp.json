@@ -1,0 +1,14 @@
+{
+  "mcpServers": {
+    "instagram": {
+      "command": "node",
+      "args": ["mcp/instagram-mcp/src/index.js"],
+      "env": {
+        "IG_TOKEN_PERSONAL": "${IG_TOKEN_PERSONAL}",
+        "IG_USER_ID_PERSONAL": "${IG_USER_ID_PERSONAL}",
+        "IG_TOKEN_MARELAB": "${IG_TOKEN_MARELAB}",
+        "IG_USER_ID_MARELAB": "${IG_USER_ID_MARELAB}"
+      }
+    }
+  }
+}
