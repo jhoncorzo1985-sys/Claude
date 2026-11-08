@@ -28,6 +28,11 @@ Convertir Instagram en el principal canal de generación de oportunidades: **10.
 ## Objetivo de audiencia
 **10.000 seguidores reales** en cada cuenta (@Marelab y la personal), de gente que encaja con la audiencia, no bots. Plazo base: 9–12 meses (Jhon puede acelerar con más constancia; el skill recalcula el ritmo con datos reales).
 
+## Cuentas y orden de arranque
+- **Fase 1 — Personal: @jhoncorzo1985** (posicionamiento: *Embajador de Marelab* — vive y cuenta la Cultura MARE desde adentro).
+- **Fase 2 — Marelab: @marecolombia** (arranca cuando la Fase 1 tenga ritmo estable de 3–4 semanas; el material de la Fase 1 se reutiliza).
+- Plan vigente: `plan/semana-01-personal.md`. Datos de partida: `plan/perfil.md`.
+
 ## Dos cuentas, dos roles (se alimentan entre sí)
 
 - **Personal (Jhon)** — la cara y la historia: fundador, innovación, creatividad, bastidores de Marelab, aprendizajes. Crece más rápido porque la gente sigue personas. Es el motor de confianza.
